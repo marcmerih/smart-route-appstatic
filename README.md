@@ -1,4 +1,4 @@
-# smart-route-appstatic
+# Smart Route Appstatic
 
 The team will build a novel route-based recommender that will optimize the travel experience and travel route preferences for car occupants and increase occupant awareness of their surroundings (e.g., by making them aware of tourism, event, and other exploration opportunities relevant to the preferences of the car occupants). The recommender will require collection of travel, tourism, and business data from a variety of sources and integration with an AI-based backend that can efficiently plan the route taking into account available data, user preferences, and system objectives.
 
