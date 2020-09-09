@@ -4,13 +4,22 @@ The team will build a novel route-based recommender that will optimize the trave
 
 ----------
 
-# client expectations
+# Client Expectations
 
 The team will develop an interactive map-based front-end tool with a Python-powered backend that stores all data and powers the machine learning and AI-based models to serve front-end requests. The team will provide an interactive planning tool and either a simulated or real-time tool for use enroute. Ideally, students will validate the tool through a small user study designed to assess satisfaction of project requirements.
 
 ----------
 
-# supervisor
+# Project Contributors
+
+Merih (Marc) Atasoy
+Chris Palumbo
+Matteo Ciserani
+Bassam Bibi
+
+----------
+
+# Supervisor
 
 Prof. Scott Sanner
 University of Toronto
