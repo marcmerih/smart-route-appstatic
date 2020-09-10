@@ -8,5 +8,3 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'smart-route-app';
 }
-
-// added a new line here.
