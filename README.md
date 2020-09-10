@@ -36,10 +36,10 @@ Used libraries include (please add as new dependencies are introduced):
 
 # Workflow
 
-*For first time setup of workspace:*
+*For first time setup of workspace for front-end:*
   1.  Download NodeJS to your machine.
   2.  In the terminal of your editor, run `npm install -g @angular/cli`
-  3.  After cloning the repository, please navigate to /smart-route path and run `npm install` in the terminal of your text editor/compiler.
+  3.  After cloning the repository, please navigate to */smart-route-appstatic/frontend/smart-route-app* path and run `npm install` in the terminal of your text editor/compiler.
   
  For further questions about setting up Angular / NodeJS in your local machine, please reference this video: https://www.youtube.com/watch?v=1RIXiy0v-wM
 
@@ -64,4 +64,25 @@ Used libraries include (please add as new dependencies are introduced):
   
   You will notice that there are a lot of files in the repository. These files were introduced by _Angular CLI_. The sub folder we will be most interested in (and will be working with) is in _*src/app*_.
   
-  There is also an _*assets*_ subfolder, which will house all images we use, copydeck, documents, etc.
+  There is also an _*assets*_ subfolder, which will house all images (/assets/images) we use, copydeck (/assets/i18n), documents (/assets/documents), etc.
+  
+  Package.json file is important to show you Angular CLI tools (such as building your application to a local server, building in production mode, building in -aot mode, etc). These are things that are not necessarily needed to be known, except for npm run start.
+  
+  Package-lock.json contains all dependencies that our project will be using. These are dependencies that are installed into the project, such as bootstrap, angular material, firebase, etc.
+  
+  styles.css is a global styling file which is sensitive, and will contain global stylings that will be sued throughout the application. Changing these files can result in many parts of the application being affected. We will have more global stylesheets added as per best practices (i.e material.css for angular material styling, variables.css for global styling variables such as colour hex codes, etc.)
+  
+  Please note that package & package-lock.json files will get updated if you install new dependencies (or pull changes that contain new dependencies). These files should not be manually altered.
+  
+  ------------
+  
+  # Running the application locally
+  
+  In order to see our application locally, you can build and serve it to be accessible in your localhost. In order to achieve this:
+    1)  In your terminal (having navigated to */smart-route-appstatic/frontend/smart-route-app* angular application folder), run `npm run start`
+    2)  Once you see _'Compiled Successfully'_, you will be prompted a localhost link (probably to port 4200).
+    3)  Follow that link in your favourite browser, and voila!
+
+  Side note: If you are going to be using terminal for things like git commands, do not touch the 'Compiled Sucessfully' tab. Leave that running, otherwise your servers will be stopped (and can be restarted at any point using above method). Simply open new terminal tabs as you need by clicking the new _+_ icon in VSCode (or by hitting *CTRL + Shift + ~*), and run your commands there!
+  
+  ------------
