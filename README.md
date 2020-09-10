@@ -79,6 +79,7 @@ Used libraries include (please add as new dependencies are introduced):
   # Running the application locally
   
   In order to see our application locally, you can build and serve it to be accessible in your localhost. In order to achieve this:
+
     1)  In your terminal (having navigated to */smart-route-appstatic/frontend/smart-route-app* angular application folder), run `npm run start`.
     2)  Once you see _'Compiled Successfully'_, you will be prompted a localhost link (probably to port 4200).
     3)  Follow that link in your favourite browser, and voila!
