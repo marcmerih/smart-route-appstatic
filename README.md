@@ -39,7 +39,7 @@ Used libraries include (please add as new dependencies are introduced):
 *For first time setup of workspace:*
   1.  Download NodeJS to your machine.
   2.  In the terminal of your editor, run `npm install -g @angular/cli`
-  3.  After cloning the repository, please run `npm install` in the terminal of your text editor/compiler.
+  3.  After cloning the repository, please navigate to /smart-route path and run `npm install` in the terminal of your text editor/compiler.
   
  For further questions about setting up Angular / NodeJS in your local machine, please reference this video: https://www.youtube.com/watch?v=1RIXiy0v-wM
 
