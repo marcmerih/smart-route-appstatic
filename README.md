@@ -22,6 +22,18 @@ University of Toronto
 
 -----------
 
+# Libraries
+
+The current application is created using Angular (CLI), NodeJS, HTML, CSS, and Python.
+
+Used libraries include (please add as new dependencies are introduced):
+  - Angular Material
+  - Material Icons
+  - Bootstrap
+  - Google Fonts
+  
+------------
+
 # Workflow
 
 *Pushing code to the master branch:*
@@ -37,3 +49,11 @@ University of Toronto
   9.  Now your code is ready to be pushed, so just run `git push` (alternatively, if you find yourself creating the branch in your local, terminal will prompt you to run `git push --set-upstream origin *type/your-branch-name*`, which will create and sync the same branch in the remote with your local branch).
   10. Open the github website, click on *Create and compare pull request*.
   11. Add reviewers, add a title, and a description (if there are more than 5 files changed), and click create PR!
+  
+  -----------
+  
+  # Code Structure
+  
+  You will notice that there are a lot of files in the repository. These files were introduced by _Angular CLI_. The sub folder we will be most interested in (and will be working with) is in _*src/app*_.
+  
+  There is also an _*assets*_ subfolder, which will house all images we use, copydeck, documents, etc.
