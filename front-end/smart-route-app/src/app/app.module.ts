@@ -8,12 +8,15 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RoutesComponent } from './routes/routes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountsComponent
+    AccountsComponent,
+    RoutesComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     // Angular Material
     MatButtonToggleModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
