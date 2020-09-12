@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'smart-route-app';
+
+  constructor(public router: Router) {
+    // TO-DO: @MARC ATASOY - change later.
+    this.router.navigateByUrl('accounts');
+  }
 }
