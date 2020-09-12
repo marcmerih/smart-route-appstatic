@@ -1,4 +1,9 @@
 <div class="row">
+    <div class="col-md-12">
+        <span class="material-icons close-button" (click)="navigateToRoute()">
+            close
+        </span>
+    </div>
     <div class="col-md-12 container">
         <mat-button-toggle-group [(ngModel)]="accountType" aria-label="account-type"> 
             <!-- ngModel will change the variable accountType to whatever is selected-->
@@ -74,7 +79,5 @@
             [disabled]="((accountType === 'Login') ? loginForm : signupForm).invalid"
             (click)="submitForm((accountType === 'Login') ? loginForm : signupForm)">{{ accountType }}</button>
         </div>
-        <br>
-        <a routerLink="/route" routerLinkActive="active">or, continue to application!</a>
     </div>
 </div>
