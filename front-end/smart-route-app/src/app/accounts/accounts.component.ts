@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-accounts',
@@ -10,6 +11,8 @@ export class AccountsComponent implements OnInit {
   accountType = 'Sign Up';
   loginForm: FormGroup;
   signupForm: FormGroup;
+  subscription: Subscription = new Subscription();
+  accountProgression = 0
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -25,6 +28,13 @@ export class AccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.subscription.add(this.loginForm.get('email').value);
   }
 
+  submitForm(formGroup: FormGroup) {
+    if (formGroup.valid) {
+      console.log(formGroup);
+      // Make call to backend to save formgroup in db.
+    }
+  }
 }
