@@ -87,3 +87,31 @@ Used libraries include (please add as new dependencies are introduced):
   Side note: If you are going to be using terminal for things like git commands, do not touch the 'Compiled Sucessfully' tab. Leave that running, otherwise your servers will be stopped (and can be restarted at any point using above method). Simply open new terminal tabs as you need by clicking the new _+_ icon in VSCode (or by hitting *CTRL + Shift + ~*), and run your commands there!
   
   ------------
+
+  # Chrome Headless for Spec Testing
+  
+  Install a few dependencies:
+    `npm install --save-dev karma-phantomjs-launcher`, 
+    `npm install --save intl`, 
+    Open karma.conf.js and add require('karma-phantomjs-launcher') to the plugins array, 
+    Open your src/polyfills.ts file and uncomment the following lines:
+    
+    import 'core-js/es6/symbol';
+    import 'core-js/es6/object';
+    import 'core-js/es6/function';
+    import 'core-js/es6/parse-int';
+    import 'core-js/es6/parse-float';
+    import 'core-js/es6/number';
+    import 'core-js/es6/math';
+    import 'core-js/es6/string';
+    import 'core-js/es6/date';
+    import 'core-js/es6/array';
+    import 'core-js/es6/regexp';
+    import 'core-js/es6/map';
+    import 'core-js/es6/weak-map';
+    import 'core-js/es6/set';
+    import 'intl';
+    import 'intl/locale-data/jsonp/en';
+    
+   Change ng test in package.json to `ng test --browsers PhantomJS`
+    

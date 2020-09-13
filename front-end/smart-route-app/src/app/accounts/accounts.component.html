@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-12 container">
+        <mat-button-toggle-group [(ngModel)]="accountType" aria-label="account-type"> 
+            <!-- ngModel will change the variable accountType to whatever is selected-->
+            <mat-button-toggle value="Login">Login</mat-button-toggle>
+            <mat-button-toggle value="Sign Up">Sign Up</mat-button-toggle>
+        </mat-button-toggle-group>
+        <br>
+        <br>
+        <div class="account-forms">
+            <!-- Display Login Fields if selected account type is 'Login' -->
+            <ng-container *ngIf="accountType === 'Login'" [formGroup]="loginForm">
+                <mat-form-field appearence="fill" class="text-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email">
+                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                        Email is required.
+                    </mat-error>
+                    <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                        Email must be in the format abc@test.com.
+                    </mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearence="fill" class="text-field">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="text" formControlName="password">
+                    <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                        Password is required.
+                    </mat-error>
+                    <!-- Create custom password validator with regex and add mat error here -->
+                </mat-form-field>
+            </ng-container>
+
+            <!-- Display Signup Fields if selected account type is 'Sign Up' -->
+            <ng-container *ngIf="accountType === 'Sign Up'" [formGroup]="signupForm">
+                <mat-form-field appearence="fill" class="text-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email">
+                    <mat-error *ngIf="signupForm.get('email').hasError('required')">
+                        Email is required.
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('email').hasError('email')">
+                        Email must be in the format abc@test.com.
+                    </mat-error>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearence="fill" class="text-field">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                        Password is required.
+                    </mat-error>
+                    <!-- Create custom password validator with regex and add mat error here -->
+                </mat-form-field>
+                <br>
+                <mat-form-field appearence="fill" class="text-field">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput type="password"  formControlName="confirmPassword">
+                    <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                        Password must be confirmed.
+                    </mat-error>
+                    <!-- Create custom match password validator with regex and add mat error here -->
+                    <!-- Create custom password validator with regex and add mat error here -->
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-checkbox color="primary" formControlName="agreedToTerms">I agree to the terms and conditions!</mat-checkbox>
+            </ng-container>
+            <br>
+            <br>
+            <button mat-raised-button color="primary" class="primary">{{ accountType }}</button>
+        </div>
+        <br>
+        <a routerLink="/route" routerLinkActive="active">or, continue to application!</a>
+    </div>
+</div>

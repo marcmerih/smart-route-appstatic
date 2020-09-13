@@ -35,5 +35,50 @@ $smart-route-app-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  // Fonts to be selected at later time. @team
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+// Global Variables
+
+$yellow: #FFE590;
+$black: rgb(53, 53, 53);
+
+
+
+// Angular Material Styling
+
+mat-button-toggle-group {
+  width: 300px !important;
+
+  mat-button-toggle {
+    width: 150px;
+  }
+}
+
+.text-field, button.primary  {
+    width: 300px !important;
+    font-size: 12pt;
+}
+
+button.primary {
+  height: 45px;
+  background-color: $yellow !important;
+  color: $black !important;
+}
+
+.mat-button-toggle {
+  background-color: white !important;
+}
+  
+.mat-button-toggle-checked {
+  background-color: $yellow !important;
+}
+  
