@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accounts',
@@ -10,8 +12,10 @@ export class AccountsComponent implements OnInit {
   accountType = 'Sign Up';
   loginForm: FormGroup;
   signupForm: FormGroup;
+  subscription: Subscription = new Subscription();
+  accountProgression = 0
 
-  constructor() {
+  constructor(private router: Router) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -25,6 +29,17 @@ export class AccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.subscription.add(this.loginForm.get('email').value);
   }
 
+  submitForm(formGroup: FormGroup) {
+    if (formGroup.valid) {
+      console.log(formGroup);
+      // Make call to backend to save formgroup in db.
+    }
+  }
+
+  navigateToRoute() {
+    this.router.navigateByUrl('/route');
+  }
 }

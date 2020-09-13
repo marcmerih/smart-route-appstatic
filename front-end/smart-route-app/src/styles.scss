@@ -49,6 +49,7 @@ body {
 // Global Variables
 
 $yellow: #FFE590;
+$grey: #afafaf;
 $black: rgb(53, 53, 53);
 
 
@@ -71,6 +72,13 @@ mat-button-toggle-group {
 button.primary {
   height: 45px;
   background-color: $yellow !important;
+  color: $black !important;
+}
+
+button.primary:disabled {
+  height: 45px;
+  background-color: white !important;
+  border: 1px solid $grey;
   color: $black !important;
 }
 
