@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "smart-route-app"
+    }
+  },
+  "defaultProject": "smart-route-app",
+  "cli": {
+    "analytics": false
+  }
 }
