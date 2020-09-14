@@ -12,12 +12,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutesComponent } from './routes/routes.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountsComponent,
-    RoutesComponent
+    RoutesComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
