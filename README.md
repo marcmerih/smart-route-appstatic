@@ -43,15 +43,17 @@ Used libraries include (please add as new dependencies are introduced):
   
  For further questions about setting up Angular / NodeJS in your local machine, please reference this video: https://www.youtube.com/watch?v=1RIXiy0v-wM
 
+*Starting to code*
+
+  1. Create a branch on Github
+  2.  On your local VSCODE Terminal, run `git checkout master` to enter local master branch.
+  3. To acquire any new branches created by others (and your own branch that you've just created), run `git fetch`.
+  4.  To acquire latest changes merged into remote master, run `git pull origin master`.
+  5.  You should only make changes to your own branches (and not the master branch). To go into your branch locally, run `git checkout *type/your-branch-name*`
+  6.  Create your changes, and start application in your localhost by doing 'npm run start'
 
 *Pushing code to the master branch:*
 
-  1.  Create a new branch in remote repository (here).
-  2.  On your local VSCODE Terminal, run `git checkout master` to enter local master branch.
-  3.  To acquire any new branches created by others (and your own branch that you've just created), run `git fetch`.
-  4.  To acquire latest changes merged into remote master, run `git pull origin master`.
-  5.  You should only make changes to your own branches (and not the master branch). To go into your branch locally, run `git checkout *type/your-branch-name*`
-  6.  Create your changes.
   7.  To stage the changes, run `git add .`.
   8.  Now you must commit these staged changes, so you must run `git commit -m "message"`, where the message is a very brief description of what is in that commit.
   9.  Now your code is ready to be pushed, so just run `git push` (alternatively, if you find yourself creating the branch in your local, terminal will prompt you to run `git push --set-upstream origin *type/your-branch-name*`, which will create and sync the same branch in the remote with your local branch).
