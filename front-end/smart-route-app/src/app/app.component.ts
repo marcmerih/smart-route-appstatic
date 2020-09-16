@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Router, Routes } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,5 +13,4 @@ export class AppComponent {
     // TO-DO: @MARC ATASOY - change later.
     this.router.navigateByUrl('accounts');
   }
-
 }

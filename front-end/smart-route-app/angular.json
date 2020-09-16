@@ -28,8 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/ol/ol.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
