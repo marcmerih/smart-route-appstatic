@@ -2,11 +2,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AccountsComponent } from './accounts/accounts.component';
 import { RoutesComponent } from './routes/routes.component';
+import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 
 const routes: Routes = [
   {
     path: 'accounts',
-    component: AccountsComponent
+    component: AccountsComponent,
+    children: [
+      {
+        path: 'profile-creation', 
+        component: ProfileCreationComponent
+      }
+    ]
   },
   {
     path: 'route',
