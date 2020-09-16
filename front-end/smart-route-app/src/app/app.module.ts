@@ -9,17 +9,21 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
+import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountsComponent,
     RoutesComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileCreationComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +37,13 @@ import { HeaderComponent } from './header/header.component';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
