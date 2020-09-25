@@ -6,16 +6,6 @@ import { ProfileCreationComponent } from './accounts/profile-creation/profile-cr
 
 const routes: Routes = [
   {
-    path: 'accounts',
-    component: AccountsComponent,
-    children: [
-      {
-        path: 'profile-creation', 
-        component: ProfileCreationComponent
-      }
-    ]
-  },
-  {
     path: 'route',
     component: RoutesComponent
   }

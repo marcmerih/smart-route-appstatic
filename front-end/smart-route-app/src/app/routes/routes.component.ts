@@ -24,6 +24,7 @@ export class RoutesComponent implements AfterViewInit {
           source: new OSM()
         })
       ],
+      controls: [],
       view: new View({
         center: fromLonLat([-79.3872, 43.6352]),
         zoom: 7

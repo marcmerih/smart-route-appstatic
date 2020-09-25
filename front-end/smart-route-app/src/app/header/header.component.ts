@@ -9,16 +9,19 @@ import { Router } from '@angular/router';
  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
- is_menu_displayed = false;
- 
+ userSignedIn = false;
+ isTripOverlayExpanded = false;
+
  constructor(private router: Router ) {}
  
  ngOnInit(): void {
  }
- toggle_menu_display() {
-   this.is_menu_displayed = !this.is_menu_displayed ;
+
+ toggleTripOverlay() {
+   this.isTripOverlayExpanded = !this.isTripOverlayExpanded;
  }
- navigate_to_accounts() {
-   this.router.navigateByUrl('/accounts');
+
+ get tripOverlayExpand() {
+   return (this.isTripOverlayExpanded) ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
  }
 }

@@ -50,7 +50,10 @@ body {
 // Global Variables
 
 $yellow: #FFE590;
-$grey: #afafaf;
+$grey: #707070;
+$light-grey: #E3E3E3;
+$white: #ffffff;
+$blue: #488EFF;
 $black: rgb(53, 53, 53);
 
 
@@ -90,3 +93,12 @@ button.primary:disabled {
 .mat-button-toggle-checked {
   background-color: $yellow !important;
 }
+
+
+// Animations
+
+// @keyframes on-hover {
+//   0% {
+
+//   }
+// }
