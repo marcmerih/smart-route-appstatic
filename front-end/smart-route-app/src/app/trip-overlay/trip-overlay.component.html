@@ -1,0 +1,23 @@
+<div class="col-md-12 overlay">
+    <br>
+    <div class="locations">
+        <span class="title">Trip</span>
+        <button mat-raised-button *ngIf="hasBeenRouted">+ ADD</button>    
+    </div>
+    <br>
+    <!-- <br> -->
+    <mat-form-field appearence="fill">
+        <mat-label>Starting Location</mat-label>
+        <input matInput type="text">
+    </mat-form-field>
+    <br>
+    <span class="to"> to </span>
+    <br>
+    <mat-form-field appearence="fill">
+        <mat-label>Ending Location</mat-label>
+        <input matInput type="text">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button>ROUTE</button>
+    <br>
+</div>

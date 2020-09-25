@@ -6,8 +6,6 @@ import OSM from 'ol/source/OSM';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
-import ZoomToExtent from 'ol/control/ZoomToExtent';
 @Component({
   selector: 'app-routes',
   templateUrl: './routes.component.html',
@@ -26,13 +24,12 @@ export class RoutesComponent implements AfterViewInit {
           source: new OSM()
         })
       ],
+      controls: [],
       view: new View({
         center: fromLonLat([-79.3872, 43.6352]),
         zoom: 7
       }),
     });
-
-    this
   }
 
 }

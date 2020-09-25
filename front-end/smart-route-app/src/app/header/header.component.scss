@@ -1,34 +1,70 @@
 @import "../../styles.scss";
- 
-.header{
-   width: 100%;
-   height: 60px;
-   display: block;
-   background-color: #FAEDED;
-   .inner_header{
-       width: 1000px;
-       height: 100%;
-       display: block;
-       margin: 0 auto;
-       background-color: $grey;
-   }
-   .menu{
-       font-size: 35pt;
-       color: $grey;
-       margin-top: 10px;
-       margin-left: 15px;
-       cursor: pointer;
-       background-color: black;
-   }
-   .header_icons{
-       margin-top: 10px;
-       float: right;
-       margin-right: 15px;
-       .profile{
-           font-size: 35pt;
-           color: $grey;
-           cursor: pointer;
-       }
-   }
+
+.header {
+    border-radius: 100px;
+    background-color: $white;
+    z-index: 10;
+    opacity: 0.9;
+    height: 70px;
+    box-shadow: 0px 1px 9px $black;
+    margin-top: -10px;
+
+    .trip-overlay {
+        float: left !important;
+        margin-left: 2%;
+        margin-top: 18px;
+
+        .app-title {
+            font-size: 12pt !important;
+            cursor: default;
+            top: -15px;
+            position: relative;
+            color: $grey;
+            margin-left: 12px;
+            font-family: Oswald, sans-serif;
+        }
+
+        span.icon {
+            font-size: 34pt;
+            color: $grey;
+            cursor: pointer;
+        }
+
+        span.icon:hover {
+            color: $blue;
+            transition: 0.15s ease-in;
+        }
+
+        span::selection {
+            color: none;
+            background: none;
+        }
+    }
+
+    .icons-navigation {
+        float: right;
+        margin-right: 3%;
+        margin-top: 25px;
+
+        span {
+            margin-left: 15px;
+            font-size: 22pt;
+            color: $grey;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: $blue;
+            transition: 0.15s ease-in;
+        }
+
+        span::selection {
+            color: none;
+            background: none;
+        }
+    }
+
+    .trip-overlay-ting {
+        width: 100% !important;
+    }
 }
- 

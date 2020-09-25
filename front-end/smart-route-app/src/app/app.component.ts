@@ -11,6 +11,6 @@ export class AppComponent {
 
   constructor(public router: Router) {
     // TO-DO: @MARC ATASOY - change later.
-    this.router.navigateByUrl('accounts');
+    this.router.navigateByUrl('route');
   }
 }
