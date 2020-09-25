@@ -17,6 +17,9 @@ import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
+import { AddressCardComponent } from './address-card/address-card.component';
+import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
     RoutesComponent,
     HeaderComponent,
     ProfileCreationComponent,
-    TripOverlayComponent
+    TripOverlayComponent,
+    AddressCardComponent,
+    AddIntermediateStopComponent
   ],
   imports: [
     BrowserModule,
@@ -41,11 +46,14 @@ import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
     MatCheckboxModule,
     MatProgressBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddIntermediateStopComponent]
 })
 export class AppModule { }
