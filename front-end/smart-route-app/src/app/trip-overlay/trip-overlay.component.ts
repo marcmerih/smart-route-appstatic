@@ -53,4 +53,9 @@ export class TripOverlayComponent implements OnInit {
     return this.startTripForm.get('endingLocation').value;
   }
 
+  get isRouteDisabled() {
+    return !(this.startTripForm.get('startingLocation').value &&
+      this.startTripForm.get('endingLocation').value)
+  }
+
 }

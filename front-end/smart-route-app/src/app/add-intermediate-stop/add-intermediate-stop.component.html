@@ -7,6 +7,8 @@
         <input type="text" matInput [formControl]="address">
     </mat-form-field>
     <br>
+    <br>
+    <button mat-button class="submit" (click)="close()">Cancel</button>
     <button mat-raised-button class="submit"
-    (click)="addLocation()">ADD TO ROUTE</button>
+    (click)="addLocation()" [disabled]="isDisabled">ADD TO ROUTE</button>
 </div>

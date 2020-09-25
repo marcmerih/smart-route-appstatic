@@ -18,7 +18,17 @@ export class AddIntermediateStopComponent implements OnInit {
   }
 
   addLocation() {
-    this.dialogRef.close(this.address);
+    if (this.address) {
+      this.dialogRef.close(this.address);
+    }
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  get isDisabled() {
+    return (!this.address.value);
   }
 
 }

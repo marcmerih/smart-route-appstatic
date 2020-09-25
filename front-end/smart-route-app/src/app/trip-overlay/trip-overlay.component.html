@@ -9,9 +9,6 @@
         <mat-label>Starting Location</mat-label>
         <input matInput type="text" formControlName="startingLocation">
     </mat-form-field>
-    <br>
-    <span class="to"> to </span>
-    <br>
     <mat-form-field appearence="fill">
         <mat-label>Ending Location</mat-label>
         <input matInput type="text" formControlName="endingLocation">
@@ -19,7 +16,8 @@
     <br>
     <br>
     <button mat-raised-button class="route"
-    (click)="route()">ROUTE</button>
+    (click)="route()"
+    [disabled]="isRouteDisabled">ROUTE</button>
     <br>
 </div>
 

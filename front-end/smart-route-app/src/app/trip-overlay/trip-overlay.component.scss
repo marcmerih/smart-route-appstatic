@@ -38,6 +38,14 @@
         width: 60%;
     }
 
+    button.route:disabled::ng-deep {
+        border-radius: 15px;
+        background-color: $disabled;
+        color: $grey;
+        margin-bottom: 5%;
+        width: 60%;
+    }
+
     mat-form-field::ng-deep {
         width: 80%;
         margin-left: 15px;
