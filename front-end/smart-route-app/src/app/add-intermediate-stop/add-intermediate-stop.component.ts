@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-intermediate-stop',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-intermediate-stop.component.scss']
 })
 export class AddIntermediateStopComponent implements OnInit {
+  address: FormControl;
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<AddIntermediateStopComponent>) {
+    this.address = new FormControl('');
+  }
 
   ngOnInit(): void {
+  }
+
+  addLocation() {
+    this.dialogRef.close(this.address);
   }
 
 }

@@ -17,12 +17,11 @@ export class TripOverlayComponent implements OnInit {
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
-  intermediateLocationForm: FormGroup;
+  intermediateLocationAddress = '';
   addresses = []
 
   constructor(private dialog: MatDialog, private tripService: TripService) {
     this.startTripForm = this.tripService.tripSetupForm;
-    this.intermediateLocationForm = this.tripService.intermediateLocationForm;
   }
 
   ngOnInit(): void {
@@ -34,9 +33,15 @@ export class TripOverlayComponent implements OnInit {
   }
 
   addIntermediaryAddress() {
-    this.dialog.open(AddIntermediateStopComponent, {
+    let dialogRef = this.dialog.open(AddIntermediateStopComponent, {
       height: '25vh',
       width: '25vw',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Make a backend call to update route with added stop.
+      this.addresses.push(result.value);
+      this.intermediateLocationAddress = result.value;
     });
   }
 
@@ -48,9 +53,4 @@ export class TripOverlayComponent implements OnInit {
     return this.startTripForm.get('endingLocation').value;
   }
 
-  get intermediateLocation() {
-    if (this.intermediateLocationForm) {
-      return this.intermediateLocationForm.get('address').value;
-    }
-  }
 }

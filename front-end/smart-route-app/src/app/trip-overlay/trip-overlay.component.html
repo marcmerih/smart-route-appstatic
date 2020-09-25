@@ -1,9 +1,7 @@
 <div class="col-md-12 overlay" *ngIf="currentStep === 0" [formGroup]="startTripForm">
     <br>
     <div class="locations">
-        <span class="title">Start Trip</span>
-        <button mat-raised-button *ngIf="hasBeenRouted"
-        (click)="addIntermediaryAddress()">+ ADD</button>    
+        <span class="title">Start Trip</span>   
     </div>
     <br>
     <!-- <br> -->
@@ -19,24 +17,27 @@
         <input matInput type="text" formControlName="endingLocation">
     </mat-form-field>
     <br>
+    <br>
     <button mat-raised-button class="route"
     (click)="route()">ROUTE</button>
     <br>
 </div>
 
-<div class="col-md-12 overlay" *ngIf="currentStep === 1" [formGroup]="intermediateLocation">
+<div class="col-md-12 overlay" *ngIf="currentStep === 1">
     <br>
     <div class="locations">
         <span class="title">Trip Details</span>
-        <button mat-raised-button *ngIf="hasBeenRouted">+ ADD</button>    
+        <button mat-raised-button *ngIf="hasBeenRouted" (click)="addIntermediaryAddress()">+ ADD</button>    
     </div>
     <br>
     <app-address-card [address]="startingLocation"></app-address-card>
     <br>
     <div *ngFor="let address of addresses">
         <br>
-        <app-address-card [address]="intermediateLocation"></app-address-card>
+        <app-address-card [address]="intermediateLocationAddress"></app-address-card>
     </div>
     <br>
     <app-address-card [address]="endingLocation"></app-address-card>
+    <br>
+    <br>
 </div>
