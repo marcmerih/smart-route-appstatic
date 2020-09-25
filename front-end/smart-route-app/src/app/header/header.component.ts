@@ -1,6 +1,7 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
  
  
 @Component({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
  userSignedIn = false;
- isTripOverlayExpanded = false;
+ isTripOverlayExpanded = true;
 
  constructor(private router: Router ) {}
  

@@ -4,8 +4,9 @@
     border-radius: 100px;
     background-color: $white;
     z-index: 10;
-    opacity: 0.85;
-    height: 70px;box-shadow: 0px 1px 9px $black;
+    opacity: 0.9;
+    height: 70px;
+    box-shadow: 0px 1px 9px $black;
     margin-top: -10px;
 
     .trip-overlay {
@@ -61,5 +62,9 @@
             color: none;
             background: none;
         }
+    }
+
+    .trip-overlay-ting {
+        width: 100% !important;
     }
 }

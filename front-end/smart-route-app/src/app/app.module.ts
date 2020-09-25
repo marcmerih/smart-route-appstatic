@@ -16,6 +16,7 @@ import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     AccountsComponent,
     RoutesComponent,
     HeaderComponent,
-    ProfileCreationComponent
+    ProfileCreationComponent,
+    TripOverlayComponent
   ],
   imports: [
     BrowserModule,
