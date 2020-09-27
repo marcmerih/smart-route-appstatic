@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddIntermediateStopComponent } from '../add-intermediate-stop/add-intermediate-stop.component';
 import { TripService } from '../trip.service';
 import { FormGroup } from '@angular/forms';
+import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
 export enum RoutingSteps {
   routeStartEnd = 0,
   tripDetails = 1
@@ -32,10 +33,21 @@ export class TripOverlayComponent implements OnInit {
     this.currentStep = this.routingSteps.tripDetails;
   }
 
+  openTripSettings() {
+    let dialogRefSettings = this.dialog.open(TripSettingsComponent, {
+      height: '60vh',
+      width: '60vw'
+    });
+
+    dialogRefSettings.afterClosed().subscribe(result => {
+
+    });
+  }
+
   addIntermediaryAddress() {
     let dialogRef = this.dialog.open(AddIntermediateStopComponent, {
-      height: '25vh',
-      width: '25vw',
+      height: '40vh',
+      width: '40vw',
     });
 
     dialogRef.afterClosed().subscribe(result => {

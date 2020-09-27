@@ -1,0 +1,19 @@
+<span class="material-icons" style="cursor: pointer;" (click)="close()">close</span>
+<div class="col-md-12 settings">
+    <span class="title">Trip Settings</span>
+    <br>
+    <br>
+    <span>Maximum Detour Duration (h)</span>
+    <br>
+    <mat-slider
+        thumbLabel
+        tickInterval="1"
+        min="1"
+        max="10"
+    ></mat-slider>
+    <br>
+    <br>
+    <button mat-button class="submit" (click)="close()">Cancel</button>
+    <button mat-raised-button class="submit"
+    (click)="addLocation()" [disabled]="isDisabled">APPLY FILTERS</button>
+</div>

@@ -17,10 +17,13 @@ import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TagsComponent } from './tags/tags.component';
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatSliderModule } from '@angular/material/slider'
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
 import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { TripSettingsComponent } from './trip-settings/trip-settings.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
     TripOverlayComponent,
     AddressCardComponent,
     AddIntermediateStopComponent,
-    TagsComponent
+    TagsComponent,
+    TripSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
     MatProgressBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    MatSliderModule
   ],
   providers: [
     MatDatepickerModule,

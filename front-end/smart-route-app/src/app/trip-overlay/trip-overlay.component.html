@@ -19,6 +19,8 @@
         </mat-form-field>
         <br>
         <br>
+        <button mat-button class="trip-settings"
+        (click)="openTripSettings()">Trip Settings</button>
         <button mat-raised-button class="route"
         (click)="route()"
         [disabled]="isRouteDisabled">ROUTE</button>
@@ -45,11 +47,16 @@
             <br>
         </div>
     </div>
-    <br>
     <div class="col-md-12 tags">
         <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A"></app-tags>
         <app-tags tagName="Hotels" icon="hotel" color="#E76F51"></app-tags>
         <app-tags tagName="Things to do" icon="event_available" color="#F4A261"></app-tags>
     </div>
+    <br>
+    <mat-tab-group>
+        <mat-tab label="Restaurants">Restaurants</mat-tab>
+        <mat-tab label="Hotels">Hotels</mat-tab>
+        <mat-tab label="Things to do">Things to do</mat-tab>
+    </mat-tab-group>
     
 </div>

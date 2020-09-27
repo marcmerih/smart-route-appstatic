@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 enum profileCreationSteps {
   signUp = 0,
   profileDetails = 1,
@@ -22,7 +23,7 @@ export class AccountsComponent implements OnInit {
   subscription: Subscription = new Subscription();
   accountProgression = 0
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private dialogRef: MatDialogRef<AccountsComponent>) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -75,7 +76,7 @@ export class AccountsComponent implements OnInit {
     }
   }
 
-  navigateToRoute() {
-    this.router.navigateByUrl('/route');
+  close() {
+    this.dialogRef.close();
   }
 }

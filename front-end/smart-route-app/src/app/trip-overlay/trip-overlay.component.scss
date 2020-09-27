@@ -2,13 +2,14 @@
 
 .container {
     min-width: 478px;
-    
+
     .overlay {
         background-color: $white;
         margin-top: 100px;
-        border-radius: 11px;
+        border-radius: 18px;
         text-align: center;
         margin-right: 125px !important;
+        margin-bottom: 20px !important;
     
         .locations {
             text-align: left !important;
@@ -43,7 +44,18 @@
             font-family: Poppins;
             font-weight: 600;
             margin-bottom: 5%;
-            width: 60%;
+            width: 50% !important;
+        }
+        
+        button.trip-settings::ng-deep {
+            border-radius: 15px;
+            border: 1px solid $blue;
+            color: $blue;
+            font-family: Poppins;
+            font-weight: 600;
+            margin-bottom: 5%;
+            margin-right: 15px !important;
+            width: 30% !important;
         }
     
         button.route:disabled::ng-deep {
@@ -54,6 +66,7 @@
             margin-bottom: 5%;
             width: 60%;
         }
+
     
         mat-form-field::ng-deep {
             width: 80%;
@@ -69,10 +82,23 @@
     .tags {
         width: 100%;
         text-align: center;
-    
+
         app-tags {
+            cursor: pointer;
             display: inline-flex;
             margin-right: 8px;
         }
     }
+
+    mat-tab-group::ng-deep {
+        background-color: white;
+        font-size: 8pt !important;
+        border-radius: 20px;
+        width: 100%;
+
+        mat-tab::ng-deep {
+            width: 10px !important;
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
+<span class="material-icons" style="cursor: pointer;" (click)="close()">close</span>
 <div class="col-md-12 address">
-    <span>Add a stop</span>
+    <span class="title">Add a stop</span>
     <br>
     <br>
     <mat-form-field appearence="fill">
@@ -8,7 +9,6 @@
     </mat-form-field>
     <br>
     <br>
-    <button mat-button class="submit" (click)="close()">Cancel</button>
     <button mat-raised-button class="submit"
     (click)="addLocation()" [disabled]="isDisabled">ADD TO ROUTE</button>
 </div>

@@ -6,7 +6,7 @@
         </div>
         <div class="icons-navigation">
             <span class="material-icons" *ngIf="userSignedIn">person</span>
-            <span class="material-icons" *ngIf="!userSignedIn">login</span>
+            <span class="material-icons" *ngIf="!userSignedIn" (click)="openSignUp()">login</span>
             <span class="material-icons">directions_car</span>
             <span class="material-icons">favorite</span>
             <span class="material-icons">settings</span>
