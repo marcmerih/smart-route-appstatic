@@ -1,4 +1,5 @@
-<div class="col-md-12 col-sm-12 col-xs-12 tag" [ngStyle]="{'background-color': color}">
+<div [class]="isActive" [ngStyle]="{'background-color': color}">
     <span class="material-icons icon">{{ this.icon }}</span>
     <span class="tag-name">{{ this.tagName }}</span>
 </div>
+<span class="material-icons filter" *ngIf="hasBeenClicked">filter_list</span>

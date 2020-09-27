@@ -21,6 +21,10 @@ export class TripOverlayComponent implements OnInit {
   intermediateLocationAddress = '';
   addresses = []
 
+  restaurantClicked = false;
+  hotelsClicked = false;
+  ttdClicked = false;
+
   constructor(private dialog: MatDialog, private tripService: TripService) {
     this.startTripForm = this.tripService.tripSetupForm;
   }
@@ -55,6 +59,16 @@ export class TripOverlayComponent implements OnInit {
       this.addresses.push(result.value);
       this.intermediateLocationAddress = result.value;
     });
+  }
+
+  hasBeenClicked(tag: string) {
+    if (tag === 'restaurant') {
+      this.restaurantClicked = !this.restaurantClicked;
+    } else if (tag === 'hotels') {
+      this.hotelsClicked = !this.hotelsClicked;
+    } else {
+      this.ttdClicked = !this.ttdClicked;
+    }
   }
 
   get startingLocation() {

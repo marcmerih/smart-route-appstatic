@@ -86,19 +86,22 @@
         app-tags {
             cursor: pointer;
             display: inline-flex;
-            margin-right: 8px;
+            margin-right: 3px;
         }
     }
 
-    mat-tab-group::ng-deep {
-        background-color: white;
-        font-size: 8pt !important;
-        border-radius: 20px;
-        width: 100%;
+    ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+        min-width: 10px !important;
+        padding: 10px !important;
+        // border-radius: 40px;
+    }
 
-        mat-tab::ng-deep {
-            width: 10px !important;
-        }
+    ::ng-deep.mat-tab-header-pagination.mat-tab-header-pagination-disabled {
+        display: none !important;
+    }
+
+    ::ng-deep.mat-tab-header-pagination-next.mat-tab-header-pagination-disabled {
+        display: none !important;
     }
 
 }

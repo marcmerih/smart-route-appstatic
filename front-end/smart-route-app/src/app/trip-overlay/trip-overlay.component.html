@@ -47,16 +47,31 @@
             <br>
         </div>
     </div>
-    <div class="col-md-12 tags">
-        <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A"></app-tags>
-        <app-tags tagName="Hotels" icon="hotel" color="#E76F51"></app-tags>
-        <app-tags tagName="Things to do" icon="event_available" color="#F4A261"></app-tags>
-    </div>
-    <br>
-    <mat-tab-group>
-        <mat-tab label="Restaurants">Restaurants</mat-tab>
-        <mat-tab label="Hotels">Hotels</mat-tab>
-        <mat-tab label="Things to do">Things to do</mat-tab>
+    <!-- <div class="col-md-12 tags">
+        <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A" (click)="hasBeenClicked('restaurant')"
+        [hasBeenClicked]="restaurantClicked"></app-tags>
+        <app-tags tagName="Hotels" icon="hotel" color="#E76F51" (click)="hasBeenClicked('hotels')"
+        [hasBeenClicked]="hotelsClicked"></app-tags>
+        <app-tags tagName="Things to do" icon="event_available" color="#F4A261" (click)="hasBeenClicked('ttd')"
+        [hasBeenClicked]="ttdClicked"></app-tags>
+    </div> -->
+    <!-- <br> -->
+    <mat-tab-group class="col-md-12" mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">restaurant</span> &nbsp; Restaurants
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">hotel</span> &nbsp; Hotels
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">event_available</span> &nbsp; Events
+            </ng-template>
+        </mat-tab>
     </mat-tab-group>
     
 </div>
