@@ -16,6 +16,7 @@ import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TagsComponent } from './tags/tags.component';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
 import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
@@ -30,7 +31,8 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
     ProfileCreationComponent,
     TripOverlayComponent,
     AddressCardComponent,
-    AddIntermediateStopComponent
+    AddIntermediateStopComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,

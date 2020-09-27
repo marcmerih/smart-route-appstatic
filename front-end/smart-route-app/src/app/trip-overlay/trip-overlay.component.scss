@@ -1,57 +1,78 @@
 @import "../../styles.scss";
 
-.overlay {
-    background-color: $white;
-    margin-top: 100px;
-    border-radius: 11px;
-    text-align: center;
-    margin-right: 125px !important;
-
-    .locations {
-        text-align: left !important;
-        width: 90% !important;
-        margin-left: 15px;
-
-        .title {
-            font-family: Oswald;
-            margin-left: 10% !important;
-            font-size: 16pt;
+.container {
+    min-width: 478px;
+    
+    .overlay {
+        background-color: $white;
+        margin-top: 100px;
+        border-radius: 11px;
+        text-align: center;
+        margin-right: 125px !important;
+    
+        .locations {
+            text-align: left !important;
+            width: 90% !important;
+            margin-left: 15px;
+    
+            .title {
+                font-family: Poppins;
+                margin-left: 10% !important;
+                font-size: 16pt;
+                margin-bottom: 10px !important;
+            }
+    
+            button::ng-deep {
+                border-radius: 15px;
+                background-color: $blue;
+                color: $white;
+                font-family: Poppins;
+                font-weight: 600;
+                float: right;
+            }    
         }
-
-        button::ng-deep {
+    
+        .to {
+            text-align: center !important;
+        }
+    
+        button.route::ng-deep {
             border-radius: 15px;
             background-color: $blue;
             color: $white;
-            float: right;
-        }    
+            font-family: Poppins;
+            font-weight: 600;
+            margin-bottom: 5%;
+            width: 60%;
+        }
+    
+        button.route:disabled::ng-deep {
+            border-radius: 15px;
+            // background-color: $disabled;
+            // color: $grey;
+            opacity: 0.5;
+            margin-bottom: 5%;
+            width: 60%;
+        }
+    
+        mat-form-field::ng-deep {
+            width: 80%;
+            margin-left: 15px;
+            font-family: Poppins;
+        }
+    
+        app-address-card {
+            width: 50% !important;
+        }
     }
-
-    .to {
-        text-align: center !important;
-    }
-
-    button.route::ng-deep {
-        border-radius: 15px;
-        background-color: $blue;
-        color: $white;
-        margin-bottom: 5%;
-        width: 60%;
-    }
-
-    button.route:disabled::ng-deep {
-        border-radius: 15px;
-        background-color: $disabled;
-        color: $grey;
-        margin-bottom: 5%;
-        width: 60%;
-    }
-
-    mat-form-field::ng-deep {
-        width: 80%;
-        margin-left: 15px;
-    }
-
-    app-address-card {
-        width: 50% !important;
+    
+    .tags {
+        width: 100%;
+        text-align: center;
+    
+        app-tags {
+            display: inline-flex;
+            margin-right: 8px;
+        }
     }
 }
