@@ -35,6 +35,7 @@ export class TripOverlayComponent implements OnInit {
   route() {
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
+    console.log(this.tripService.tripSetupForm);
   }
 
   openTripSettings() {
