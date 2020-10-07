@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, HttpResonseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
@@ -20,7 +20,7 @@ def get_data(request):
         return JsonResponse(serializer.data, safe=False)
 
 
-# def home(request, points):
-#     route = Route(points.startingAddress,points.endingAddress)
+def home(request):
+    # route = Route(points.startingAddress, points.endingAddress)
 
-#     return HttpResponse('<h1>Map Home</h1>')
+    return HttpResponse('<h1>Map Home</h1>')

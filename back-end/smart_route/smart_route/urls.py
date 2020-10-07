@@ -21,6 +21,6 @@ from map.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^getData/', get_data),
-    # url(r'', include('map.urls')),
-    url(r'^.*', TemplateView.as_view(template_name="home.html", name="home"))
+    url(r'', include('map.urls'))
+    # url(r'^.*', TemplateView.as_view(template_name="home.html", name="home"))
 ]

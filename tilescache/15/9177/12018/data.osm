@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.8.3 (882218 spike-07.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="43.1731354" minlon="-79.1784668" maxlat="43.1811471" maxlon="-79.1674805"/>
+ <node id="700652434" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:40:29Z" user="andrewpmk" uid="1679" lat="43.1713421" lon="-79.1868768"/>
+ <node id="700652884" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:40:40Z" user="andrewpmk" uid="1679" lat="43.1730985" lon="-79.1851090"/>
+ <node id="700654499" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:41:24Z" user="andrewpmk" uid="1679" lat="43.1791546" lon="-79.1775138"/>
+ <node id="700654887" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:41:35Z" user="andrewpmk" uid="1679" lat="43.1841932" lon="-79.1710984"/>
+ <node id="700655571" visible="true" version="2" changeset="72992183" timestamp="2019-08-04T15:18:51Z" user="Kevo" uid="40964" lat="43.1854367" lon="-79.1694762"/>
+ <node id="700655807" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:42:02Z" user="andrewpmk" uid="1679" lat="43.1707977" lon="-79.1871882"/>
+ <node id="700655939" visible="true" version="2" changeset="46330919" timestamp="2017-02-23T09:02:31Z" user="istvanv_telenav" uid="4972028" lat="43.1700053" lon="-79.1874486"/>
+ <node id="700658367" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:43:23Z" user="andrewpmk" uid="1679" lat="43.1842788" lon="-79.1709894"/>
+ <node id="700658561" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:43:30Z" user="andrewpmk" uid="1679" lat="43.1704041" lon="-79.1873475"/>
+ <node id="700658656" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:43:33Z" user="andrewpmk" uid="1679" lat="43.1760010" lon="-79.1814806"/>
+ <node id="700658941" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:43:43Z" user="andrewpmk" uid="1679" lat="43.1835214" lon="-79.1719538"/>
+ <node id="700659903" visible="true" version="2" changeset="46330919" timestamp="2017-02-23T09:02:31Z" user="istvanv_telenav" uid="4972028" lat="43.1780649" lon="-79.1788519"/>
+ <node id="700661307" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:44:56Z" user="andrewpmk" uid="1679" lat="43.1757885" lon="-79.1817463"/>
+ <node id="700661567" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:45:05Z" user="andrewpmk" uid="1679" lat="43.1816442" lon="-79.1743439"/>
+ <node id="700662342" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:45:32Z" user="andrewpmk" uid="1679" lat="43.1730188" lon="-79.1852087"/>
+ <node id="700664126" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:46:39Z" user="andrewpmk" uid="1679" lat="43.1724083" lon="-79.1859718"/>
+ <node id="700665760" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:47:40Z" user="andrewpmk" uid="1679" lat="43.1716894" lon="-79.1866328"/>
+ <node id="700666649" visible="true" version="1" changeset="4454034" timestamp="2010-04-18T03:48:15Z" user="andrewpmk" uid="1679" lat="43.1793720" lon="-79.1772371"/>
+ <node id="1892295379" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:03Z" user="Matthew Darwin" uid="5633991" lat="43.1780371" lon="-79.1786911">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="237"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295388" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:03Z" user="Matthew Darwin" uid="5633991" lat="43.1782493" lon="-79.1789122">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="238"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295471" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:06Z" user="Matthew Darwin" uid="5633991" lat="43.1790329" lon="-79.1774232">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="269"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295472" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:06Z" user="Matthew Darwin" uid="5633991" lat="43.1792122" lon="-79.1776861">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="270"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295473" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:06Z" user="Matthew Darwin" uid="5633991" lat="43.1790970" lon="-79.1773415">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="271"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295478" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:06Z" user="Matthew Darwin" uid="5633991" lat="43.1792763" lon="-79.1776045">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="272"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295521" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:07Z" user="Matthew Darwin" uid="5633991" lat="43.1794296" lon="-79.1774094">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="278"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295523" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:07Z" user="Matthew Darwin" uid="5633991" lat="43.1792503" lon="-79.1771464">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="279"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295524" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:07Z" user="Matthew Darwin" uid="5633991" lat="43.1794937" lon="-79.1773277">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="280"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295525" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:07Z" user="Matthew Darwin" uid="5633991" lat="43.1793144" lon="-79.1770648">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="281"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295599" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:10Z" user="Matthew Darwin" uid="5633991" lat="43.1817018" lon="-79.1745162">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="348"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892295600" visible="true" version="2" changeset="56472595" timestamp="2018-02-18T20:19:10Z" user="Matthew Darwin" uid="5633991" lat="43.1815225" lon="-79.1742533">
+  <tag k="addr:city" v="Niagara-On-The-Lake"/>
+  <tag k="addr:housenumber" v="349"/>
+  <tag k="addr:street" v="Niagara Stone Road"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </node>
+ <node id="1892311090" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1642428" lon="-79.1738641"/>
+ <node id="1892311091" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1643688" lon="-79.1738604"/>
+ <node id="1892311092" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1645214" lon="-79.1738312"/>
+ <node id="1892311093" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1647460" lon="-79.1737999"/>
+ <node id="1892311094" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1659079" lon="-79.1738145"/>
+ <node id="1892311095" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1672505" lon="-79.1738729"/>
+ <node id="1892311096" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1690347" lon="-79.1739551"/>
+ <node id="1892311097" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1707641" lon="-79.1739896"/>
+ <node id="1892311099" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:57Z" user="andrewpmk" uid="1679" lat="43.1727555" lon="-79.1740779"/>
+ <node id="1892311126" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:58Z" user="andrewpmk" uid="1679" lat="43.1748728" lon="-79.1741502"/>
+ <node id="1892311142" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:58Z" user="andrewpmk" uid="1679" lat="43.1770532" lon="-79.1742328"/>
+ <node id="1892311145" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:58Z" user="andrewpmk" uid="1679" lat="43.1790536" lon="-79.1704161"/>
+ <node id="1892311147" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1791392" lon="-79.1717075"/>
+ <node id="1892311151" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1793240" lon="-79.1743374"/>
+ <node id="1892311153" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1794056" lon="-79.1701943"/>
+ <node id="1892311154" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1794056" lon="-79.1704422"/>
+ <node id="1892311155" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1794341" lon="-79.1712771"/>
+ <node id="1892311157" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1794912" lon="-79.1692159"/>
+ <node id="1892311159" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1797005" lon="-79.1705726"/>
+ <node id="1892311161" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:33:59Z" user="andrewpmk" uid="1679" lat="43.1797861" lon="-79.1712379"/>
+ <node id="1892311167" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1802150" lon="-79.1743540"/>
+ <node id="1892311169" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1806896" lon="-79.1743708"/>
+ <node id="1892311171" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1807630" lon="-79.1728738"/>
+ <node id="1892311176" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1809791" lon="-79.1723067"/>
+ <node id="1892311178" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1810962" lon="-79.1720302"/>
+ <node id="1892311179" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1811464" lon="-79.1718119"/>
+ <node id="1892311183" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1813296" lon="-79.1714242"/>
+ <node id="1892311184" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1813744" lon="-79.1743909"/>
+ <node id="1892311193" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1820540" lon="-79.1694230"/>
+ <node id="1892311194" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:00Z" user="andrewpmk" uid="1679" lat="43.1820787" lon="-79.1692289"/>
+ <node id="1943719858" visible="true" version="1" changeset="13342230" timestamp="2012-10-03T02:45:54Z" user="andrewpmk" uid="1679" lat="43.1653517" lon="-79.1786231"/>
+ <node id="1943719859" visible="true" version="1" changeset="13342230" timestamp="2012-10-03T02:45:55Z" user="andrewpmk" uid="1679" lat="43.1654455" lon="-79.1740392"/>
+ <node id="1943719860" visible="true" version="1" changeset="13342230" timestamp="2012-10-03T02:45:55Z" user="andrewpmk" uid="1679" lat="43.1738825" lon="-79.1789511"/>
+ <node id="1943719861" visible="true" version="1" changeset="13342230" timestamp="2012-10-03T02:45:55Z" user="andrewpmk" uid="1679" lat="43.1739763" lon="-79.1743673"/>
+ <node id="1943744681" visible="true" version="1" changeset="13342469" timestamp="2012-10-03T03:48:04Z" user="andrewpmk" uid="1679" lat="43.1761131" lon="-79.1714940"/>
+ <node id="1943744682" visible="true" version="1" changeset="13342469" timestamp="2012-10-03T03:48:04Z" user="andrewpmk" uid="1679" lat="43.1761849" lon="-79.1690611"/>
+ <node id="1943744683" visible="true" version="1" changeset="13342469" timestamp="2012-10-03T03:48:04Z" user="andrewpmk" uid="1679" lat="43.1788641" lon="-79.1691990"/>
+ <node id="4838495243" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1795110" lon="-79.1696651"/>
+ <node id="4838495244" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1795002" lon="-79.1696236"/>
+ <node id="4838495245" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1795022" lon="-79.1695431"/>
+ <node id="4838495246" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1795354" lon="-79.1694908"/>
+ <node id="4838495247" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1799041" lon="-79.1694291"/>
+ <node id="4838495248" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1799794" lon="-79.1694532"/>
+ <node id="4838495249" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1800127" lon="-79.1695243"/>
+ <node id="4838495250" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1799970" lon="-79.1696705"/>
+ <node id="4838495251" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1799491" lon="-79.1697188"/>
+ <node id="4838495252" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679" lat="43.1795354" lon="-79.1696826"/>
+ <node id="6216073606" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746800" lon="-79.1703210"/>
+ <node id="6216073607" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746760" lon="-79.1703210"/>
+ <node id="6216073608" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746750" lon="-79.1703620"/>
+ <node id="6216073609" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745510" lon="-79.1703560"/>
+ <node id="6216073610" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745520" lon="-79.1703170"/>
+ <node id="6216073611" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745210" lon="-79.1703160"/>
+ <node id="6216073612" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745190" lon="-79.1703640"/>
+ <node id="6216073613" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1744630" lon="-79.1703610"/>
+ <node id="6216073614" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1744640" lon="-79.1703110"/>
+ <node id="6216073615" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1744600" lon="-79.1703110"/>
+ <node id="6216073616" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1744620" lon="-79.1702110"/>
+ <node id="6216073617" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745330" lon="-79.1702140"/>
+ <node id="6216073618" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745330" lon="-79.1701930"/>
+ <node id="6216073619" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745500" lon="-79.1701940"/>
+ <node id="6216073620" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745510" lon="-79.1701820"/>
+ <node id="6216073621" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745970" lon="-79.1701840"/>
+ <node id="6216073622" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745980" lon="-79.1701450"/>
+ <node id="6216073623" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746400" lon="-79.1701470"/>
+ <node id="6216073624" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746390" lon="-79.1701860"/>
+ <node id="6216073625" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1746840" lon="-79.1701880"/>
+ <node id="6216073626" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745120" lon="-79.1707920"/>
+ <node id="6216073627" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1743450" lon="-79.1707830"/>
+ <node id="6216073628" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1743490" lon="-79.1706210"/>
+ <node id="6216073629" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1745160" lon="-79.1706300"/>
+ <node id="6216073630" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1797330" lon="-79.1682750"/>
+ <node id="6216073631" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1795630" lon="-79.1682690"/>
+ <node id="6216073632" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1795650" lon="-79.1681680"/>
+ <node id="6216073633" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1797350" lon="-79.1681740"/>
+ <node id="6216073634" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1792590" lon="-79.1702480"/>
+ <node id="6216073635" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1791110" lon="-79.1702440"/>
+ <node id="6216073636" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1791130" lon="-79.1701180"/>
+ <node id="6216073637" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1792610" lon="-79.1701230"/>
+ <node id="6216073638" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1791510" lon="-79.1716000"/>
+ <node id="6216073639" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1790390" lon="-79.1715950"/>
+ <node id="6216073640" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1790400" lon="-79.1715040"/>
+ <node id="6216073641" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T11:59:11Z" user="carpbunker" uid="5214232" lat="43.1791530" lon="-79.1715080"/>
+ <way id="55775988" visible="true" version="13" changeset="82487290" timestamp="2020-03-22T16:01:26Z" user="DannyMcD" uid="5789626">
+  <nd ref="700655939"/>
+  <nd ref="700658561"/>
+  <nd ref="700655807"/>
+  <nd ref="700652434"/>
+  <nd ref="700665760"/>
+  <nd ref="700664126"/>
+  <nd ref="700662342"/>
+  <nd ref="700652884"/>
+  <nd ref="700661307"/>
+  <nd ref="700658656"/>
+  <nd ref="700659903"/>
+  <nd ref="700654499"/>
+  <nd ref="700666649"/>
+  <nd ref="700661567"/>
+  <nd ref="700658941"/>
+  <nd ref="700654887"/>
+  <nd ref="700658367"/>
+  <nd ref="700655571"/>
+  <tag k="highway" v="secondary"/>
+  <tag k="lanes" v="2"/>
+  <tag k="lcn" v="yes"/>
+  <tag k="maxspeed" v="80"/>
+  <tag k="name" v="Niagara Stone Road"/>
+  <tag k="ref" v="55"/>
+  <tag k="sidewalk" v="no"/>
+  <tag k="source" v="GeoBase NRN"/>
+  <tag k="surface" v="asphalt"/>
+ </way>
+ <way id="178874006" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:17:50Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295478"/>
+  <nd ref="1892295521"/>
+  <tag k="addr:interpolation" v="even"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178874060" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:17:55Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295524"/>
+  <nd ref="1892295599"/>
+  <tag k="addr:interpolation" v="even"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178874068" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:17:56Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295379"/>
+  <nd ref="1892295471"/>
+  <tag k="addr:interpolation" v="odd"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178874108" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:18:00Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295388"/>
+  <nd ref="1892295472"/>
+  <tag k="addr:interpolation" v="even"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178874180" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:18:04Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295473"/>
+  <nd ref="1892295523"/>
+  <tag k="addr:interpolation" v="odd"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178874201" visible="true" version="1" changeset="12936354" timestamp="2012-08-31T21:18:05Z" user="andrewpmk" uid="1679">
+  <nd ref="1892295525"/>
+  <nd ref="1892295600"/>
+  <tag k="addr:interpolation" v="odd"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="178875688" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:03Z" user="andrewpmk" uid="1679">
+  <nd ref="1892311090"/>
+  <nd ref="1892311091"/>
+  <nd ref="1892311092"/>
+  <nd ref="1892311093"/>
+  <nd ref="1892311094"/>
+  <nd ref="1892311095"/>
+  <nd ref="1892311096"/>
+  <nd ref="1892311097"/>
+  <nd ref="1892311099"/>
+  <nd ref="1892311126"/>
+  <nd ref="1892311142"/>
+  <nd ref="1892311151"/>
+  <nd ref="1892311167"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+  <tag k="waterway" v="stream"/>
+ </way>
+ <way id="178875695" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:04Z" user="andrewpmk" uid="1679">
+  <nd ref="1892311167"/>
+  <nd ref="1892311169"/>
+  <nd ref="1892311184"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+  <tag k="waterway" v="stream"/>
+ </way>
+ <way id="178875702" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:05Z" user="andrewpmk" uid="1679">
+  <nd ref="1892311167"/>
+  <nd ref="1892311171"/>
+  <nd ref="1892311176"/>
+  <nd ref="1892311178"/>
+  <nd ref="1892311183"/>
+  <nd ref="1892311193"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+  <tag k="waterway" v="stream"/>
+ </way>
+ <way id="178875704" visible="true" version="1" changeset="12936540" timestamp="2012-08-31T21:34:05Z" user="andrewpmk" uid="1679">
+  <nd ref="1892311179"/>
+  <nd ref="1892311194"/>
+  <nd ref="1892311157"/>
+  <nd ref="1892311153"/>
+  <nd ref="1892311159"/>
+  <nd ref="1892311161"/>
+  <nd ref="1892311155"/>
+  <nd ref="1892311154"/>
+  <nd ref="1892311145"/>
+  <nd ref="1892311147"/>
+  <nd ref="1892311179"/>
+  <tag k="natural" v="wood"/>
+  <tag k="source" v="Bing"/>
+ </way>
+ <way id="183934945" visible="true" version="1" changeset="13342230" timestamp="2012-10-03T02:45:55Z" user="andrewpmk" uid="1679">
+  <nd ref="1943719860"/>
+  <nd ref="1943719861"/>
+  <nd ref="1943719859"/>
+  <nd ref="1943719858"/>
+  <nd ref="1943719860"/>
+  <tag k="landuse" v="farmland"/>
+  <tag k="source" v="NRCan-CanVec-10.0"/>
+ </way>
+ <way id="183938182" visible="true" version="1" changeset="13342469" timestamp="2012-10-03T03:48:04Z" user="andrewpmk" uid="1679">
+  <nd ref="1892311147"/>
+  <nd ref="1943744681"/>
+  <nd ref="1943744682"/>
+  <nd ref="1943744683"/>
+  <nd ref="1892311145"/>
+  <nd ref="1892311147"/>
+  <tag k="leisure" v="golf_course"/>
+  <tag k="source" v="Bing"/>
+ </way>
+ <way id="491762963" visible="true" version="1" changeset="48451394" timestamp="2017-05-06T12:45:37Z" user="andrewpmk" uid="1679">
+  <nd ref="4838495252"/>
+  <nd ref="4838495251"/>
+  <nd ref="4838495250"/>
+  <nd ref="4838495249"/>
+  <nd ref="4838495248"/>
+  <nd ref="4838495247"/>
+  <nd ref="4838495246"/>
+  <nd ref="4838495245"/>
+  <nd ref="4838495244"/>
+  <nd ref="4838495243"/>
+  <nd ref="4838495252"/>
+  <tag k="natural" v="water"/>
+ </way>
+ <way id="664119608" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T12:01:01Z" user="carpbunker" uid="5214232">
+  <nd ref="6216073625"/>
+  <nd ref="6216073624"/>
+  <nd ref="6216073623"/>
+  <nd ref="6216073622"/>
+  <nd ref="6216073621"/>
+  <nd ref="6216073620"/>
+  <nd ref="6216073619"/>
+  <nd ref="6216073618"/>
+  <nd ref="6216073617"/>
+  <nd ref="6216073616"/>
+  <nd ref="6216073615"/>
+  <nd ref="6216073614"/>
+  <nd ref="6216073613"/>
+  <nd ref="6216073612"/>
+  <nd ref="6216073611"/>
+  <nd ref="6216073610"/>
+  <nd ref="6216073609"/>
+  <nd ref="6216073608"/>
+  <nd ref="6216073607"/>
+  <nd ref="6216073606"/>
+  <nd ref="6216073625"/>
+  <tag k="building" v="yes"/>
+  <tag k="source" v="Niagara-on-the-Lake"/>
+ </way>
+ <way id="664119609" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T12:01:01Z" user="carpbunker" uid="5214232">
+  <nd ref="6216073629"/>
+  <nd ref="6216073628"/>
+  <nd ref="6216073627"/>
+  <nd ref="6216073626"/>
+  <nd ref="6216073629"/>
+  <tag k="building" v="yes"/>
+  <tag k="source" v="Niagara-on-the-Lake"/>
+ </way>
+ <way id="664119610" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T12:01:02Z" user="carpbunker" uid="5214232">
+  <nd ref="6216073633"/>
+  <nd ref="6216073632"/>
+  <nd ref="6216073631"/>
+  <nd ref="6216073630"/>
+  <nd ref="6216073633"/>
+  <tag k="building" v="yes"/>
+  <tag k="source" v="Niagara-on-the-Lake"/>
+ </way>
+ <way id="664119611" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T12:01:02Z" user="carpbunker" uid="5214232">
+  <nd ref="6216073637"/>
+  <nd ref="6216073636"/>
+  <nd ref="6216073635"/>
+  <nd ref="6216073634"/>
+  <nd ref="6216073637"/>
+  <tag k="building" v="yes"/>
+  <tag k="source" v="Niagara-on-the-Lake"/>
+ </way>
+ <way id="664119612" visible="true" version="1" changeset="66393283" timestamp="2019-01-17T12:01:02Z" user="carpbunker" uid="5214232">
+  <nd ref="6216073641"/>
+  <nd ref="6216073640"/>
+  <nd ref="6216073639"/>
+  <nd ref="6216073638"/>
+  <nd ref="6216073641"/>
+  <tag k="building" v="yes"/>
+  <tag k="source" v="Niagara-on-the-Lake"/>
+ </way>
+ <relation id="4264278" visible="true" version="19" changeset="72992183" timestamp="2019-08-04T15:18:51Z" user="Kevo" uid="40964">
+  <member type="way" ref="55793691" role=""/>
+  <member type="way" ref="436472889" role=""/>
+  <member type="way" ref="55793051" role=""/>
+  <member type="way" ref="55793877" role=""/>
+  <member type="way" ref="55794268" role=""/>
+  <member type="way" ref="55793100" role=""/>
+  <member type="way" ref="478032664" role=""/>
+  <member type="way" ref="478032663" role=""/>
+  <member type="way" ref="710671660" role=""/>
+  <member type="way" ref="478032661" role=""/>
+  <member type="way" ref="55792862" role=""/>
+  <member type="way" ref="477907965" role=""/>
+  <member type="way" ref="684273916" role=""/>
+  <member type="way" ref="436473576" role=""/>
+  <member type="way" ref="477907966" role=""/>
+  <member type="way" ref="436473577" role=""/>
+  <member type="way" ref="55792592" role=""/>
+  <member type="way" ref="456334120" role=""/>
+  <member type="way" ref="456334119" role=""/>
+  <member type="way" ref="456334118" role=""/>
+  <member type="way" ref="55793519" role=""/>
+  <member type="way" ref="55792825" role=""/>
+  <member type="way" ref="494665705" role=""/>
+  <member type="way" ref="494665707" role=""/>
+  <member type="way" ref="494664722" role=""/>
+  <member type="way" ref="477907964" role=""/>
+  <member type="way" ref="491112054" role=""/>
+  <member type="way" ref="491112053" role=""/>
+  <member type="way" ref="431551071" role=""/>
+  <member type="way" ref="710686991" role=""/>
+  <member type="way" ref="710686990" role=""/>
+  <member type="way" ref="710686992" role=""/>
+  <member type="way" ref="477907962" role=""/>
+  <member type="way" ref="55775988" role=""/>
+  <member type="way" ref="55770630" role=""/>
+  <member type="way" ref="55773756" role=""/>
+  <member type="way" ref="476546915" role=""/>
+  <tag k="network" v="CA:ON:Niagara"/>
+  <tag k="ref" v="55"/>
+  <tag k="route" v="road"/>
+  <tag k="symbol" v="https://upload.wikimedia.org/wikipedia/commons/3/3e/Niagara_Regional_Road_55.svg"/>
+  <tag k="type" v="route"/>
+ </relation>
+ <relation id="6480366" visible="true" version="15" changeset="72992183" timestamp="2019-08-04T15:18:51Z" user="Kevo" uid="40964">
+  <member type="way" ref="436473574" role=""/>
+  <member type="way" ref="436473575" role=""/>
+  <member type="way" ref="55793691" role=""/>
+  <member type="way" ref="55793051" role=""/>
+  <member type="way" ref="55793877" role=""/>
+  <member type="way" ref="55794268" role=""/>
+  <member type="way" ref="55793100" role=""/>
+  <member type="way" ref="478032664" role=""/>
+  <member type="way" ref="478032663" role=""/>
+  <member type="way" ref="710671660" role=""/>
+  <member type="way" ref="478032661" role=""/>
+  <member type="way" ref="55792862" role=""/>
+  <member type="way" ref="477907965" role=""/>
+  <member type="way" ref="684273916" role=""/>
+  <member type="way" ref="436473576" role=""/>
+  <member type="way" ref="55794250" role=""/>
+  <member type="way" ref="55792700" role=""/>
+  <member type="way" ref="55793109" role=""/>
+  <member type="way" ref="55793923" role=""/>
+  <member type="way" ref="55792592" role=""/>
+  <member type="way" ref="456334120" role=""/>
+  <member type="way" ref="456334119" role=""/>
+  <member type="way" ref="456334118" role=""/>
+  <member type="way" ref="55793519" role=""/>
+  <member type="way" ref="55792825" role=""/>
+  <member type="way" ref="494665705" role=""/>
+  <member type="way" ref="494665707" role=""/>
+  <member type="way" ref="494664722" role=""/>
+  <member type="way" ref="477907964" role=""/>
+  <member type="way" ref="491112054" role=""/>
+  <member type="way" ref="491112053" role=""/>
+  <member type="way" ref="431551071" role=""/>
+  <member type="way" ref="710686991" role=""/>
+  <member type="way" ref="710686990" role=""/>
+  <member type="way" ref="710686992" role=""/>
+  <member type="way" ref="477907962" role=""/>
+  <member type="way" ref="180905405" role=""/>
+  <member type="way" ref="55771472" role=""/>
+  <member type="way" ref="55775465" role=""/>
+  <member type="way" ref="55773622" role=""/>
+  <member type="way" ref="55773057" role=""/>
+  <member type="way" ref="55775426" role=""/>
+  <member type="way" ref="55774380" role=""/>
+  <member type="way" ref="55778306" role=""/>
+  <member type="way" ref="476636766" role=""/>
+  <member type="way" ref="55770617" role=""/>
+  <member type="way" ref="475921077" role=""/>
+  <member type="way" ref="476546915" role=""/>
+  <member type="way" ref="55773756" role=""/>
+  <member type="way" ref="55770630" role=""/>
+  <member type="way" ref="55775988" role=""/>
+  <member type="way" ref="55777422" role=""/>
+  <member type="way" ref="55777647" role=""/>
+  <member type="way" ref="55772332" role=""/>
+  <member type="way" ref="55772452" role=""/>
+  <member type="way" ref="55776252" role=""/>
+  <member type="way" ref="363816557" role=""/>
+  <member type="way" ref="55777222" role=""/>
+  <member type="way" ref="55770984" role=""/>
+  <member type="way" ref="55777746" role=""/>
+  <member type="way" ref="55770697" role=""/>
+  <member type="way" ref="55776157" role=""/>
+  <member type="way" ref="55774545" role=""/>
+  <member type="way" ref="55771971" role=""/>
+  <member type="way" ref="55778304" role=""/>
+  <member type="way" ref="55773839" role=""/>
+  <member type="way" ref="363816558" role=""/>
+  <member type="way" ref="363816568" role=""/>
+  <member type="way" ref="363816572" role=""/>
+  <member type="way" ref="363816570" role=""/>
+  <member type="way" ref="363816575" role=""/>
+  <member type="way" ref="363816554" role=""/>
+  <member type="way" ref="55770967" role=""/>
+  <member type="way" ref="55773672" role=""/>
+  <tag k="name" v="Old Town - Glendale"/>
+  <tag k="network" v="Niagara-on-the-Lake Transit"/>
+  <tag k="operator" v="Town of Niagara-on-the-Lake"/>
+  <tag k="route" v="bus"/>
+  <tag k="type" v="route"/>
+ </relation>
+</osm>
