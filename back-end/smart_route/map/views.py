@@ -6,7 +6,6 @@ from django.http import HttpResponse, JsonResponse
 from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
 from .routing import Route
-
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -21,6 +20,6 @@ def get_data(request):
 
 
 def home(request):
-    # route = Route(points.startingAddress, points.endingAddress)
-
-    return HttpResponse('<h1>Map Home</h1>')
+    route = Route("Toronto General Hospital",
+                  "75 Sussex Mews, Toronto, ON")
+    return render(request, "home.html", {'route': route})

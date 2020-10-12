@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Django-ng</title>
+    <title>Smart Route Home.html</title>
     <base href="/" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,12 +17,17 @@
   </head>
 
   <body>
-    <app-root></app-root>
-    <script type="text/javascript" src="{% static 'ang/runtime.js' %}"></script>
+    {%for point in route%}
+    <div>{{point}}</div>
+    {% endfor %}
+
+    <app-root>
+    </app-root>
+    <script type="text/javascript" src="{% static 'ang/runtime.ts' %}"></script>
     <script
       type="text/javascript"
-      src="{% static 'ang/polyfills.js' %}"
+      src="{% static 'ang/polyfills.ts' %}"
     ></script>
-    <script type="text/javascript" src="{% static 'ang/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ang/main.ts' %}"></script>
   </body>
 </html>
