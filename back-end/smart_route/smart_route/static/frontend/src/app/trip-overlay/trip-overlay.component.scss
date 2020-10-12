@@ -1,0 +1,107 @@
+@import "../../styles.scss";
+
+.container {
+    min-width: 478px;
+
+    .overlay {
+        background-color: $white;
+        margin-top: 100px;
+        border-radius: 18px;
+        text-align: center;
+        margin-right: 125px !important;
+        margin-bottom: 20px !important;
+    
+        .locations {
+            text-align: left !important;
+            width: 90% !important;
+            margin-left: 15px;
+    
+            .title {
+                font-family: Poppins;
+                margin-left: 10% !important;
+                font-size: 16pt;
+                margin-bottom: 10px !important;
+            }
+    
+            button::ng-deep {
+                border-radius: 15px;
+                background-color: $blue;
+                color: $white;
+                font-family: Poppins;
+                font-weight: 600;
+                float: right;
+            }    
+        }
+    
+        .to {
+            text-align: center !important;
+        }
+    
+        button.route::ng-deep {
+            border-radius: 15px;
+            background-color: $blue;
+            color: $white;
+            font-family: Poppins;
+            font-weight: 600;
+            margin-bottom: 5%;
+            width: 50% !important;
+        }
+        
+        button.trip-settings::ng-deep {
+            border-radius: 15px;
+            border: 1px solid $blue;
+            color: $blue;
+            font-family: Poppins;
+            font-weight: 600;
+            margin-bottom: 5%;
+            margin-right: 15px !important;
+            width: 30% !important;
+        }
+    
+        button.route:disabled::ng-deep {
+            border-radius: 15px;
+            // background-color: $disabled;
+            // color: $grey;
+            opacity: 0.5;
+            margin-bottom: 5%;
+            width: 60%;
+        }
+
+    
+        mat-form-field::ng-deep {
+            width: 80%;
+            margin-left: 15px;
+            font-family: Poppins;
+        }
+    
+        app-address-card {
+            width: 50% !important;
+        }
+    }
+    
+    .tags {
+        width: 100%;
+        text-align: center;
+
+        app-tags {
+            cursor: pointer;
+            display: inline-flex;
+            margin-right: 3px;
+        }
+    }
+
+    ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+        min-width: 10px !important;
+        padding: 10px !important;
+        // border-radius: 40px;
+    }
+
+    ::ng-deep.mat-tab-header-pagination.mat-tab-header-pagination-disabled {
+        display: none !important;
+    }
+
+    ::ng-deep.mat-tab-header-pagination-next.mat-tab-header-pagination-disabled {
+        display: none !important;
+    }
+
+}

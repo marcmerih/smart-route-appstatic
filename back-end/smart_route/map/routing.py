@@ -1,6 +1,6 @@
-from pyroutelib3 import Router  # Import the router
-from geopy.geocoders import Nominatim
-import ol
+# from pyroutelib3 import Router  # Import the router
+# from geopy.geocoders import Nominatim
+# import ol
 
 
 def GeoEncode(address):
