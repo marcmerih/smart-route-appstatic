@@ -13,21 +13,22 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{% static 'ang/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'frontend/src/styles.scss' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+  
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
   </head>
-
   <body>
-    {%for point in route%}
+    <!-- {%for point in route%}
     <div>{{point}}</div>
-    {% endfor %}
-
+    {% endfor %} -->
     <app-root>
+      Loading app ...
     </app-root>
-    <script type="text/javascript" src="{% static 'ang/runtime.ts' %}"></script>
-    <script
-      type="text/javascript"
-      src="{% static 'ang/polyfills.ts' %}"
-    ></script>
-    <script type="text/javascript" src="{% static 'ang/main.ts' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/dist/smart-route-app/runtime.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/dist/smart-route-app/polyfills.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/dist/smart-route-app/styles.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/dist/smart-route-app/vendor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/dist/smart-route-app/main.js' %}"></script>
   </body>
-</html>
+  </html>

@@ -1,0 +1,19 @@
+.close-button {
+    cursor: pointer;
+}
+.container {
+    text-align: center;
+
+    .account-forms {
+        margin-top: 25px;
+
+        .progressBar {
+            width: 98%;
+        }
+    }
+
+    a {
+        font-size: 9pt;
+        text-decoration: underline;
+    }
+}

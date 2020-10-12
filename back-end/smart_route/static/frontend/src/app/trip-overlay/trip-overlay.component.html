@@ -1,0 +1,82 @@
+<div class="col-md-12 container">
+    <div class="col-md-12 overlay" *ngIf="currentStep === 0" [formGroup]="startTripForm">
+        <br>
+        <div class="locations">
+            <span class="title">Start Trip</span>   
+        </div>
+        <br>
+        <mat-form-field appearence="fill">
+            <mat-label>Starting Location</mat-label>
+            <input matInput type="text" formControlName="startingLocation"
+                    autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearence="fill">
+            <mat-label>Ending Location</mat-label>
+            <input matInput type="text"
+            autocomplete="off"
+            formControlName="endingLocation" 
+            autocomplete="off">
+        </mat-form-field>
+        <br>
+        <br>
+        <button mat-button class="trip-settings"
+        (click)="openTripSettings()">Trip Settings</button>
+        <button mat-raised-button class="route"
+        (click)="route()"
+        [disabled]="isRouteDisabled">ROUTE</button>
+        <br>
+    </div>
+    
+    <div *ngIf="currentStep === 1">
+        <div class="col-md-12 overlay">
+            <br>
+            <div class="locations">
+                <span class="title">Trip Details</span>
+                <button mat-raised-button *ngIf="hasBeenRouted" (click)="addIntermediaryAddress()">+ ADD</button>    
+            </div>
+            <br>
+            <app-address-card [address]="startingLocation"></app-address-card>
+            <br>
+            <div *ngFor="let address of addresses">
+                <br>
+                <app-address-card [address]="intermediateLocationAddress"></app-address-card>
+            </div>
+            <br>
+            <app-address-card [address]="endingLocation"></app-address-card>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="col-md-12 tags">
+        <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A" (click)="hasBeenClicked('restaurant')"
+        [hasBeenClicked]="restaurantClicked"></app-tags>
+        <app-tags tagName="Hotels" icon="hotel" color="#E76F51" (click)="hasBeenClicked('hotels')"
+        [hasBeenClicked]="hotelsClicked"></app-tags>
+        <app-tags tagName="Things to do" icon="event_available" color="#F4A261" (click)="hasBeenClicked('ttd')"
+        [hasBeenClicked]="ttdClicked"></app-tags>
+    </div>
+    <br>
+    <mat-tab-group class="col-md-12" mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">restaurant</span> &nbsp; Restaurants
+            </ng-template>
+            <div style="background-color: white;">
+                This is restauranats.
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">hotel</span> &nbsp; Hotels
+            </ng-template>
+            This is hotels.
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span class="material-icons">event_available</span> &nbsp; Events
+            </ng-template>
+            This is things to dpo.
+        </mat-tab>
+    </mat-tab-group>
+    
+</div>
