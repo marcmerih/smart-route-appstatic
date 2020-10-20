@@ -20,8 +20,8 @@ from django.views.generic.base import TemplateView
 from map.views import *
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^getData/', get_data),
+    # url(r'^admin/', admin.site.urls),
+    # url(r'^getData/', get_data),
     url(r'', include('map.urls')),
     # url('route', djangodir_views.serve_angular, name='serve_angular'),
 ]

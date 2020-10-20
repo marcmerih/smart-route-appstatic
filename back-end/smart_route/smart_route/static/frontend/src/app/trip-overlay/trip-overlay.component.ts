@@ -4,9 +4,16 @@ import { AddIntermediateStopComponent } from '../add-intermediate-stop/add-inter
 import { TripService } from '../trip.service';
 import { FormGroup } from '@angular/forms';
 import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 export enum RoutingSteps {
   routeStartEnd = 0,
   tripDetails = 1
+}
+
+export class RouteModel {
+  listOfNodes: number[][];
 }
 @Component({
   selector: 'app-trip-overlay',
@@ -20,12 +27,14 @@ export class TripOverlayComponent implements OnInit {
   startTripForm: FormGroup;
   intermediateLocationAddress = '';
   addresses = []
+  currentRoute: any;
 
   restaurantClicked = false;
   hotelsClicked = false;
   ttdClicked = false;
 
-  constructor(private dialog: MatDialog, private tripService: TripService) {
+  constructor(private dialog: MatDialog, private router: Router,
+    private tripService: TripService, private http: HttpClient) {
     this.startTripForm = this.tripService.tripSetupForm;
   }
 
@@ -35,7 +44,11 @@ export class TripOverlayComponent implements OnInit {
   route() {
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    console.log(this.tripService.tripSetupForm);
+    let currentUrl = this.router.url;
+    this.http.get<RouteModel>(currentUrl + '/dir').subscribe(request => {
+      this.currentRoute = request.listOfNodes;
+    });
+    console.log(this.currentRoute);
   }
 
   openTripSettings() {

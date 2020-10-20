@@ -17,8 +17,9 @@ import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TagsComponent } from './tags/tags.component';
-import { MatTabsModule } from '@angular/material/tabs'
-import { MatSliderModule } from '@angular/material/slider'
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSliderModule } from '@angular/material/slider';
+import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
 import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
@@ -41,6 +42,7 @@ import { TripSettingsComponent } from './trip-settings/trip-settings.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
