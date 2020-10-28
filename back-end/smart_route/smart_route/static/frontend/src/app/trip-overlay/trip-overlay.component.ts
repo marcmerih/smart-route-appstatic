@@ -5,7 +5,6 @@ import { TripService } from '../trip.service';
 import { FormGroup } from '@angular/forms';
 import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 export enum RoutingSteps {
   routeStartEnd = 0,
@@ -44,11 +43,10 @@ export class TripOverlayComponent implements OnInit {
   route() {
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    let currentUrl = this.router.url;
-    this.http.get<RouteModel>(currentUrl + '/dir').subscribe(request => {
+    this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}`).subscribe(request => {
       this.currentRoute = request.listOfNodes;
+      console.log(this.currentRoute);
     });
-    console.log(this.currentRoute);
   }
 
   openTripSettings() {

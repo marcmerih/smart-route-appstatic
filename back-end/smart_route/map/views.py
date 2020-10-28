@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from pyroutelib3 import Router # Import the router
+
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
@@ -33,43 +35,46 @@ class DefaultRouteViewSet(viewsets.ModelViewSet):
 #     # return render(request, "home.html", {'route': route})
 #     return render(request, "home.html", {});
 
+router = Router("<transport mode>") # Initialise it
 class FrontendRenderView(View):
     def get(self, request, *args, **kwargs):
         return render(request, "home.html", {})
 
-class DefaultRoute(TemplateView):
-    def getRoute(request):
-        listOfNodes=[[-79.3882155418396, 43.657828357961655],
-        [
-            -79.38928842544556,
-            43.657611020178535
-        ],
-        [
-            -79.3903398513794,
-            43.65986198052727
-        ],
-        [
-            -79.39059734344482,
-            43.66054501387546
-        ],
-        [
-            -79.3905758857727,
-            43.660731294349134
-        ],
-        [
-            -79.39098358154297,
-            43.66065367755534
-        ],
-        [
-            -79.39059734344482,
-            43.65983093337226
-        ],
-        [
-            -79.39984560012817,
-            43.65793702655821
-        ],
-        [
-            -79.40036058425903,
-            43.65902370170711
-        ]]
-        return HttpResponse('{ "listOfNodes":"' + listOfNodes + '"}')
+
+def getRoute(request, startingLocation, endingLocation):
+    # listOfNodes = Route(startingLocation, endingLocation)
+    listOfNodes = [startingLocation, endingLocation]
+    # listOfNodes=[[-79.3882155418396, 43.657828357961655],
+    # [
+    #     -79.38928842544556,
+    #     43.657611020178535
+    # ],
+    # [
+    #     -79.3903398513794,
+    #     43.65986198052727
+    # ],
+    # [
+    #     -79.39059734344482,
+    #     43.66054501387546
+    # ],
+    # [
+    #     -79.3905758857727,
+    #     43.660731294349134
+    # ],
+    # [
+    #     -79.39098358154297,
+    #     43.66065367755534
+    # ],
+    # [
+    #     -79.39059734344482,
+    #     43.65983093337226
+    # ],
+    # [
+    #     -79.39984560012817,
+    #     43.65793702655821
+    # ],
+    # [
+    #     -79.40036058425903,
+    #     43.65902370170711
+    # ]]
+    return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
