@@ -7,6 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class TripService {
   tripSetupForm: FormGroup;
   intermediateLocationForm: FormGroup;
+  listOfNodes;
 
   constructor() {
     this.tripSetupForm = new FormGroup({

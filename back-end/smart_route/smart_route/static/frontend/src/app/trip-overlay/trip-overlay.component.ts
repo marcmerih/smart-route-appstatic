@@ -47,6 +47,14 @@ export class TripOverlayComponent implements OnInit {
       this.currentRoute = request.listOfNodes;
       console.log(this.currentRoute);
     });
+
+    // Things required to do:
+    //  1) Transform current route into list of arrays from list of tuples.
+    //  2) Set current route equal to a service variable (in trip service) that is accessible globally
+    //  3) In routes.component.ts, process the variable as a vectorlayer, and add that layer onto the map.
+
+    this.currentRoute = "[(43.6133961, -79.5962764), (43.6134212, -79.5962996), (43.6134489, -79.596312)]";
+    this.tripService.listOfNodes = this.currentRoute;
   }
 
   openTripSettings() {
