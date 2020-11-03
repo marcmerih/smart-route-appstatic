@@ -6,7 +6,7 @@ import { ProfileCreationComponent } from './accounts/profile-creation/profile-cr
 
 const routes: Routes = [
   {
-    path: 'route',
+    path: 'route/:startingLocation:endingLocation:intermediateLocation:maximumDetour',
     component: RoutesComponent
   }
 ];

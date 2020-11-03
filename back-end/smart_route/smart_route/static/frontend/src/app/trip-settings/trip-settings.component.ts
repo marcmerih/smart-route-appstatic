@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./trip-settings.component.scss']
 })
 export class TripSettingsComponent implements OnInit {
+  duration;
 
   constructor(public dialogRef: MatDialogRef<TripSettingsComponent>) { }
 
@@ -20,7 +21,13 @@ export class TripSettingsComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(
+      this.duration.value
+    );
+  }
+
+  captureValue($event) {
+    this.duration = $event;
   }
 
   get isDisabled() {

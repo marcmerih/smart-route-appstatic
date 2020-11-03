@@ -5,15 +5,10 @@ import { TripService } from '../trip.service';
 import { FormGroup } from '@angular/forms';
 import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-export enum RoutingSteps {
-  routeStartEnd = 0,
-  tripDetails = 1
-}
+import { Router, Params, ActivatedRoute } from '@angular/router';
+import { RoutesComponent } from '../routes/routes.component';
+import { RoutingSteps, TripSettings, RouteModel } from '../models'
 
-export class RouteModel {
-  listOfNodes: number[][];
-}
 @Component({
   selector: 'app-trip-overlay',
   templateUrl: './trip-overlay.component.html',
@@ -25,25 +20,40 @@ export class TripOverlayComponent implements OnInit {
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
   intermediateLocationAddress = '';
-  addresses = []
+  addresses = [];
   currentRoute: any;
-
   restaurantClicked = false;
   hotelsClicked = false;
   ttdClicked = false;
+  tripSettings: TripSettings = new TripSettings;
 
-  constructor(private dialog: MatDialog, private router: Router,
+  constructor(private dialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
     private tripService: TripService, private http: HttpClient) {
     this.startTripForm = this.tripService.tripSetupForm;
+    this.tripSettings.maximumDetourDuration = 100;
   }
 
   ngOnInit(): void {
   }
 
   route() {
+    const queryParams: Params = { startingLocation: this.startingLocation, 
+      endingLocation: this.endingLocation,
+      maximumDetour: this.tripSettings.maximumDetourDuration  
+    };
+    this.router.navigate(
+      [], 
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: queryParams, 
+        queryParamsHandling: 'merge', // remove to replace all query params by provided
+      });
+
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}`).subscribe(request => {
+    this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
+      // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
+      // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
       this.currentRoute = request.listOfNodes;
       console.log(this.currentRoute);
     });
@@ -64,7 +74,7 @@ export class TripOverlayComponent implements OnInit {
     });
 
     dialogRefSettings.afterClosed().subscribe(result => {
-
+      this.tripSettings.maximumDetourDuration = result;
     });
   }
 
@@ -76,8 +86,34 @@ export class TripOverlayComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       // Make a backend call to update route with added stop.
-      this.addresses.push(result.value);
-      this.intermediateLocationAddress = result.value;
+      if (result) {
+        this.addresses.push(result.value);
+        this.intermediateLocationAddress = result.value;
+        let joinedAddress = this.addresses.join(',');
+
+        const queryParams: Params = { 
+          startingLocation: this.startingLocation, 
+          endingLocation: this.endingLocation,
+          intermediateLocation: joinedAddress
+         };
+        this.router.navigate(
+          [], 
+          {
+            relativeTo: this.activatedRoute,
+            queryParams: queryParams, 
+            queryParamsHandling: 'merge', // remove to replace all query params by provided
+          });
+    
+        this.hasBeenRouted = true;
+        this.currentStep = this.routingSteps.tripDetails;
+        this.http.get<RouteModel>(`./intermediate/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}-${this.addresses}`).subscribe(request => {
+          // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
+          // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
+          this.currentRoute = request.listOfNodes;
+          console.log(this.currentRoute);
+        });
+
+      }
     });
   }
 
