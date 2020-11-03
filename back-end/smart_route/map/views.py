@@ -28,6 +28,11 @@ class FrontendRenderView(View):
         return render(request, "home.html", {})
 
 
-def getRoute(request, startingLocation, endingLocation):
+def getRoute(request, startingLocation, endingLocation, maximumDetour):
+    listOfNodes = Route(startingLocation, endingLocation)
+    return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
+
+def addIntermediate(request, startingLocation, endingLocation, maximumDetour, addresses):
+    listOfAddresses = list(addresses)
     listOfNodes = Route(startingLocation, endingLocation)
     return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
