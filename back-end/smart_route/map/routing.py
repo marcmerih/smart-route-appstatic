@@ -1,32 +1,36 @@
-from pyroutelib3 import Router  # Import the router
-from geopy.geocoders import Nominatim
-import ol
+# from pyroutelib3 import Router  # Import the router
+import openrouteservice
+# from geopy.geocoders import Nominatim
+# import ol
 
+class Router():
+    def __init__(self):
+        self.client = openrouteservice.Client(key='5b3ce3597851110001cf6248bc140663f03343e5aa7be735985a0c4f') # Specify your personal API key
+    
+    def GeoEncode(self, address):
+        geo_coords = openrouteservice.geocode.pelias_autocomplete(self.client, address)
+        return geo_coords['features'][0]['geometry']['coordinates'] # (longitude, latitude)
 
-def GeoEncode(address):
-    geolocator = Nominatim(user_agent="smart-route")
-    location = geolocator.geocode(address)
-    # print(location)
-    return (location.latitude, location.longitude)
+    def Route(self, coords):
+        route = self.client.directions(coords, format = "geojson")
+        return route['features'][0]['geometry']['coordinates'];
 
+        # router = Router("car")  # Initialise car Router
+        # lat1, lon1 = GeoEncode(point1)
+        # lat2, lon2 = GeoEncode(point2)
+        # start = router.findNode(lat1, lon1)  # Find start and end nodes
+        # end = router.findNode(lat2, lon2)
 
-def Route(point1, point2):
-    router = Router("car")  # Initialise car Router
-    lat1, lon1 = GeoEncode(point1)
-    lat2, lon2 = GeoEncode(point2)
-    start = router.findNode(lat1, lon1)  # Find start and end nodes
-    end = router.findNode(lat2, lon2)
+        # # Find the route - a list of OSM nodes
+        # status, route = router.doRoute(start, end)
 
-    # Find the route - a list of OSM nodes
-    status, route = router.doRoute(start, end)
+        # if status == 'success':
+        #     # Get actual route coordinates
+        #     routeLatLons = list(map(router.nodeLatLon, route))
+        #     return routeLatLons
 
-    if status == 'success':
-        # Get actual route coordinates
-        routeLatLons = list(map(router.nodeLatLon, route))
-        return routeLatLons
-
-    else:
-        return status
+        # else:
+        #     return status
 
 # address1 = "601 Lakeside Rd, Fort Erie, ON"
 # address2 = "601 Lakeview Rd, Fort Erie, ON"

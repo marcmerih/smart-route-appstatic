@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
 from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
-from .routing import Route
+from .routing import Router
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from rest_framework.mixins import (
@@ -16,8 +16,6 @@ from rest_framework.mixins import (
 )
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import viewsets
-
-
 
 class DefaultRouteViewSet(viewsets.ModelViewSet):
     queryset = DefaultRoute.objects.all()
@@ -29,10 +27,12 @@ class FrontendRenderView(View):
 
 
 def getRoute(request, startingLocation, endingLocation, maximumDetour):
-    listOfNodes = Route(startingLocation, endingLocation)
+    router = Router()
+    coords = [router.GeoEncode(startingLocation), router.GeoEncode(endingLocation)]
+    listOfNodes = router.Route(coords)
     return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
 
 def addIntermediate(request, startingLocation, endingLocation, maximumDetour, addresses):
     listOfAddresses = list(addresses)
-    listOfNodes = Route(startingLocation, endingLocation)
+    # listOfNodes = Route(startingLocation, endingLocation)
     return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
