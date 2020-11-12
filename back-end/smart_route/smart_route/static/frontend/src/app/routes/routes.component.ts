@@ -4,6 +4,7 @@ import {fromLonLat} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 
 import {VectorImage} from 'ol/layer';
+import {Stroke, Circle, Fill, Style} from 'ol/style';
 
 import SourceVector from 'ol/source/vector';
 import LayerVector from 'ol/layer/vector';
@@ -68,11 +69,27 @@ export class RoutesComponent implements AfterViewInit {
     const startingLocationMarker = new LayerVector({
       source: new SourceVector({
         features: [
-            new Feature({
-                geometry: new Point(fromLonLat(startingCoordinates))
-            })
+          new Feature({
+              geometry: new Point(fromLonLat(startingCoordinates))
+          })
         ]
-      })
+      }),
+      style: new Style({
+        fill: new Fill({
+            color: 'rgba(255, 0, 0, 0.2)'
+        }),
+        stroke: new Stroke({
+            color: '#343434',
+            width: 2
+        }),
+        image: new Circle({
+            radius: 9,
+            fill: new Fill({
+                color: 'rgba(51,204,0,1)'
+            })
+        })
+      }),
+      zIndex: 10000
     });
 
     this.map.addLayer(startingLocationMarker);
@@ -80,11 +97,27 @@ export class RoutesComponent implements AfterViewInit {
     const endingLocationMarker = new LayerVector({
       source: new SourceVector({
         features: [
-            new Feature({
-                geometry: new Point(fromLonLat(endingCoordinates))
-            })
+          new Feature({
+              geometry: new Point(fromLonLat(endingCoordinates))
+          })
         ]
-      })
+      }),
+      style: new Style({
+        fill: new Fill({
+            color: 'rgba(255, 0, 0, 0.2)'
+        }),
+        stroke: new Stroke({
+            color: '#343434',
+            width: 2
+        }),
+        image: new Circle({
+            radius: 9,
+            fill: new Fill({
+                color: 'rgba(204,51,51,1)'
+            })
+        })
+      }),
+      zIndex: 10000
     });
 
     this.map.addLayer(endingLocationMarker);
@@ -100,6 +133,12 @@ export class RoutesComponent implements AfterViewInit {
     const vectorLayer = new LayerVector({
       source: new SourceVector({
         format: new GeoJSON()
+      }),
+      style: new Style({
+        stroke: new Stroke({
+          color: [46, 45, 5, 1],
+          width: 6
+        })
       })
     });
 
