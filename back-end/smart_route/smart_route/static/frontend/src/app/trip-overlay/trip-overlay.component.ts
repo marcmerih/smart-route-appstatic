@@ -7,7 +7,7 @@ import { TripSettingsComponent } from '../trip-settings/trip-settings.component'
 import { HttpClient } from '@angular/common/http';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { RoutesComponent } from '../routes/routes.component';
-import { RoutingSteps, TripSettings, RouteModel } from '../models'
+import { RoutingSteps, TripSettings, RouteModel } from '../models';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -63,8 +63,45 @@ export class TripOverlayComponent implements OnInit {
     //  2) Set current route equal to a service variable (in trip service) that is accessible globally
     //  3) In routes.component.ts, process the variable as a vectorlayer, and add that layer onto the map.
 
-    this.currentRoute = "[(43.6133961, -79.5962764), (43.6134212, -79.5962996), (43.6134489, -79.596312)]";
-    this.tripService.listOfNodes = this.currentRoute;
+    this.currentRoute = `{
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                -79.39609050750732,
+                43.65874427283292
+              ],
+              [
+                -79.39982414245605,
+                43.66749909290297
+              ],
+              [
+                -79.38952445983887,
+                43.66970311946217
+              ],
+              [
+                -79.38591957092285,
+                43.660886527635675
+              ],
+              [
+                -79.39548969268799,
+                43.65883741593547
+              ],
+              [
+                -79.3960690498352,
+                43.65872486800172
+              ]
+            ]
+          }
+        }
+      ]
+    }`;
+    this.tripService.setListOfNodes(this.currentRoute);
   }
 
   openTripSettings() {
