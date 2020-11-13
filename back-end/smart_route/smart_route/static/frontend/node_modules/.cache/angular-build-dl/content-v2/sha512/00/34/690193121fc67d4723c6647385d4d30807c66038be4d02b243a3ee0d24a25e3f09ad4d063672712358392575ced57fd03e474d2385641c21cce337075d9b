@@ -1906,9 +1906,9 @@
           key: "onListOfNodesReturned",
           value: function onListOfNodesReturned(nodes) {
             // Get the starting and ending locations as markers on the map.
-            this.setStartEndMarkers(nodes); // Route the starting to ending location on map.
+            this.setStartEndMarkers(nodes.listOfNodes); // Route the starting to ending location on map.
 
-            this.routePath(nodes);
+            this.routePath(nodes.listOfNodes);
           }
         }, {
           key: "setStartEndMarkers",
@@ -1925,14 +1925,14 @@
                 fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                   color: 'rgba(255, 0, 0, 0.2)'
                 }),
-                stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                  color: '#343434',
-                  width: 2
-                }),
                 image: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Circle"]({
                   radius: 9,
                   fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                     color: 'rgba(51,204,0,1)'
+                  }),
+                  stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
+                    color: 'white',
+                    width: 3
                   })
                 })
               }),
@@ -1949,14 +1949,14 @@
                 fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                   color: 'rgba(255, 0, 0, 0.2)'
                 }),
-                stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                  color: '#343434',
-                  width: 2
-                }),
                 image: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Circle"]({
                   radius: 9,
                   fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                     color: 'rgba(204,51,51,1)'
+                  }),
+                  stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
+                    color: 'white',
+                    width: 3
                   })
                 })
               }),
@@ -1978,13 +1978,15 @@
               }),
               style: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Style"]({
                 stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                  color: [46, 45, 5, 1],
+                  color: [41, 153, 228, 0.8],
                   width: 6
                 })
               })
             });
             vectorLayer.getSource().addFeature(route);
             this.map.addLayer(vectorLayer);
+            this.map.getView().setCenter(Object(ol_proj__WEBPACK_IMPORTED_MODULE_1__["transform"])([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
+            this.map.getView().setZoom(12);
           }
         }]);
 
@@ -2540,8 +2542,7 @@
             this.http.get("./dir/".concat(this.startingLocation, "-").concat(this.endingLocation, "-").concat(this.tripSettings.maximumDetourDuration)).subscribe(function (request) {
               // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
               // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-              _this2.currentRoute = request.listOfNodes;
-              console.log(_this2.currentRoute);
+              _this2.currentRoute = JSON.parse(request.listOfNodes);
             }); // Things required to do:
             //  1) Transform current route into list of arrays from list of tuples.
             //  2) Set current route equal to a service variable (in trip service) that is accessible globally
@@ -2598,9 +2599,10 @@
                 _this4.http.get("./intermediate/".concat(_this4.startingLocation, "-").concat(_this4.endingLocation, "-").concat(_this4.tripSettings.maximumDetourDuration, "-").concat(_this4.addresses)).subscribe(function (request) {
                   // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
                   // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-                  _this4.currentRoute = request.listOfNodes;
-                  console.log(_this4.currentRoute);
+                  _this4.currentRoute = JSON.parse(request.listOfNodes);
                 });
+
+                _this4.tripService.setListOfNodes(_this4.currentRoute);
               }
             });
           }

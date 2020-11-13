@@ -956,6 +956,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 class RoutesComponent {
     constructor(tripService) {
         this.tripService = tripService;
@@ -978,9 +979,9 @@ class RoutesComponent {
     }
     onListOfNodesReturned(nodes) {
         // Get the starting and ending locations as markers on the map.
-        this.setStartEndMarkers(nodes);
+        this.setStartEndMarkers(nodes.listOfNodes);
         // Route the starting to ending location on map.
-        this.routePath(nodes);
+        this.routePath(nodes.listOfNodes);
     }
     setStartEndMarkers(nodes) {
         const startingCoordinates = nodes[0];
@@ -997,15 +998,15 @@ class RoutesComponent {
                 fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                     color: 'rgba(255, 0, 0, 0.2)'
                 }),
-                stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                    color: '#343434',
-                    width: 2
-                }),
                 image: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Circle"]({
                     radius: 9,
                     fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                         color: 'rgba(51,204,0,1)'
-                    })
+                    }),
+                    stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
+                        color: 'white',
+                        width: 3
+                    }),
                 })
             }),
             zIndex: 10000
@@ -1023,15 +1024,15 @@ class RoutesComponent {
                 fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                     color: 'rgba(255, 0, 0, 0.2)'
                 }),
-                stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                    color: '#343434',
-                    width: 2
-                }),
                 image: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Circle"]({
                     radius: 9,
                     fill: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Fill"]({
                         color: 'rgba(204,51,51,1)'
-                    })
+                    }),
+                    stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
+                        color: 'white',
+                        width: 3
+                    }),
                 })
             }),
             zIndex: 10000
@@ -1049,13 +1050,15 @@ class RoutesComponent {
             }),
             style: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Style"]({
                 stroke: new ol_style__WEBPACK_IMPORTED_MODULE_3__["Stroke"]({
-                    color: [46, 45, 5, 1],
+                    color: [41, 153, 228, 0.8],
                     width: 6
                 })
             })
         });
         vectorLayer.getSource().addFeature(route);
         this.map.addLayer(vectorLayer);
+        this.map.getView().setCenter(Object(ol_proj__WEBPACK_IMPORTED_MODULE_1__["transform"])([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
+        this.map.getView().setZoom(12);
     }
 }
 RoutesComponent.ɵfac = function RoutesComponent_Factory(t) { return new (t || RoutesComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_trip_service__WEBPACK_IMPORTED_MODULE_12__["TripService"])); };
@@ -1313,8 +1316,7 @@ class TripOverlayComponent {
         this.http.get(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
             // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
             // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-            this.currentRoute = request.listOfNodes;
-            console.log(this.currentRoute);
+            this.currentRoute = JSON.parse(request.listOfNodes);
         });
         // Things required to do:
         //  1) Transform current route into list of arrays from list of tuples.
@@ -1357,9 +1359,9 @@ class TripOverlayComponent {
                 this.http.get(`./intermediate/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}-${this.addresses}`).subscribe(request => {
                     // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
                     // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-                    this.currentRoute = request.listOfNodes;
-                    console.log(this.currentRoute);
+                    this.currentRoute = JSON.parse(request.listOfNodes);
                 });
+                this.tripService.setListOfNodes(this.currentRoute);
             }
         });
     }
