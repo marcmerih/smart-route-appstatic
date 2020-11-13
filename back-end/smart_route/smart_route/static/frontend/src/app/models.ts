@@ -8,5 +8,5 @@ export enum RoutingSteps {
 }
   
 export class RouteModel {
-    listOfNodes: number[][];
+    listOfNodes: string;
 }

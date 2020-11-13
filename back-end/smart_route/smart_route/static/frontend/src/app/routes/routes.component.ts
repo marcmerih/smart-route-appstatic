@@ -5,6 +5,7 @@ import OSM from 'ol/source/OSM';
 
 import {VectorImage} from 'ol/layer';
 import {Stroke, Circle, Fill, Style} from 'ol/style';
+import {transform} from 'ol/proj';
 
 import SourceVector from 'ol/source/vector';
 import LayerVector from 'ol/layer/vector';
@@ -49,22 +50,16 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   onListOfNodesReturned(nodes) {
-    // Get the GeoJSON format of nodes
-    this.listOfNodes = nodes;
-    const nodesObject = JSON.parse(this.listOfNodes);
-
     // Get the starting and ending locations as markers on the map.
-    this.setStartEndMarkers(nodesObject);
+    this.setStartEndMarkers(nodes);
 
     // Route the starting to ending location on map.
-    this.routePath(nodesObject);
+    this.routePath(nodes);
   }
 
-  setStartEndMarkers(nodesObject) {
-    const coordinates = nodesObject['features'][0]['geometry']['coordinates'];
-
-    const startingCoordinates = coordinates[0];
-    const endingCoordinates = coordinates[coordinates.length - 1];
+  setStartEndMarkers(nodes) {
+    const startingCoordinates = nodes[0];
+    const endingCoordinates = nodes[nodes.length - 1];
 
     const startingLocationMarker = new LayerVector({
       source: new SourceVector({
@@ -78,15 +73,15 @@ export class RoutesComponent implements AfterViewInit {
         fill: new Fill({
             color: 'rgba(255, 0, 0, 0.2)'
         }),
-        stroke: new Stroke({
-            color: '#343434',
-            width: 2
-        }),
         image: new Circle({
             radius: 9,
             fill: new Fill({
                 color: 'rgba(51,204,0,1)'
-            })
+            }),
+            stroke: new Stroke({
+              color: 'white',
+              width: 3
+            }),
         })
       }),
       zIndex: 10000
@@ -106,15 +101,15 @@ export class RoutesComponent implements AfterViewInit {
         fill: new Fill({
             color: 'rgba(255, 0, 0, 0.2)'
         }),
-        stroke: new Stroke({
-            color: '#343434',
-            width: 2
-        }),
         image: new Circle({
             radius: 9,
             fill: new Fill({
                 color: 'rgba(204,51,51,1)'
-            })
+            }),
+            stroke: new Stroke({
+              color: 'white',
+              width: 3
+            }),
         })
       }),
       zIndex: 10000
@@ -123,10 +118,9 @@ export class RoutesComponent implements AfterViewInit {
     this.map.addLayer(endingLocationMarker);
   }
 
-  routePath(nodesObject) {
+  routePath(nodes) {
     var route = new Feature();
-    var coordinates = nodesObject['features'][0]['geometry']['coordinates'];
-    var geometry = new LineString(coordinates);
+    var geometry = new LineString(nodes);
     geometry.transform('EPSG:4326', 'EPSG:3857'); //Transform to your map projection
     route.setGeometry(geometry);
 
@@ -136,7 +130,7 @@ export class RoutesComponent implements AfterViewInit {
       }),
       style: new Style({
         stroke: new Stroke({
-          color: [46, 45, 5, 1],
+          color: [41, 153, 228, 0.8],
           width: 6
         })
       })
@@ -144,5 +138,8 @@ export class RoutesComponent implements AfterViewInit {
 
     vectorLayer.getSource().addFeature(route);
     this.map.addLayer(vectorLayer);
+    
+    this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
+    this.map.getView().setZoom(12);
   }
 }
