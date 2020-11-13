@@ -51,7 +51,7 @@ export class TripOverlayComponent implements OnInit {
 
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
+    this.http.get(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe((request: string) => {
       // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
       // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
       this.currentRoute = JSON.parse(request);
@@ -62,7 +62,7 @@ export class TripOverlayComponent implements OnInit {
     //  2) Set current route equal to a service variable (in trip service) that is accessible globally
     //  3) In routes.component.ts, process the variable as a vectorlayer, and add that layer onto the map.
 
-    this.tripService.setListOfNodes(JSON.parse(this.currentRoute.listOfNodes));
+    this.tripService.setListOfNodes(this.currentRoute);
   }
 
   openTripSettings() {

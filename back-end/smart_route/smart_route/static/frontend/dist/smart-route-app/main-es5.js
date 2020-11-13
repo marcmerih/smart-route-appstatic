@@ -1906,9 +1906,9 @@
           key: "onListOfNodesReturned",
           value: function onListOfNodesReturned(nodes) {
             // Get the starting and ending locations as markers on the map.
-            this.setStartEndMarkers(nodes.listOfNodes); // Route the starting to ending location on map.
+            this.setStartEndMarkers(nodes); // Route the starting to ending location on map.
 
-            this.routePath(nodes.listOfNodes);
+            this.routePath(nodes);
           }
         }, {
           key: "setStartEndMarkers",
@@ -2542,7 +2542,7 @@
             this.http.get("./dir/".concat(this.startingLocation, "-").concat(this.endingLocation, "-").concat(this.tripSettings.maximumDetourDuration)).subscribe(function (request) {
               // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
               // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-              _this2.currentRoute = JSON.parse(request.listOfNodes);
+              _this2.currentRoute = JSON.parse(request);
             }); // Things required to do:
             //  1) Transform current route into list of arrays from list of tuples.
             //  2) Set current route equal to a service variable (in trip service) that is accessible globally

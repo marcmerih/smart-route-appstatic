@@ -979,9 +979,9 @@ class RoutesComponent {
     }
     onListOfNodesReturned(nodes) {
         // Get the starting and ending locations as markers on the map.
-        this.setStartEndMarkers(nodes.listOfNodes);
+        this.setStartEndMarkers(nodes);
         // Route the starting to ending location on map.
-        this.routePath(nodes.listOfNodes);
+        this.routePath(nodes);
     }
     setStartEndMarkers(nodes) {
         const startingCoordinates = nodes[0];
@@ -1313,10 +1313,10 @@ class TripOverlayComponent {
         });
         this.hasBeenRouted = true;
         this.currentStep = this.routingSteps.tripDetails;
-        this.http.get(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
+        this.http.get(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe((request) => {
             // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
             // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-            this.currentRoute = JSON.parse(request.listOfNodes);
+            this.currentRoute = JSON.parse(request);
         });
         // Things required to do:
         //  1) Transform current route into list of arrays from list of tuples.
