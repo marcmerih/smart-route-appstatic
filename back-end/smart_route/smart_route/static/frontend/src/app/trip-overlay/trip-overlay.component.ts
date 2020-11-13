@@ -54,7 +54,7 @@ export class TripOverlayComponent implements OnInit {
     this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
       // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
       // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-      this.currentRoute = JSON.parse(request.listOfNodes);
+      this.currentRoute = JSON.parse(request);
     });
 
     // Things required to do:
