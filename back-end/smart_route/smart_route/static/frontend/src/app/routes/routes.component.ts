@@ -58,6 +58,8 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setStartEndMarkers(nodes) {
+    console.log(nodes);
+    console.log(typeof(nodes));
     const startingCoordinates = nodes[0];
     const endingCoordinates = nodes[nodes.length - 1];
 

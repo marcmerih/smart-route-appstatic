@@ -1913,6 +1913,8 @@
         }, {
           key: "setStartEndMarkers",
           value: function setStartEndMarkers(nodes) {
+            console.log(nodes);
+            console.log(typeof nodes);
             var startingCoordinates = nodes[0];
             var endingCoordinates = nodes[nodes.length - 1];
             var startingLocationMarker = new ol_layer_vector__WEBPACK_IMPORTED_MODULE_5__["default"]({
@@ -2542,13 +2544,16 @@
             this.http.get("./dir/".concat(this.startingLocation, "-").concat(this.endingLocation, "-").concat(this.tripSettings.maximumDetourDuration)).subscribe(function (request) {
               // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
               // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-              _this2.currentRoute = JSON.parse(request);
+              // console.log(request);
+              // console.log(typeof(request));
+              _this2.currentRoute = JSON.parse(request.listOfNodes); // console.log(this.currentRoute);
+              // console.log(typeof(this.currentRoute));
+
+              _this2.tripService.setListOfNodes(_this2.currentRoute);
             }); // Things required to do:
             //  1) Transform current route into list of arrays from list of tuples.
             //  2) Set current route equal to a service variable (in trip service) that is accessible globally
             //  3) In routes.component.ts, process the variable as a vectorlayer, and add that layer onto the map.
-
-            this.tripService.setListOfNodes(this.currentRoute);
           }
         }, {
           key: "openTripSettings",
