@@ -122,7 +122,7 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setPOIMarkers(coords) {
-    JSON.parse(coords).forEach(coordinates => {
+    coords.forEach(coordinates => {
       const POIMarker = new LayerVector({
         source: new SourceVector({
           features: [
