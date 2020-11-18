@@ -53,12 +53,15 @@ class Trip():
         # res_review_dict = res_dict["review_score"]
         # res_lon_dict = res_dict["lon"]
         # res_lat_dict = res_dict["lat"]
-        restaurants = restaurants_data[self.restaurantsInDistance].sort_values("review_score",ascending= False).reset_index().values.tolist()
-
+        restaurants = restaurants_data[self.restaurantsInDistance].sort_values(
+            "review_score", ascending=False).reset_index()
+        restaurants_info = restaurants[["restaurant_name",
+                                        "address", "review_score"]].values.tolist()
+        restaurants_coords = restaurants[["lon", "lat"]].values.tolist()
         # return HttpResponse('{ "restaurantNames":"' + str(res_name_dict) + '", "restaurantAddresses":"' + str(res_address_dict) + '","restaurantRatings":"' + str(res_review_dict) + '","restaurantLons":"' + str(res_lon_dict) + '","restaurantLats":"' + str(res_lat_dict) + '"}')
 
-        return HttpResponse('{ "listOfRestaurants":"' + str(restaurants) + '"}')
-        
+        return HttpResponse('{ "listOfRestaurantsInfo":"' + str(restaurants_info) + '", "listOfRestaurantsCoords":"' + str(restaurants_coords) + '"}')
+
     # def addStop(addresses):
     #     listOfAddresses = addresses.split('')
     # listOfNodes = Route(startingLocation, endingLocation)
