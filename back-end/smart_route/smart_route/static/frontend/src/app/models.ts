@@ -12,10 +12,6 @@ export class RouteModel {
 }
 
 export class RestaurantsModel {
-    listOfRestaurants: string;
-    // restaurantNames: string; // string of a dictionaries
-    // restaurantRatings: string;
-    // restaurantLats: string;
-    // restaurantLons: string;
-    // restaurantAddresses: string;
+    listOfRestaurantsInfo: string;
+    listOfRestaurantsCoords: string;
 }

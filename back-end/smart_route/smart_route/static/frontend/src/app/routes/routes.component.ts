@@ -47,6 +47,7 @@ export class RoutesComponent implements AfterViewInit {
     });
 
     this.tripService.nodes$.subscribe(listOfNodes => this.onListOfNodesReturned(listOfNodes));
+    this.tripService.poiMarkers$.subscribe(coords => this.setPOIMarkers(coords));
   }
 
   onListOfNodesReturned(nodes) {
@@ -118,6 +119,38 @@ export class RoutesComponent implements AfterViewInit {
     });
 
     this.map.addLayer(endingLocationMarker);
+  }
+
+  setPOIMarkers(coords) {
+    JSON.parse(coords).forEach(coordinates => {
+      const POIMarker = new LayerVector({
+        source: new SourceVector({
+          features: [
+            new Feature({
+                geometry: new Point(fromLonLat(coordinates))
+            })
+          ]
+        }),
+        style: new Style({
+          fill: new Fill({
+              color: 'rgba(255, 0, 0, 0.2)'
+          }),
+          image: new Circle({
+              radius: 9,
+              fill: new Fill({
+                  color: 'rgba(22,120,242,1)'
+              }),
+              stroke: new Stroke({
+                color: 'white',
+                width: 3
+              }),
+          })
+        }),
+        zIndex: 10000
+      });
+  
+      this.map.addLayer(POIMarker);
+    });
   }
 
   routePath(nodes) {
