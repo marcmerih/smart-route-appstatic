@@ -7,7 +7,7 @@ import { TripSettingsComponent } from '../trip-settings/trip-settings.component'
 import { HttpClient } from '@angular/common/http';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { RoutesComponent } from '../routes/routes.component';
-import { RoutingSteps, TripSettings, RouteModel } from '../models'
+import { RoutingSteps, TripSettings, RouteModel } from '../models';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -51,20 +51,21 @@ export class TripOverlayComponent implements OnInit {
 
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    this.http.get<RouteModel>(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe(request => {
+    this.http.get(`./dir/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}`).subscribe((request: RouteModel) => {
       // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
       // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-      this.currentRoute = request.listOfNodes;
-      console.log(this.currentRoute);
+      // console.log(request);
+      // console.log(typeof(request));
+      this.currentRoute = JSON.parse(request.listOfNodes)
+      // console.log(this.currentRoute);
+      // console.log(typeof(this.currentRoute));
+      this.tripService.setListOfNodes(this.currentRoute);
     });
 
     // Things required to do:
     //  1) Transform current route into list of arrays from list of tuples.
     //  2) Set current route equal to a service variable (in trip service) that is accessible globally
     //  3) In routes.component.ts, process the variable as a vectorlayer, and add that layer onto the map.
-
-    this.currentRoute = "[(43.6133961, -79.5962764), (43.6134212, -79.5962996), (43.6134489, -79.596312)]";
-    this.tripService.listOfNodes = this.currentRoute;
   }
 
   openTripSettings() {
@@ -109,10 +110,10 @@ export class TripOverlayComponent implements OnInit {
         this.http.get<RouteModel>(`./intermediate/${this.startingLocation}-${this.endingLocation}-${this.tripSettings.maximumDetourDuration}-${this.addresses}`).subscribe(request => {
           // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
           // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
-          this.currentRoute = request.listOfNodes;
-          console.log(this.currentRoute);
+          this.currentRoute = JSON.parse(request.listOfNodes);
         });
 
+        this.tripService.setListOfNodes(this.currentRoute);
       }
     });
   }

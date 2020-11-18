@@ -8,5 +8,13 @@ export enum RoutingSteps {
 }
   
 export class RouteModel {
-    listOfNodes: number[][];
+    listOfNodes: string;
+}
+
+export class RestaurantModel {
+    restaurantName: string; // string of a dictionaries
+    restaurantRating: string;
+    restaurantLat: string;
+    restaurantLon: string;
+    restaurantAddress: string;
 }

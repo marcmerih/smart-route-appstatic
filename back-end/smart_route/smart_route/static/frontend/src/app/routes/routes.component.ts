@@ -4,10 +4,16 @@ import {fromLonLat} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 
 import {VectorImage} from 'ol/layer';
-import {Vector} from 'ol/source';
-import {Stroke} from 'ol/style';
-import {Style} from 'ol/style';
-import {GeoJSON} from 'ol/format';
+import {Stroke, Circle, Fill, Style} from 'ol/style';
+import {transform} from 'ol/proj';
+
+import SourceVector from 'ol/source/vector';
+import LayerVector from 'ol/layer/vector';
+
+import {Feature} from 'ol';
+import {Point, LineString} from 'ol/geom';
+
+import GeoJSON from 'ol/format/GeoJSON';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -20,8 +26,10 @@ import { TripService } from '../trip.service';
 })
 export class RoutesComponent implements AfterViewInit {
   map: Map;
+  listOfNodes;
 
-  constructor(private tripService: TripService) { }
+  constructor(private tripService: TripService) {
+  }
 
   ngAfterViewInit() {
     this.map = new Map({
@@ -38,32 +46,102 @@ export class RoutesComponent implements AfterViewInit {
       }),
     });
 
-    // if (this.tripService.listOfNodes) {
-      // const currentRoute = '{ "listOfNodes":' + this.tripService.listOfNodes + '}';
-
-      // const nodesObject = JSON.parse(currentRoute);
-      // console.log(nodesObject);
-
-
-      // const strokeStyle = new Stroke({
-      //   color: [146, 45, 45, 1],
-      //   width: 15
-      // })
-  
-      // const routedTripLayer = new VectorImage({
-      //   source: new Vector({
-      //     object: nodesObject,
-      //     format: new GeoJSON()
-      //   }),
-      //   visible: true,
-      //   title: 'route',
-      //   style: new Style({
-      //     stroke: strokeStyle
-      //   })
-      // })
-  
-      // this.map.addLayer(routedTripLayer);
-    // }
+    this.tripService.nodes$.subscribe(listOfNodes => this.onListOfNodesReturned(listOfNodes));
   }
 
+  onListOfNodesReturned(nodes) {
+    // Get the starting and ending locations as markers on the map.
+    this.setStartEndMarkers(nodes);
+
+    // Route the starting to ending location on map.
+    this.routePath(nodes);
+  }
+
+  setStartEndMarkers(nodes) {
+    console.log(nodes);
+    console.log(typeof(nodes));
+    const startingCoordinates = nodes[0];
+    const endingCoordinates = nodes[nodes.length - 1];
+
+    const startingLocationMarker = new LayerVector({
+      source: new SourceVector({
+        features: [
+          new Feature({
+              geometry: new Point(fromLonLat(startingCoordinates))
+          })
+        ]
+      }),
+      style: new Style({
+        fill: new Fill({
+            color: 'rgba(255, 0, 0, 0.2)'
+        }),
+        image: new Circle({
+            radius: 9,
+            fill: new Fill({
+                color: 'rgba(51,204,0,1)'
+            }),
+            stroke: new Stroke({
+              color: 'white',
+              width: 3
+            }),
+        })
+      }),
+      zIndex: 10000
+    });
+
+    this.map.addLayer(startingLocationMarker);
+
+    const endingLocationMarker = new LayerVector({
+      source: new SourceVector({
+        features: [
+          new Feature({
+              geometry: new Point(fromLonLat(endingCoordinates))
+          })
+        ]
+      }),
+      style: new Style({
+        fill: new Fill({
+            color: 'rgba(255, 0, 0, 0.2)'
+        }),
+        image: new Circle({
+            radius: 9,
+            fill: new Fill({
+                color: 'rgba(204,51,51,1)'
+            }),
+            stroke: new Stroke({
+              color: 'white',
+              width: 3
+            }),
+        })
+      }),
+      zIndex: 10000
+    });
+
+    this.map.addLayer(endingLocationMarker);
+  }
+
+  routePath(nodes) {
+    var route = new Feature();
+    var geometry = new LineString(nodes);
+    geometry.transform('EPSG:4326', 'EPSG:3857'); //Transform to your map projection
+    route.setGeometry(geometry);
+
+    const vectorLayer = new LayerVector({
+      source: new SourceVector({
+        format: new GeoJSON()
+      }),
+      style: new Style({
+        stroke: new Stroke({
+          color: [41, 153, 228, 0.8],
+          width: 6
+        })
+      })
+    });
+
+    vectorLayer.getSource().addFeature(route);
+    this.map.addLayer(vectorLayer);
+    
+    this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
+    this.map.getView().setZoom(12);
+  }
 }
