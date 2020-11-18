@@ -56,6 +56,22 @@
         [hasBeenClicked]="ttdClicked"></app-tags>
     </div>
     <br>
+
+    <ng-container *ngIf="restaurantClicked">
+        <div class="poi-card">
+            <div *ngFor="let restaurant of restaurants">
+                <app-card [name]="restaurant[1]"
+                    [address]="restaurant[2]"
+                    [rating]="restaurant[3]"
+                ></app-card>
+            </div>
+        </div>
+        <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </ng-container>
+    
     <!-- <mat-tab-group class="col-md-12" mat-align-tabs="center">
         <mat-tab>
             <ng-template mat-tab-label>

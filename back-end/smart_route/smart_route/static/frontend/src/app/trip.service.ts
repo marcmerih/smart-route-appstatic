@@ -24,4 +24,8 @@ export class TripService {
   setListOfNodes(nodes) {
     this.nodes$.emit(nodes);
   }
+
+  // getRestaurantsInDistance(): Observable<string> {
+    
+  // }
 }

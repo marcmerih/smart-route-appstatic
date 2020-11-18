@@ -19,12 +19,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { TagsComponent } from './tags/tags.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
 import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { TripSettingsComponent } from './trip-settings/trip-settings.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { TripSettingsComponent } from './trip-settings/trip-settings.component';
     AddressCardComponent,
     AddIntermediateStopComponent,
     TagsComponent,
-    TripSettingsComponent
+    TripSettingsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { TripSettingsComponent } from './trip-settings/trip-settings.component';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatPaginatorModule
   ],
   providers: [
     MatDatepickerModule,
