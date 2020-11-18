@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
 from .routing import Router
+from .trip import Trip
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from rest_framework.mixins import (
@@ -17,22 +18,30 @@ from rest_framework.mixins import (
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import viewsets
 
+trip = Trip()
+
+
 class DefaultRouteViewSet(viewsets.ModelViewSet):
     queryset = DefaultRoute.objects.all()
     serializer_class = DefaultRouteSerializer
+
 
 class FrontendRenderView(View):
     def get(self, request, *args, **kwargs):
         return render(request, "home.html", {})
 
 
-def getRoute(request, startingLocation, endingLocation, maximumDetour):
-    router = Router()
-    coords = [router.GeoEncode(startingLocation), router.GeoEncode(endingLocation)]
-    listOfNodes = router.Route(coords)
-    return HttpResponse(str(listOfNodes))
+def getInitialRoute(request, startingLocation, endingLocation, maximumDetour):
+    global trip
+    trip.startingLocation = startingLocation
+    trip.endingLocation = endingLocation
+    trip.maximumDetour = int(maximumDetour)
+    trip.initializeDestinations()
+    trip.setRoute()
+    trip.setRestaurantsInDistance()
+    return trip.getRoute(request)
 
-def addIntermediate(request, startingLocation, endingLocation, maximumDetour, addresses):
-    listOfAddresses = list(addresses)
-    # listOfNodes = Route(startingLocation, endingLocation)
-    return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
+
+def getRestaurants(request):
+    global trip
+    return trip.getRestaurantsInDistance()
