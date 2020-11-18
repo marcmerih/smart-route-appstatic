@@ -10,6 +10,8 @@
 # dependencies
 /node_modules
 
+.DS_Store
+
 # Adding package-loc.json to gitignore for now. @Marc Atasoy
 package-lock.json
 

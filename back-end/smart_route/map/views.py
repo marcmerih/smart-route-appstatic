@@ -30,7 +30,7 @@ def getRoute(request, startingLocation, endingLocation, maximumDetour):
     router = Router()
     coords = [router.GeoEncode(startingLocation), router.GeoEncode(endingLocation)]
     listOfNodes = router.Route(coords)
-    return HttpResponse(str(listOfNodes))
+    return HttpResponse('{ "listOfNodes":"' + str(listOfNodes) + '"}')
 
 def addIntermediate(request, startingLocation, endingLocation, maximumDetour, addresses):
     listOfAddresses = list(addresses)
