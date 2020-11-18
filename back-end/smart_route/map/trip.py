@@ -46,7 +46,10 @@ class Trip():
             dist <= self.maximumDetour for dist in distance_matrix]
 
     def getRestaurantsInDistance(self):
-        return restaurants_data[self.restaurantsInDistance].sort_values(self.sort_by, ascending=False)
+        res_dict = restaurants_data[self.restaurantsInDistance].sort_values(
+            self.sort_by, ascending=False).to_dict()
+
+        return res_dict
 
     # def addStop(addresses):
     #     listOfAddresses = addresses.split('')
