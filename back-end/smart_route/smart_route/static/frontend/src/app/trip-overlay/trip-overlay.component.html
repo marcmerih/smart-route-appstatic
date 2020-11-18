@@ -59,12 +59,12 @@
 
     <ng-container *ngIf="restaurantClicked">
         <div class="poi-card">
-            <div *ngFor="let restaurant of restaurants">
-                <app-card [name]="restaurant[1]"
-                    [address]="restaurant[2]"
-                    [rating]="restaurant[3]"
+            <!-- <div *ngFor="let restaurant of restaurants">
+                <app-card [name]="restaurant[0]"
+                    [address]="restaurant[1]"
+                    [rating]="restaurant[2]"
                 ></app-card>
-            </div>
+            </div> -->
         </div>
         <mat-paginator [length]="100"
               [pageSize]="10"
