@@ -104,4 +104,13 @@
         display: none !important;
     }
 
+    .poi-card {
+        background-color: white;
+        width: 100%;
+        border-radius: 18px;
+        padding: 30px;
+        height: auto;
+        overflow-y: scroll !important;
+    }
+
 }

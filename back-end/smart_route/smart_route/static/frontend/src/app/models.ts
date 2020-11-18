@@ -11,10 +11,11 @@ export class RouteModel {
     listOfNodes: string;
 }
 
-export class RestaurantModel {
-    restaurantName: string; // string of a dictionaries
-    restaurantRating: string;
-    restaurantLat: string;
-    restaurantLon: string;
-    restaurantAddress: string;
+export class RestaurantsModel {
+    listOfRestaurants: string;
+    // restaurantNames: string; // string of a dictionaries
+    // restaurantRatings: string;
+    // restaurantLats: string;
+    // restaurantLons: string;
+    // restaurantAddresses: string;
 }
