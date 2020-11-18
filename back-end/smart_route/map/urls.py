@@ -10,8 +10,11 @@ router.register(r'route', views.DefaultRouteViewSet)
 urlpatterns = [
     # url('^', include(router.urls)),
     url(r'^$', FrontendRenderView.as_view(), name="home"),
-    url(r'^dir/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)/$', views.getRoute),
-    url(r'^intermediate/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)\-(?P<addresses>.+)/$', views.addIntermediate)
+    url(r'^dir/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)/$',
+        views.getInitialRoute),
+    # url(r'^intermediate/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)\-(?P<addresses>.+)/$', views.addIntermediate),
+    # url(r'^res/$', views.getRestaurants),
+
     # url(r'^dir/startingLocation=[A-Za-z0-9-]{0,100}&endingLocation=[A-Za-z0-9-]{0,100}$', views.getRoute),
     # url(r'^dir$', views.DefaultRoute.getRoute),
 ]
