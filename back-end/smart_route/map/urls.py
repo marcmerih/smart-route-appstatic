@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^$', FrontendRenderView.as_view(), name="home"),
     url(r'^dir/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)/$',
         views.getInitialRoute),
-    url(r'^route/restaurants/$', views.getRestaurants),
+    url(r'^restaurants/$', views.getRestaurants),
 ]
 
 # urlpatterns += [

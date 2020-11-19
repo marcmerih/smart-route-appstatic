@@ -57,14 +57,14 @@
     </div>
     <br>
 
-    <ng-container *ngIf="restaurantClicked">
+    <ng-container *ngIf="restaurantClicked" class="container-card">
         <div class="poi-card">
-            <!-- <div *ngFor="let restaurant of restaurants">
+            <div *ngFor="let restaurant of restaurants">
                 <app-card [name]="restaurant[0]"
                     [address]="restaurant[1]"
                     [rating]="restaurant[2]"
                 ></app-card>
-            </div> -->
+            </div>
         </div>
         <mat-paginator [length]="100"
               [pageSize]="10"

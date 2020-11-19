@@ -2,6 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouteModel } from './models';
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TripService {
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.nodes$ = new EventEmitter();
     this.poiMarkers$ = new EventEmitter();
     this.tripSetupForm = new FormGroup({
@@ -30,6 +31,7 @@ export class TripService {
   }
 
   setPoiMarkers(coords) {
+    console.log(coords);
     this.poiMarkers$.emit(coords);
   }
 
@@ -42,6 +44,6 @@ export class TripService {
   }
   
   getRestaurants() {
-    return this.http.get('route/restaurant/');
+    return this.http.get(`./restaurants`);
   }
 }

@@ -109,8 +109,12 @@
         width: 100%;
         border-radius: 18px;
         padding: 30px;
-        height: auto;
+        height: 400px;
         overflow-y: scroll !important;
+    }
+
+    .container-card {
+        margin-bottom: 25px;
     }
 
 }

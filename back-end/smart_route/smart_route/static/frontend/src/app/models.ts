@@ -12,6 +12,6 @@ export class RouteModel {
 }
 
 export class RestaurantsModel {
-    listOfRestaurantsInfo: string;
-    listOfRestaurantsCoords: string;
+    listOfRestaurantsInfo: any;
+    listOfRestaurantsCoords: any;
 }

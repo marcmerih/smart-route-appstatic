@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
+import json
 
 restaurants_data = pd.read_csv('resDataExample.csv')
 
@@ -45,7 +46,7 @@ class Trip():
         self.restaurantsInDistance = [
             dist <= self.maximumDetour for dist in distance_matrix]
 
-    def getRestaurantsInDistance(self, request):
+    def getRestaurantsInDistance(self):
         # res_dict = restaurants_data[self.restaurantsInDistance].sort_values(
         #     self.sort_by, ascending=False).to_dict()
         # res_name_dict = res_dict["restaurant_name"]
@@ -58,9 +59,20 @@ class Trip():
         restaurants_info = restaurants[["restaurant_name",
                                         "address", "review_score"]].values.tolist()
         restaurants_coords = restaurants[["lon", "lat"]].values.tolist()
-        # return HttpResponse('{ "restaurantNames":"' + str(res_name_dict) + '", "restaurantAddresses":"' + str(res_address_dict) + '","restaurantRatings":"' + str(res_review_dict) + '","restaurantLons":"' + str(res_lon_dict) + '","restaurantLats":"' + str(res_lat_dict) + '"}')
 
-        return HttpResponse('{ "listOfRestaurantsInfo":"' + str(restaurants_info) + '", "listOfRestaurantsCoords":"' + str(restaurants_coords) + '"}')
+        # json_response = simplejson.dumps(
+        #     {
+        #         "listOfRestaurantsInfo" : restaurants_info,
+        #         "listOfRestaurantsCoords": restaurants_coords
+        #     }
+        # )
+        response_data = {}
+        response_data['listOfRestaurantsInfo'] = restaurants_info
+        response_data['listOfRestaurantsCoords'] = restaurants_coords
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+        # return HttpResponse(json_response, content_type ="application/json")
+
+        # return HttpResponse('{ "listOfRestaurantsInfo":"' + str(restaurants_info) + '", "listOfRestaurantsCoords":"' + str(restaurants_coords) + '"}')
 
     # def addStop(addresses):
     #     listOfAddresses = addresses.split('')
