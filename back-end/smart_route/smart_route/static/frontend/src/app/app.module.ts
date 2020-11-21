@@ -20,6 +20,7 @@ import { TagsComponent } from './tags/tags.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
@@ -27,6 +28,7 @@ import { AddIntermediateStopComponent } from './add-intermediate-stop/add-interm
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { TripSettingsComponent } from './trip-settings/trip-settings.component';
 import { CardComponent } from './card/card.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { CardComponent } from './card/card.component';
     AddIntermediateStopComponent,
     TagsComponent,
     TripSettingsComponent,
-    CardComponent
+    CardComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { CardComponent } from './card/card.component';
     MatDialogModule,
     MatTabsModule,
     MatSliderModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule
   ],
   providers: [
     MatDatepickerModule,

@@ -1,5 +1,48 @@
 <div class="col-md-12 card">
-    <h5>{{ this.name }}</h5>
-    <p>{{ this.address }}</p>
-    <p>{{ this.rating }}</p>
+    <!-- <div class="grid-container">
+        <div class="image">
+            <img src="assets/restaurant.png">
+        </div>
+        <div class="poi-name">
+            <h5>{{ this.name }}</h5>
+        </div>
+        <br>
+        <div class="address">
+            <p>{{ this.address }}</p>
+        </div>
+        <br>
+        <div class="tags">
+            <p>Restaurant, This, That</p>
+        </div>
+         <div class="recommend-reason">
+            <p>Because of your interest in ...</p>
+        </div>
+        <div class="dislike">
+            <button><mat-icon class="dislike"></mat-icon></button>
+        </div>
+        <div class="like">
+            <button><mat-icon class="like"></mat-icon></button>
+        </div>
+        <div class="add">
+            <button><mat-icon class="add"></mat-icon></button>
+        </div>
+    </div> -->
+
+    <div class="grid-container">
+        <div class="image">
+            <img src="assets/restaurant.png">
+        </div>
+        <div class="information">
+            <h3>{{ this.name }}</h3>
+                <p>{{ this.address }}</p>
+            <!-- <p>{{ this.recommendationReason }}</p> -->
+            <div *ngFor="let tag of tags" class="tags">
+                <app-tag [tag]="tag"
+                ></app-tag>
+            </div>
+            <button class="rate"><mat-icon>thumb_up</mat-icon></button>
+            <button class="rate"><mat-icon>thumb_down</mat-icon></button>
+            <button mat-mini-fab class="add"><mat-icon>add</mat-icon></button>
+        </div>
+    </div>
 </div>

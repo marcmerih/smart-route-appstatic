@@ -1,6 +1,113 @@
 .card {
-    background-color: #efefef;
+    background-color: #fafafa;
     border-radius: 18px;
     margin-bottom: 5px;
     padding: 10px;
+    height: 130px;
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 80% 0%;
+        gap: 0px 0px;
+        grid-template-areas:
+          "img information"
+          ". ."
+          ". .";
+    }
+    .image { 
+        grid-area: img;
+
+        img {
+            height: 60%;
+        }
+    }
+    .information { 
+        grid-area: information;
+
+        h3 {
+            font-size: 12pt;
+            word-wrap: break-word;
+        }
+
+        p {
+            font-size: 8pt;
+            word-wrap: break-word;
+            font-style: italic;
+        }
+
+        .tags {
+            display: inline-block;
+        }
+        
+        .add {
+            border-radius: 60px !important;
+            background-color: #E96A6A !important;
+            color: white;
+        }
+
+        .rate {
+            border: none;
+            background-color: #fafafa;
+            width: auto;
+
+            mat-icon {
+                font-size: 11pt;
+            }
+        }
+    }
+
+    // .grid-container {
+    //     display: grid;
+    //     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    //     grid-template-rows: 10% 10% 10%;
+    //     gap: 10px 10px;
+    //     grid-template-areas:
+    //       "image image image poi-name poi-name poi-name poi-name poi-name ."
+    //       "image image image address address address address address add"
+    //       "image image image tags tags tags tags dislike like";
+    //   }
+    //   .image {
+    //     display: grid;
+    //     grid-template-columns: 1fr;
+    //     grid-template-rows: 1fr;
+    //     gap: 0px 0px;
+    //     grid-template-areas:
+    //       ".";
+    //     grid-area: image;
+
+    //     img {
+    //         height: 100%;
+    //     }
+    //   }
+    //   .poi-name {
+    //     display: grid;
+    //     grid-template-columns: 1fr;
+    //     grid-template-rows: 1fr;
+    //     gap: 0px 0px;
+    //     grid-template-areas:
+    //       ".";
+    //     grid-area: poi-name;
+    //   }
+    //   .address {
+    //     display: grid;
+    //     grid-template-columns: 1fr;
+    //     grid-template-rows: 1fr;
+    //     gap: 0px 0px;
+    //     grid-template-areas:
+    //       ".";
+    //     grid-area: address;
+    //   }
+    //   .tags {
+    //     display: grid;
+    //     grid-template-columns: 1fr;
+    //     grid-template-rows: 1fr;
+    //     gap: 0px 0px;
+    //     grid-template-areas:
+    //       ".";
+    //     grid-area: tags;
+    //   }
+    //   .dislike { grid-area: dislike; }
+    //   .like { grid-area: like; }
+    //   .add { grid-area: add; }
 }

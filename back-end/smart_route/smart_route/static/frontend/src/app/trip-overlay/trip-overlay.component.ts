@@ -148,17 +148,17 @@ export class TripOverlayComponent implements OnInit {
   displayRestaurants() {
     this.restaurantClicked = !this.restaurantClicked;
     if (this.restaurantClicked) {
-      this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
-        console.log(request);
-        this.tripService.setPoiMarkers(request.listOfRestaurantsCoords);
-        this.restaurants = request.listOfRestaurantsInfo;
-        console.log(request.listOfRestaurantsInfo);
-        console.log(request.listOfRestaurantsCoords);
-      });
+      // this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
+      //   console.log(request);
+      //   this.tripService.setPoiMarkers(request.listOfRestaurantsCoords);
+      //   this.restaurants = request.listOfRestaurantsInfo;
+      //   console.log(request.listOfRestaurantsInfo);
+      //   console.log(request.listOfRestaurantsCoords);
+      // });
 
-      // const currentRestaurant = this.mockRestaurants;
-      // this.tripService.setPoiMarkers(currentRestaurant.listOfRestaurantsCoords);
-      // this.restaurants = currentRestaurant.listOfRestaurantsInfo;
+      const currentRestaurant = this.mockRestaurants;
+      this.tripService.setPoiMarkers(currentRestaurant.listOfRestaurantsCoords);
+      this.restaurants = currentRestaurant.listOfRestaurantsInfo;
     }
   }
 

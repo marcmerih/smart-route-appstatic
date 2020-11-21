@@ -9,6 +9,8 @@ export class CardComponent implements OnInit {
   @Input() name: string;
   @Input() address: string;
   @Input() rating: string;
+  @Input() recommendationReason: string = "Because of your interest in Asian Restaurants";
+  @Input() tags: string[] = ['Asian', 'Barbecue', 'Buffet'];
 
   constructor() { }
 

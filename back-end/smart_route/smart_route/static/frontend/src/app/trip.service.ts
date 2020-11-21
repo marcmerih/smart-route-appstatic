@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouteModel } from './models';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
