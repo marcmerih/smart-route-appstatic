@@ -69,6 +69,10 @@ mat-button-toggle-group {
   }
 }
 
+::ng-deep mat-select{
+  font-size: 9px;   
+}
+
 .text-field, button.primary  {
     width: 300px !important;
     font-size: 12pt;

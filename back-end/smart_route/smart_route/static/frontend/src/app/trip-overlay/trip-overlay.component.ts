@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddIntermediateStopComponent } from '../add-intermediate-stop/add-intermediate-stop.component';
 import { TripService } from '../trip.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
 import { HttpClient } from '@angular/common/http';
 import { Router, Params, ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ export class TripOverlayComponent implements OnInit {
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
+  sortFormGroup: FormGroup;
   intermediateLocationAddress = '';
   addresses = [];
   currentRoute: any;
@@ -27,6 +28,12 @@ export class TripOverlayComponent implements OnInit {
   ttdClicked = false;
   tripSettings: TripSettings = new TripSettings;
   restaurants;
+  sortOptions = [
+    {value: 'recommended', viewValue: 'Recommended'},
+    {value: 'price-ascending', viewValue: 'Price: High-to-Low'},
+    {value: 'price-descending', viewValue: 'Price: Low-to-High'}
+  ];
+  defaulOption = {value: 'recommended', viewValue: 'Recommended'};
   mockRestaurants = 
   {
     "listOfRestaurantsInfo": [['Prime Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
@@ -41,6 +48,9 @@ export class TripOverlayComponent implements OnInit {
   constructor(private dialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
     private tripService: TripService, private http: HttpClient) {
     this.startTripForm = this.tripService.tripSetupForm;
+    this.sortFormGroup = new FormGroup({
+      sortBy: new FormControl('')
+    });
     this.tripSettings.maximumDetourDuration = 100;
     this.restaurants = [];
   }

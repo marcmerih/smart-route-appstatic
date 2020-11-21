@@ -82,6 +82,8 @@
     .tags {
         width: 100%;
         text-align: center;
+        margin-top: -15px;
+        margin-bottom: 5px;
 
         app-tags {
             cursor: pointer;
@@ -109,12 +111,31 @@
         width: 100%;
         border-radius: 18px;
         padding: 30px;
-        height: 400px;
+        height: 450px;
         overflow-y: scroll !important;
+
+        .top-info {
+            display: inline;
+
+            .restaurants-info {
+                float: left;
+            }
+
+            .filter-info {
+                float: right;
+            }
+
+            .close-info {
+                float: right;
+            }
+
+            .sort-info {
+                float: right;
+            }
+        }
     }
 
     .container-card {
         margin-bottom: 25px;
     }
-
 }

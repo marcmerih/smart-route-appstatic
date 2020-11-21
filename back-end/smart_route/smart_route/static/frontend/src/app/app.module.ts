@@ -29,6 +29,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/d
 import { TripSettingsComponent } from './trip-settings/trip-settings.component';
 import { CardComponent } from './card/card.component';
 import { TagComponent } from './tag/tag.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { TagComponent } from './tag/tag.component';
     MatTabsModule,
     MatSliderModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [
     MatDatepickerModule,

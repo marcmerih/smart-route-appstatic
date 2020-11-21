@@ -47,7 +47,7 @@
             <br>
         </div>
     </div>
-    <div class="col-md-12 tags">
+    <div class="col-md-12 tags" *ngIf="hasBeenRouted">
         <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A" (click)="hasBeenClicked('restaurant')"
         [hasBeenClicked]="restaurantClicked"></app-tags>
         <app-tags tagName="Hotels" icon="hotel" color="#E76F51" (click)="hasBeenClicked('hotels')"
@@ -57,7 +57,22 @@
     </div>
 
     <ng-container *ngIf="restaurantClicked" class="container-card">
-        <div class="poi-card">
+        <div class="poi-card" [formGroup]="sortFormGroup">
+            <div class="top-info">
+                <h5 class="restaurants-info">Restaurants</h5>
+                <mat-icon class="close-info">close</mat-icon>
+                <mat-icon class="filter-info">filter_alt</mat-icon>
+                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
+                    <mat-label>Sort By:</mat-label>
+                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value">
+                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+                        {{option.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <br>
+            <hr>
             <div *ngFor="let restaurant of restaurants">
                 <app-card [name]="restaurant[0]"
                     [address]="restaurant[1]"
@@ -65,34 +80,75 @@
                     (poiAdded)="onPOIAdded($event)"
                 ></app-card>
             </div>
-        </div>
+
         <mat-paginator [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]">
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
+        </div>
     </ng-container>
-    
-    <!-- <mat-tab-group class="col-md-12" mat-align-tabs="center">
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <span class="material-icons">restaurant</span> &nbsp; Restaurants
-            </ng-template>
-            <div style="background-color: white;">
-                This is restauranats.
+
+    <ng-container *ngIf="hotelsClicked" class="container-card">
+        <div class="poi-card" [formGroup]="sortFormGroup">
+            <div class="top-info">
+                <h5 class="restaurants-info">Hotels</h5>
+                <mat-icon class="close-info">close</mat-icon>
+                <mat-icon class="filter-info">filter_alt</mat-icon>
+                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
+                    <mat-label>Sort By:</mat-label>
+                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value">
+                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+                        {{option.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
             </div>
-        </mat-tab>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <span class="material-icons">hotel</span> &nbsp; Hotels
-            </ng-template>
-            This is hotels.
-        </mat-tab>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <span class="material-icons">event_available</span> &nbsp; Events
-            </ng-template>
-            This is things to dpo.
-        </mat-tab>
-    </mat-tab-group> -->
-    
+            <br>
+            <hr>
+            <div *ngFor="let restaurant of restaurants">
+                <app-card [name]="restaurant[0]"
+                    [address]="restaurant[1]"
+                    [rating]="restaurant[2]"
+                    (poiAdded)="onPOIAdded($event)"
+                ></app-card>
+            </div>
+
+        <mat-paginator [length]="100"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="ttdClicked" class="container-card">
+        <div class="poi-card" [formGroup]="sortFormGroup">
+            <div class="top-info">
+                <h5 class="restaurants-info">Things to do</h5>
+                <mat-icon class="close-info">close</mat-icon>
+                <mat-icon class="filter-info">filter_alt</mat-icon>
+                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
+                    <mat-label>Sort By:</mat-label>
+                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value">
+                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+                        {{option.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <br>
+            <hr>
+            <div *ngFor="let restaurant of restaurants">
+                <app-card [name]="restaurant[0]"
+                    [address]="restaurant[1]"
+                    [rating]="restaurant[2]"
+                    (poiAdded)="onPOIAdded($event)"
+                ></app-card>
+            </div>
+
+        <mat-paginator [length]="100"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+        </div>
+    </ng-container>
 </div>
