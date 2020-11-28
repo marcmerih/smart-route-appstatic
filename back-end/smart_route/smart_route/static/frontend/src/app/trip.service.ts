@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { RouteModel } from './models';
+import { RouteModel, RouteObject } from './models';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class TripService {
   tripSetupForm: FormGroup;
   intermediateLocationForm: FormGroup;
+  currentRoute: RouteObject;
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
 
@@ -36,14 +37,45 @@ export class TripService {
   }
 
   route(startingLocation, endingLocation, maximumDetourDuration) {
+    this.currentRoute = {
+      startingLocation: startingLocation,
+      endingLocation: endingLocation,
+      maximumDetourDuration: maximumDetourDuration,
+      stops: []
+    }
     return this.http.get(`./dir/${startingLocation}-${endingLocation}-${maximumDetourDuration}`);
   }
 
-  getIntermediate(startingLocation, endingLocation, maximumDetourDuration, addresses) {
-    return this.http.get<RouteModel>(`./intermediate/${startingLocation}-${endingLocation}-${maximumDetourDuration}-${addresses}`);
+  getIntermediate(startingLocation, endingLocation, maximumDetourDuration, stops) {
+    this.currentRoute.stops.push(stops);
+    return this.http.get<RouteModel>(`./add-stop/${startingLocation}-${endingLocation}-${maximumDetourDuration}-${stops}`);
   }
   
   getRestaurants() {
     return this.http.get(`./restaurants`);
+  }
+
+  poiLiked(poi) {
+    console.log(poi);
+  }
+
+  poiDisliked(poi) {
+    console.log(poi);
+  }
+
+  poiAdded(poi) {
+    this.updateCurrentPOIs(poi);
+    console.log(this.currentRoute);
+    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${this.currentRoute.stops}`);
+  }
+
+  updateCurrentPOIs(poi) {
+    if (poi.currentLabel === 'add') {
+      this.currentRoute.stops.push(poi.poi[1]);
+    } else {
+      this.currentRoute.stops = this.currentRoute.stops.filter(x => {
+        return x[0] != poi.poi[0];
+      });
+    }
   }
 }

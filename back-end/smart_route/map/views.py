@@ -39,9 +39,22 @@ def getInitialRoute(request, startingLocation, endingLocation, maximumDetour):
     trip.initializeDestinations()
     trip.setRoute()
     trip.setRestaurantsInDistance()
+    # must set hotels and ttd in distance here as well
     return trip.getRoute(request)
 
 
 def getRestaurants(request):
     global trip
     return trip.getRestaurantsInDistance()
+
+def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
+    global trip
+    trip.startingLocation = startingLocation
+    trip.endingLocation = endingLocation
+    trip.maximumDetour = int(maximumDetour)
+    return trip.addStop(stops)
+    # trip.setRoute(request)
+    # trip.setRestaurantsInDistance()
+    # # must set hotels and ttd in distance here as well
+    # return trip.getRoute(request)
+

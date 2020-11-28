@@ -28,6 +28,8 @@ export class TripOverlayComponent implements OnInit {
   ttdClicked = false;
   tripSettings: TripSettings = new TripSettings;
   restaurants;
+  hotels;
+  ttds;
   sortOptions = [
     {value: 'recommended', viewValue: 'Recommended'},
     {value: 'price-ascending', viewValue: 'Price: High-to-Low'},
@@ -42,6 +44,26 @@ export class TripOverlayComponent implements OnInit {
     ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
     ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7]],
     "listOfRestaurantsCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514]] 
+  };
+
+  mockHotels = 
+  {
+    "listOfHotelsInfo": [['Prime Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
+    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
+    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
+    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
+    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7]],
+    "listOfHotelsCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514]] 
+  };
+
+  mockTTD = 
+  {
+    "listOfTTDInfo": [['Prime Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
+    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
+    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
+    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
+    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7]],
+    "listOfTTDCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514]] 
   };
 
 
@@ -138,6 +160,7 @@ export class TripOverlayComponent implements OnInit {
           // send list of addresses to backend as well. If addresses.length == 2, then just do Route(starting, ending), if length > 2, go through
           // list of addresses and route between each 2 locations, append all list of nodes (ensuring there is no overlap), and return that list (this is for intermediate addresses and POIs)
           this.currentRoute = JSON.parse(request.listOfNodes);
+          this.tripService.setListOfNodes(this.currentRoute);
         });
 
         // this.tripService.setListOfNodes();
@@ -158,28 +181,75 @@ export class TripOverlayComponent implements OnInit {
   displayRestaurants() {
     this.restaurantClicked = !this.restaurantClicked;
     if (this.restaurantClicked) {
-      // this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
-      //   console.log(request);
-      //   this.tripService.setPoiMarkers(request.listOfRestaurantsCoords);
-      //   this.restaurants = request.listOfRestaurantsInfo;
-      //   console.log(request.listOfRestaurantsInfo);
-      //   console.log(request.listOfRestaurantsCoords);
-      // });
+      this.hotelsClicked = false;
+      this.ttdClicked = false;
+      this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
+        console.log(request);
+        this.tripService.setPoiMarkers(request.listOfRestaurantsCoords);
+        this.restaurants = request.listOfRestaurantsInfo;
+        console.log(request.listOfRestaurantsInfo);
+        console.log(request.listOfRestaurantsCoords);
+      });
 
-      const currentRestaurant = this.mockRestaurants;
-      this.tripService.setPoiMarkers(currentRestaurant.listOfRestaurantsCoords);
-      this.restaurants = currentRestaurant.listOfRestaurantsInfo;
+      // const currentRestaurant = this.mockRestaurants;
+      // this.tripService.setPoiMarkers(currentRestaurant.listOfRestaurantsCoords);
+      // this.restaurants = currentRestaurant.listOfRestaurantsInfo;
     }
   }
 
   displayHotels() {
     this.hotelsClicked = !this.hotelsClicked;
-    // Add API call here.
+    if (this.hotelsClicked) {
+      this.restaurantClicked = false;
+      this.ttdClicked = false;
+      // this.tripService.getHotels().subscribe((request: HotelsModel) => {
+      //   console.log(request);
+      //   this.tripService.setPoiMarkers(request.listOfHotelsCoords);
+      //   this.hotels = request.listOfHotelsInfo;
+      //   console.log(request.listOfHotelsInfo);
+      // });
+
+      const currentHotel = this.mockHotels;
+      this.tripService.setPoiMarkers(currentHotel.listOfHotelsCoords);
+      this.restaurants = currentHotel.listOfHotelsInfo;
+    }
   }
 
   displayTTD() {
     this.ttdClicked = !this.ttdClicked;
-    // Add API call here;
+    if (this.ttdClicked) {
+      this.restaurantClicked = false;
+      this.hotelsClicked = false;
+      // this.tripService.getTTDs().subscribe((request: TTDModel) => {
+      //   console.log(request);
+      //   this.tripService.setPoiMarkers(request.listOfTTDCoords);
+      //   this.hotels = request.listOfTTDInfo;
+      //   console.log(request.listOfTTDInfo);
+      // });
+
+      const currentTTD = this.mockTTD;
+      this.tripService.setPoiMarkers(currentTTD.listOfTTDCoords);
+      this.restaurants = currentTTD.listOfTTDInfo;
+    }
+  }
+
+  sortBySelected($event) {
+    console.log($event);
+  }
+
+  poiAdded($event) {
+    this.tripService.poiAdded($event).subscribe(request => {
+      this.currentRoute = JSON.parse(request.listOfNodes);
+      this.tripService.setListOfNodes(this.currentRoute);
+    });
+  }
+
+  poiLiked($event) {
+    this.tripService.poiLiked($event);
+  }
+
+  poiDisliked($event) {
+    this.tripService.poiDisliked($event);
   }
 
   get startingLocation() {
