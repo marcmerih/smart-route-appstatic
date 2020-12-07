@@ -154,7 +154,7 @@ export class RoutesComponent implements AfterViewInit {
         }),
         zIndex: 10000
       });
-      this.layers.push(POIMarker);
+      this.markers.push(POIMarker);
       this.map.addLayer(POIMarker);
     });
   }
@@ -187,27 +187,5 @@ export class RoutesComponent implements AfterViewInit {
     this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
     this.map.getView().setZoom(12);
   }
-
-  resetMarkers() {
-    this.map = new Map({
-      target: 'map',
-      layers: [
-        this.basemap
-      ],
-      controls: [],
-      view: new View({
-        center: fromLonLat([-79.3872, 43.6352]),
-        zoom: 7
-      }),
-    });
-    this.map.getView().setZoom(12);
-  }
-
-  resetRoute() {
-    this.layers.forEach(element => {
-      this.map.removeLayer(element);
-    });
-  }
-
 
 }
