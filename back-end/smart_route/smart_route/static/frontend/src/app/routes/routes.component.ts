@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import {} from '../../../node_modules/ol'
 import {fromLonLat} from 'ol/proj';
 import OSM from 'ol/source/OSM';
@@ -27,17 +27,21 @@ import { TripService } from '../trip.service';
 export class RoutesComponent implements AfterViewInit {
   map: Map;
   listOfNodes;
+  basemap;
+  layers;
+  markers;
 
   constructor(private tripService: TripService) {
+    this.layers = [];
+    this.markers = [];
   }
 
   ngAfterViewInit() {
+    this.basemap = new TileLayer({ source: new OSM() })
     this.map = new Map({
       target: 'map',
       layers: [
-        new TileLayer({
-          source: new OSM()
-        })
+        this.basemap
       ],
       controls: [],
       view: new View({
@@ -45,7 +49,6 @@ export class RoutesComponent implements AfterViewInit {
         zoom: 7
       }),
     });
-
     this.tripService.nodes$.subscribe(listOfNodes => this.onListOfNodesReturned(listOfNodes));
     this.tripService.poiMarkers$.subscribe(coords => this.setPOIMarkers(coords));
   }
@@ -122,6 +125,9 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setPOIMarkers(coords) {
+    this.markers.forEach(element => {
+      this.map.removeLayer(element);
+    });
     coords.forEach(coordinates => {
       const POIMarker = new LayerVector({
         source: new SourceVector({
@@ -148,12 +154,15 @@ export class RoutesComponent implements AfterViewInit {
         }),
         zIndex: 10000
       });
-  
+      this.layers.push(POIMarker);
       this.map.addLayer(POIMarker);
     });
   }
 
   routePath(nodes) {
+    this.layers.forEach(element => {
+      this.map.removeLayer(element);
+    });
     var route = new Feature();
     var geometry = new LineString(nodes);
     geometry.transform('EPSG:4326', 'EPSG:3857'); //Transform to your map projection
@@ -173,8 +182,32 @@ export class RoutesComponent implements AfterViewInit {
 
     vectorLayer.getSource().addFeature(route);
     this.map.addLayer(vectorLayer);
+    this.layers.push(vectorLayer);
     
     this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
     this.map.getView().setZoom(12);
   }
+
+  resetMarkers() {
+    this.map = new Map({
+      target: 'map',
+      layers: [
+        this.basemap
+      ],
+      controls: [],
+      view: new View({
+        center: fromLonLat([-79.3872, 43.6352]),
+        zoom: 7
+      }),
+    });
+    this.map.getView().setZoom(12);
+  }
+
+  resetRoute() {
+    this.layers.forEach(element => {
+      this.map.removeLayer(element);
+    });
+  }
+
+
 }

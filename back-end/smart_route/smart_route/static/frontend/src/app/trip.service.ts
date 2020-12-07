@@ -65,13 +65,20 @@ export class TripService {
 
   poiAdded(poi) {
     this.updateCurrentPOIs(poi);
-    console.log(this.currentRoute);
+    console.log(this.currentRoute.stops);
     return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${this.currentRoute.stops}`);
   }
 
+  orderOfStopsChanged(addresses) {
+    this.currentRoute.stops = addresses;
+    console.log(this.currentRoute);
+    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${addresses}`);
+  }
+
   updateCurrentPOIs(poi) {
+    console.log(poi)
     if (poi.currentLabel === 'add') {
-      this.currentRoute.stops.push(poi.poi[1]);
+      this.currentRoute.stops.push(poi.poi[1] + '-');
     } else {
       this.currentRoute.stops = this.currentRoute.stops.filter(x => {
         return x[0] != poi.poi[0];

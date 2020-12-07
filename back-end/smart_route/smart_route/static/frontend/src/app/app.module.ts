@@ -30,6 +30,7 @@ import { TripSettingsComponent } from './trip-settings/trip-settings.component';
 import { CardComponent } from './card/card.component';
 import { TagComponent } from './tag/tag.component';
 import { MatSelectModule } from '@angular/material/select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
 
     // Angular Material
     MatButtonToggleModule,

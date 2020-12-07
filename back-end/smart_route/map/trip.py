@@ -13,7 +13,7 @@ class Trip():
     def __init__(self):
         self.startingLocation = ''
         self.endingLocation = ''
-        self.maximumDetour = 100
+        self.maximumDetour = 3
         self.stops = []
         self.route = []
         self.router = Router()
@@ -61,9 +61,12 @@ class Trip():
     def addStop(self, stops):
         self.stops = [self.router.GeoEncode(
             self.startingLocation)]
-        for stop in stops:
-            self.stops.append(self.router.GeoEncode(stop))
+
+        for stop in stops.split('-,'):
+            encoded = self.router.GeoEncode(stop)
+            self.stops.append(encoded)
 
         self.stops.append(self.router.GeoEncode(self.endingLocation))
+
         self.route = self.router.Route(self.stops)
         return HttpResponse('{ "listOfNodes":"' + str(self.route) + '"}')

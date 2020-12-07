@@ -18,31 +18,31 @@
             autocomplete="off">
         </mat-form-field>
         <br>
-        <br>
-        <button mat-button class="trip-settings"
-        (click)="openTripSettings()">Trip Settings</button>
-        <button mat-raised-button class="route"
-        (click)="route()"
-        [disabled]="isRouteDisabled">ROUTE</button>
-        <br>
+        <div class="buttons">
+            <button mat-raised-button class="route"
+            (click)="route()"
+            [disabled]="isRouteDisabled"><mat-icon>directions</mat-icon>Route</button>
+            <button mat-button class="trip-settings" [disabled]="isRouteDisabled"
+            (click)="explore()"><mat-icon>explore</mat-icon>Explore</button>
+        </div>
     </div>
     
     <div *ngIf="currentStep === 1">
         <div class="col-md-12 overlay">
             <br>
             <div class="locations">
-                <span class="title">Trip Details</span>
-                <button mat-raised-button *ngIf="hasBeenRouted" (click)="addIntermediaryAddress()">+ ADD</button>    
+                <span class="title">Trip Details</span> 
+                <button (click)="addIntermediaryAddress()"> to be removed </button>
             </div>
             <br>
-            <app-address-card [address]="startingLocation"></app-address-card>
-            <br>
-            <div *ngFor="let address of addresses">
-                <br>
-                <app-address-card [address]="intermediateLocationAddress"></app-address-card>
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box-undraggable">{{ startingLocation }}</div>
+                <div *ngFor="let address of addresses" class="example-box" cdkDrag>
+                    <mat-icon>drag_indicator</mat-icon>
+                    <span class="draggableAddress">{{ address }}</span>
+                </div>
+                <div class="example-box-undraggable">{{ endingLocation }}</div>
             </div>
-            <br>
-            <app-address-card [address]="endingLocation"></app-address-card>
             <br>
             <br>
         </div>
@@ -62,18 +62,18 @@
                 <h5 class="restaurants-info">Restaurants</h5>
                 <mat-icon class="close-info">close</mat-icon>
                 <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
-                    <mat-label>Sort By:</mat-label>
-                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value">
-                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
-                        {{option.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <mat-slider
+                    thumbLabel
+                    value="5"
+                    min="1"
+                    max="99"
+                    [displayWith]="captureValue"
+                    (change)="updateMaximumDetour($event)"
+                ></mat-slider>
             </div>
             <br>
             <hr>
-            <div *ngFor="let restaurant of restaurants">
+            <div *ngFor="let restaurant of pageSlice">
                 <app-card [name]="restaurant[0]"
                     [address]="restaurant[1]"
                     [rating]="restaurant[2]"
@@ -84,9 +84,9 @@
                 ></app-card>
             </div>
 
-        <mat-paginator [length]="100"
+        <mat-paginator [length]="restaurants.length"
             [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]">
+            (page)="onPageChange($event)">
         </mat-paginator>
         </div>
     </ng-container>
@@ -97,29 +97,29 @@
                 <h5 class="restaurants-info">Hotels</h5>
                 <mat-icon class="close-info">close</mat-icon>
                 <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
-                    <mat-label>Sort By:</mat-label>
-                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value">
-                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
-                        {{option.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <mat-slider
+                    thumbLabel
+                    value="5"
+                    min="1"
+                    max="99"
+                    [displayWith]="captureValue"
+                    (change)="updateMaximumDetour($event)"
+                ></mat-slider>
             </div>
             <br>
             <hr>
-            <div *ngFor="let restaurant of restaurants">
-                <app-card [name]="restaurant[0]"
-                    [address]="restaurant[1]"
-                    [rating]="restaurant[2]"
-                    (poiAdded)="onPOIAdded($event)"
+            <div *ngFor="let hotel of pageSlice">
+                <app-card [name]="hotel[0]"
+                    [address]="hotel[1]"
+                    [rating]="hotel[2]"
+                    (poiAdded)="poiAdded($event)"
                 ></app-card>
             </div>
 
-        <mat-paginator [length]="100"
-            [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]">
-        </mat-paginator>
+            <mat-paginator [length]="hotels.length"
+                [pageSize]="10"
+                (page)="onPageChange($event)">
+            </mat-paginator>
         </div>
     </ng-container>
 
@@ -129,29 +129,29 @@
                 <h5 class="restaurants-info">Things to do</h5>
                 <mat-icon class="close-info">close</mat-icon>
                 <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-form-field appearance="fill" style="width: 150px !important; font-size: 9px; float: right; margin-top: -5px;">
-                    <mat-label>Sort By:</mat-label>
-                    <mat-select formControlName="sortBy" [(ngModel)]="defaulOption.value" [placeholder]="defaulOption.value" (selectionChange)="sortBySelected($event)">
-                      <mat-option *ngFor="let option of sortOptions" [value]="option.value">
-                        {{option.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
+                <mat-slider
+                    thumbLabel
+                    value="5"
+                    min="1"
+                    max="99"
+                    [displayWith]="captureValue"
+                    (change)="updateMaximumDetour($event)"
+                ></mat-slider>
             </div>
             <br>
             <hr>
-            <div *ngFor="let restaurant of restaurants">
-                <app-card [name]="restaurant[0]"
-                    [address]="restaurant[1]"
-                    [rating]="restaurant[2]"
+            <div *ngFor="let ttd of pageSlice">
+                <app-card [name]="ttd[0]"
+                    [address]="ttd[1]"
+                    [rating]="ttd[2]"
                     (poiAdded)="onPOIAdded($event)"
                 ></app-card>
             </div>
 
-        <mat-paginator [length]="restaurants.length"
-            [pageSize]="10"
-            [pageSizeOptions]="[10, 25, 50]">
-        </mat-paginator>
+            <mat-paginator [length]="ttds.length"
+                [pageSize]="10"
+                (page)="onPageChange($event)">
+            </mat-paginator>
         </div>
     </ng-container>
 </div>

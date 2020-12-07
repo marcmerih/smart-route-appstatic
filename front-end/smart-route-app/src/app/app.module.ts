@@ -24,6 +24,7 @@ import { AddressCardComponent } from './address-card/address-card.component';
 import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { TripSettingsComponent } from './trip-settings/trip-settings.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TripSettingsComponent } from './trip-settings/trip-settings.component';
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
-    MatSliderModule
+    MatSliderModule,
+    DragDropModule,
   ],
   providers: [
     MatDatepickerModule,
