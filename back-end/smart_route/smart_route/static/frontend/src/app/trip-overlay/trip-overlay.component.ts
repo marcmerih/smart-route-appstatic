@@ -237,6 +237,7 @@ export class TripOverlayComponent implements OnInit {
       } else {
         this.getTTD();
       }
+      // Call /add-stop here with the latest this.addresses to reroute with the selected POIs after changing detour.
     });
   }
 
