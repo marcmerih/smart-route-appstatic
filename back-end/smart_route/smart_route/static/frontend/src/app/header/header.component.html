@@ -1,18 +1,17 @@
 <div class="row">
     <div class="col-md-12 header">
-        <div class="trip-overlay">
-            <span class="material-icons icon" (click)="toggleTripOverlay()"> {{ tripOverlayExpand }}</span>
-            <span class="app-title">Start planning a trip!</span>
+        <div class="header-menu">
+                <span class="material-icons icon" (click)="toggleTripOverlay()"> {{ tripOverlayExpand }}</span>
+                <span class="app-title">Start planning a trip!</span>
+                <div class="nav-icon">
+                    <span class="material-icons" *ngIf="userSignedIn">person</span>
+                    <span class="material-icons" *ngIf="!userSignedIn" (click)="openSignUp()">login</span>
+                    <span class="material-icons">directions_car</span>
+                    <span class="material-icons">favorite</span>
+                    <span class="material-icons">settings</span>
+                </div>
         </div>
-        <div class="icons-navigation">
-            <span class="material-icons" *ngIf="userSignedIn">person</span>
-            <span class="material-icons" *ngIf="!userSignedIn" (click)="openSignUp()">login</span>
-            <span class="material-icons">directions_car</span>
-            <span class="material-icons">favorite</span>
-            <span class="material-icons">settings</span>
-        </div>
-
-        <div class="col-md-3 trip-overlay-ting" *ngIf="isTripOverlayExpanded">
+        <div class="col-md-3 trip-overlay-card" *ngIf="isTripOverlayExpanded">
             <app-trip-overlay></app-trip-overlay>
         </div>
     </div>
