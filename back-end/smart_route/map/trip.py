@@ -63,8 +63,7 @@ class Trip():
             self.startingLocation)]
 
         for stop in stops.split('-,'):
-            encoded = self.router.GeoEncode(stop)
-            self.stops.append(encoded)
+            self.stops.append(self.router.GeoEncode(stop))
 
         self.stops.append(self.router.GeoEncode(self.endingLocation))
 
