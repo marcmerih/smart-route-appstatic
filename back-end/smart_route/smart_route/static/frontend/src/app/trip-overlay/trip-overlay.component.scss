@@ -10,6 +10,7 @@
         text-align: center;
         margin-right: 125px !important;
         margin-bottom: 20px !important;
+        overflow-y: visible;
     
         .locations {
             text-align: left !important;
@@ -146,6 +147,7 @@
     }
 
     .container-card {
+        height: auto !important;
         margin-bottom: 25px;
     }
 }

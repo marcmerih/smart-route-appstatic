@@ -13,6 +13,7 @@
     .header-menu {
         margin-left: 2%;
         margin-top: 18px;
+        z-index: 9999999 !important;
 
         .app-title {
             font-size: 12pt !important;
@@ -64,8 +65,8 @@
     }
 
     .trip-overlay-card {
-        float: left !important;
         margin-top: -90px !important;
+        z-index: 4 !important;
         width: 100% !important;
     }
 }

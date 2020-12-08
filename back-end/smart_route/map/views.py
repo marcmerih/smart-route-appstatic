@@ -51,7 +51,7 @@ def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
     global trip
     trip.startingLocation = startingLocation
     trip.endingLocation = endingLocation
-    trip.maximumDetour = int(maximumDetour)
+    trip.maximumDetour = maximumDetour
     return trip.addStop(stops)
     # trip.setRoute(request)
     # trip.setRestaurantsInDistance()

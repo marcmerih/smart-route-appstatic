@@ -59,13 +59,8 @@ class Trip():
         return HttpResponse(json.dumps(response_data), content_type="application/json")
         
     def addStop(self, stops):
-        self.stops = [self.router.GeoEncode(
-            self.startingLocation)]
-
         for stop in stops.split('-,'):
-            self.stops.append(self.router.GeoEncode(stop))
-
-        self.stops.append(self.router.GeoEncode(self.endingLocation))
+            self.stops.insert(len(self.stops)-1, self.router.GeoEncode(stop))
 
         self.route = self.router.Route(self.stops)
         return HttpResponse('{ "listOfNodes":"' + str(self.route) + '"}')

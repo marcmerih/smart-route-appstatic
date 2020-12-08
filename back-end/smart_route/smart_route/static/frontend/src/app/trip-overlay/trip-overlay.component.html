@@ -32,9 +32,7 @@
             <br>
             <div class="locations">
                 <span class="title">Trip Details</span> 
-                <button (click)="addIntermediaryAddress()"> to be removed </button>
             </div>
-            <br>
             <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box-undraggable">{{ startingLocation }}</div>
                 <div *ngFor="let address of addresses" class="example-box" cdkDrag>
@@ -43,7 +41,6 @@
                 </div>
                 <div class="example-box-undraggable">{{ endingLocation }}</div>
             </div>
-            <br>
             <br>
         </div>
     </div>
@@ -144,7 +141,7 @@
                 <app-card [name]="ttd[0]"
                     [address]="ttd[1]"
                     [rating]="ttd[2]"
-                    (poiAdded)="onPOIAdded($event)"
+                    (poiAdded)="poiAdded($event)"
                 ></app-card>
             </div>
 

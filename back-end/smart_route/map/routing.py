@@ -11,7 +11,8 @@ class Router():
 
     def Route(self, coords):
         route = self.client.directions(coords, format = "geojson")
-        return route['features'][0]['geometry']['coordinates']
+        if (route['features'][0]['geometry']['coordinates']):
+            return route['features'][0]['geometry']['coordinates']
 
     
 
