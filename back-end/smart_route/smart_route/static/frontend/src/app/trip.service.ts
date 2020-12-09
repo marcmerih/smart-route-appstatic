@@ -13,10 +13,12 @@ export class TripService {
   currentRoute: RouteObject;
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
+  public resetMarkers$: EventEmitter<string>;
 
   constructor(private http: HttpClient, private router: Router) {
     this.nodes$ = new EventEmitter();
     this.poiMarkers$ = new EventEmitter();
+    this.resetMarkers$ = new EventEmitter();
     this.tripSetupForm = new FormGroup({
       startingLocation: new FormControl(''),
       endingLocation: new FormControl('')
@@ -34,6 +36,10 @@ export class TripService {
   setPoiMarkers(coords) {
     console.log(coords);
     this.poiMarkers$.emit(coords);
+  }
+
+  resetMarkers() {
+    this.resetMarkers$.emit();
   }
 
   route(startingLocation, endingLocation, maximumDetourDuration) {
@@ -76,7 +82,6 @@ export class TripService {
   }
 
   updateCurrentPOIs(poi) {
-    console.log(poi)
     if (poi.currentLabel === 'add') {
       this.currentRoute.stops.push(poi.poi[1] + '-');
     } else {

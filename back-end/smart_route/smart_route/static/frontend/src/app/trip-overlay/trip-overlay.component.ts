@@ -160,6 +160,8 @@ export class TripOverlayComponent implements OnInit {
       this.hotelsClicked = false;
       this.ttdClicked = false;
       this.getRestaurants();
+    } else {
+      this.tripService.resetMarkers();
     }
   }
 
@@ -170,9 +172,13 @@ export class TripOverlayComponent implements OnInit {
       this.ttdClicked = false;
       this.getHotels();
 
-      const currentHotel = this.mockHotels;
-      this.hotels = currentHotel.listOfHotelsInfo;
-      this.hotelsCoords = currentHotel.listOfHotelsCoords;
+        // To be Remoed Once Data Acquired
+        const currentHotel = this.mockHotels;
+        this.hotels = currentHotel.listOfHotelsInfo;
+        this.hotelsCoords = currentHotel.listOfHotelsCoords;
+
+    } else {
+      this.tripService.resetMarkers();
     }
   }
 
@@ -183,9 +189,13 @@ export class TripOverlayComponent implements OnInit {
       this.hotelsClicked = false;
       this.getTTD();
 
-      const currentTTD = this.mockTTD;
-      this.ttds = currentTTD.listOfTTDInfo;
-      this.ttdsCoords = currentTTD.listOfTTDCoords;
+        // To be Remoed Once Data Acquired
+        const currentTTD = this.mockTTD;
+        this.ttds = currentTTD.listOfTTDInfo;
+        this.ttdsCoords = currentTTD.listOfTTDCoords;
+
+    } else {
+      this.tripService.resetMarkers();
     }
   }
 

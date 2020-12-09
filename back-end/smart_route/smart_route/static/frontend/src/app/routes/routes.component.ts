@@ -30,10 +30,12 @@ export class RoutesComponent implements AfterViewInit {
   basemap;
   layers;
   markers;
+  addedPOIs;
 
   constructor(private tripService: TripService) {
     this.layers = [];
     this.markers = [];
+    this.addedPOIs = []
   }
 
   ngAfterViewInit() {
@@ -51,6 +53,7 @@ export class RoutesComponent implements AfterViewInit {
     });
     this.tripService.nodes$.subscribe(listOfNodes => this.onListOfNodesReturned(listOfNodes));
     this.tripService.poiMarkers$.subscribe(coords => this.setPOIMarkers(coords));
+    this.tripService.resetMarkers$.subscribe(coords => this.resetMarkers());
   }
 
   onListOfNodesReturned(nodes) {
@@ -125,9 +128,7 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setPOIMarkers(coords) {
-    this.markers.forEach(element => {
-      this.map.removeLayer(element);
-    });
+    this.resetMarkers();
     coords.forEach(coordinates => {
       const POIMarker = new LayerVector({
         source: new SourceVector({
@@ -160,9 +161,7 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   routePath(nodes) {
-    this.layers.forEach(element => {
-      this.map.removeLayer(element);
-    });
+    this.resetRoute();
     var route = new Feature();
     var geometry = new LineString(nodes);
     geometry.transform('EPSG:4326', 'EPSG:3857'); //Transform to your map projection
@@ -186,6 +185,18 @@ export class RoutesComponent implements AfterViewInit {
     
     this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
     this.map.getView().setZoom(12);
+  }
+
+  resetMarkers() {
+    this.markers.forEach(element => {
+      this.map.removeLayer(element);
+    });
+  }
+
+  resetRoute() {
+    this.layers.forEach(element => {
+      this.map.removeLayer(element);
+    });
   }
 
 }
