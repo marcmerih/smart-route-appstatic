@@ -10,8 +10,11 @@ The team will develop an interactive map-based front-end tool with a Python-powe
 # Project Contributors
 
 Merih (Marc) Atasoy (UI + Backend)
+
 Chris Palumbo (Backend + A* + Recommender)
+
 Matteo Ciserani ( Recommender + Documentation)
+
 Bassam Bibi (Data Cleaning, Preprocessing, Transformation)
 
 # Supervisor
