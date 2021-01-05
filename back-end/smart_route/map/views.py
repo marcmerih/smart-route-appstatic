@@ -20,6 +20,8 @@ from rest_framework import viewsets
 
 trip = Trip()
 
+user = User()
+
 
 class DefaultRouteViewSet(viewsets.ModelViewSet):
     queryset = DefaultRoute.objects.all()
@@ -47,6 +49,7 @@ def getRestaurants(request):
     global trip
     return trip.getRestaurantsInDistance()
 
+
 def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
     global trip
     trip.startingLocation = startingLocation
@@ -58,3 +61,20 @@ def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
     # # must set hotels and ttd in distance here as well
     # return trip.getRoute(request)
 
+
+def signIn(request, username, password):
+    global user
+
+    signedIn = user.loadUser(username, password)
+
+    if signedIn == 0:
+        # Bad, Return No Account Found Error
+
+
+def createUser(request, username, password):
+    global user
+
+    created = user.createUser(username, password)
+
+    if created == 0:
+        # Bad, Return Unique Account Error
