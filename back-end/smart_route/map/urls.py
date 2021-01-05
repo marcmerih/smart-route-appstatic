@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^dir/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)/$',
         views.getInitialRoute),
     url(r'^restaurants/$', views.getRestaurants),
+    url(r'^hotels/$', views.getHotels),
+    url(r'^ttds/$', views.getTTDs),
     url(r'^add-stop/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)\-(?P<stops>.+)/$',
         views.addStop)
 ]

@@ -10,6 +10,8 @@ from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
 from .routing import Router
 from .trip import Trip
+from .user import User
+from .recommender import RecSys
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from rest_framework.mixins import (
@@ -50,6 +52,16 @@ def getRestaurants(request):
     return trip.getRestaurantsInDistance()
 
 
+def getHotels(request):
+    global trip
+    return trip.getHotelsInDistance()
+
+
+def getTTDs(request):
+    global trip
+    return trip.getTTDsInDistance()
+
+
 def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
     global trip
     trip.startingLocation = startingLocation
@@ -69,6 +81,7 @@ def signIn(request, username, password):
 
     if signedIn == 0:
         # Bad, Return No Account Found Error
+        print("No Account Found Error")
 
 
 def createUser(request, username, password):
@@ -78,3 +91,4 @@ def createUser(request, username, password):
 
     if created == 0:
         # Bad, Return Unique Account Error
+        print("Unique Account Error")

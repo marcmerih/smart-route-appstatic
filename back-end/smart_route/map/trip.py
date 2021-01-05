@@ -1,4 +1,6 @@
 from .routing import Router
+from .user import User
+from .recommender import RecSys
 from .misc import getDistance
 import pandas as pd
 import numpy as np
@@ -60,23 +62,23 @@ class Trip():
             self.recSys.getRestaurantModel(self.user.username))
         # getUserRestaruantPredictedScores(username) would return a column list of predicted ratings for that user
 
-        self.user_restaurants_data.extend(
-            self.recSys.getUserRestaruantRatings(self.user.username))
+        # self.user_restaurants_data.extend(
+        #     self.recSys.getUserRestaruantRatings(self.user.username))
         # getUserRestaruantRatings(username) would return a column list of ratings for that user
 
         global hotels_data
 
         self.user_hotels_data = hotels_data.extend(
-            getUserHotelPredictedScores(username))
+            self.recSys.getHotelModel(self.user.username))
 
-        self.user_hotels_data.extend(getUserHotelRatings(username))
+        # self.user_hotels_data.extend(getUserHotelRatings(username))
 
         global ttds_data
 
         self.user_ttds_data = ttds_data.extend(
-            getUserTTDPredictedScores(username))
+            self.recSys.getTTDModel(self.user.username))
 
-        self.user_ttds_data.extend(getUserTTDRatings(username))
+        # self.user_ttds_data.extend(getUserTTDRatings(username))
 
     # ------ For Manual-Routing -------
 
@@ -128,13 +130,37 @@ class Trip():
     def getHotelsInDistance(self):
         hotels = hotels_data[self.hotelsInDistance].sort_values(
             self.sort_by, ascending=False).reset_index()
-        hotels_info = hotels[["restaurant_name",
-                              "address", "review_score"]].values.tolist()
+        hotels_info = hotels[["hotel_name",
+                              "address", "review_score", "predicted_score", "user_rating"]].values.tolist()
         hotels_coords = hotels[["lon", "lat"]].values.tolist()
 
         response_data = {}
         response_data['listOfHotelsInfo'] = hotels_info
         response_data['listOfHotelsCoords'] = hotels_coords
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+    def setTTDsInDistance(self):
+        global ttds_data
+        poi_coords = ttds_data[["lon", "lat"]].values.tolist()
+        distance_matrix = []
+        for poi in poi_coords:
+            clostest_node_in_route = np.sum(
+                abs(np.matrix(self.route)-poi), axis=1).argmin()
+            distance_matrix.append(getDistance(
+                self.route[clostest_node_in_route], poi))
+        self.ttdsInDistance = [
+            dist <= self.maximumDetour for dist in distance_matrix]
+
+    def getTTDsInDistance(self):
+        ttds = ttds_data[self.ttdsInDistance].sort_values(
+            self.sort_by, ascending=False).reset_index()
+        ttds_info = ttds[["ttd_name",
+                          "address", "review_score", "predicted_score", "user_rating"]].values.tolist()
+        ttds_coords = ttds[["lon", "lat"]].values.tolist()
+
+        response_data = {}
+        response_data['listOfHotelsInfo'] = ttds_info
+        response_data['listOfHotelsCoords'] = ttds_coords
         return HttpResponse(json.dumps(response_data), content_type="application/json")
 
     def addStop(self, stops):

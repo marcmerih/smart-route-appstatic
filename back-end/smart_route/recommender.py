@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 # Item-Item Similarity Matrix - IxI
 # User Rating Vector for Each User - UxI (1 x I)
@@ -11,12 +12,13 @@ ii_sim_ttd_matrix = pd.read_csv('itemitem_ttd_sim.csv')
 
 class RecSys():
 
-    self.restaurant_model  # Prediction Matrix:  -> Vector of len restaurants
-    self.restaurant_model  # Prediction Matrix:  -> Vector of len restaurants
-    self.restaurant_model  # Prediction Matrix:  -> Vector of len restaurants
+    def __init__(self):
+        self.restaurant_model = []  # Prediction Matrix:  -> Vector of len restaurants
+        self.hotel_model = []  # Prediction Matrix:  -> Vector of len restaurants
+        self.ttd_model = []  # Prediction Matrix:  -> Vector of len restaurants
 
     # Dictionary of Restaurant-Rating Pair
-    def predictUserRestaurantRatings(user_rating_dictionary):
+    def predictUserRestaurantRatings(self, user_rating_dictionary):
 
         global ii_sim_restaurant_matrix
 
@@ -44,5 +46,69 @@ class RecSys():
 
         self.restaurant_model = predictionMatrix
 
+    # Dictionary of Hotel-Rating Pair
+    def predictUserHotelRatings(self, user_rating_dictionary):
+
+        global ii_sim_hotel_matrix
+
+        ii_similarity = ii_sim_hotel_matrix
+
+        # train_matrix is built from user_rating_dictionary
+
+        train_vector = np.zeros(len(ii_similarity))
+        for item in user_rating_dictionary.keys():
+            train_vector[item-1] = user_rating_dictionary[item]
+
+        # Initialize the predicted rating vector with zeros (# of Hotels in DB)
+        temp_vector = np.zeros(len(ii_similarity))
+
+        # If been rated -> Set to 1, for the Normalizer not the predicted scores
+        temp_vector[train_vector.nonzero()] = 1
+
+        # UxI: UxI mul IxI -> 1xI: 1xI mul IxI -> Vector of len hotels
+        normalizer = np.matmul(temp_vector, ii_similarity)
+
+        normalizer[normalizer == 0] = 1e-5
+
+        # UxI: UxI mul IxI -> 1xI: 1xI mul IxI -> Vector of len hotels
+        predictionMatrix = np.matmul(train_vector, ii_similarity)/normalizer
+
+        self.hotel_model = predictionMatrix
+
+    # Dictionary of TTD-Rating Pair
+    def predictUserTTDRatings(self, user_rating_dictionary):
+
+        global ii_sim_ttd_matrix
+
+        ii_similarity = ii_sim_ttd_matrix
+
+        # train_matrix is built from user_rating_dictionary
+
+        train_vector = np.zeros(len(ii_similarity))
+        for item in user_rating_dictionary.keys():
+            train_vector[item-1] = user_rating_dictionary[item]
+
+        # Initialize the predicted rating vector with zeros (# of TTDs in DB)
+        temp_vector = np.zeros(len(ii_similarity))
+
+        # If been rated -> Set to 1, for the Normalizer not the predicted scores
+        temp_vector[train_vector.nonzero()] = 1
+
+        # UxI: UxI mul IxI -> 1xI: 1xI mul IxI -> Vector of len ttds
+        normalizer = np.matmul(temp_vector, ii_similarity)
+
+        normalizer[normalizer == 0] = 1e-5
+
+        # UxI: UxI mul IxI -> 1xI: 1xI mul IxI -> Vector of len ttds
+        predictionMatrix = np.matmul(train_vector, ii_similarity)/normalizer
+
+        self.ttd_model = predictionMatrix
+
     def getRestaurantModel(self):
         return self.restaurant_model
+
+    def getHotelModel(self):
+        return self.hotel_model
+
+    def getTTDModel(self):
+        return self.ttd_model

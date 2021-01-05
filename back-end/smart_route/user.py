@@ -50,14 +50,10 @@ class User():
 
         self.username = username
         self.password = password
-
         self.saveUserInfo
 
     def saveUserInfo(self):
         global users
-
-        userrow = users[users['username'] ==
-                        self.username]
 
         users.set_value(self.username, 'username', self.username)
         users.set_value(self.username, 'password', self.password)
@@ -81,5 +77,5 @@ class User():
         self.saveUserInfo
 
     def setTTDRating(self, ttdID, rating):
-        self.ttds_ratings[ttdID] = rating
+        self.ttd_ratings[ttdID] = rating
         self.saveUserInfo
