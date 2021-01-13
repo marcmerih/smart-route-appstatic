@@ -1,0 +1,58 @@
+
+.container {
+    height: 820px !important;
+    margin-bottom: 25px;
+    overflow-y: auto !important;
+    margin-top: 20px;
+    margin-left: -127px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    width: 550px;
+    border-radius: 25px;
+
+    .location-card {
+        height: 110px;
+        width: 324px;
+        border-radius: 50px;
+        margin-left: 180px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .slide {
+        margin: 15px;
+
+        .poi-card {
+            height: 235px;
+            margin-left: 170px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            width: 324px;
+            border-radius: 15px;
+        }
+    }
+      
+}
+
+.container::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+.container::-webkit-scrollbar-track {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+    // background: url(../../assets/car.png) 0 0;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    // -webkit-transform: rotate(90deg);
+    // -moz-transform: rotate(90deg);
+    // -ms-transform: rotate(90deg);
+    // -o-transform: rotate(90deg);
+    // transform: rotate(90deg);
+    background-size: 25px;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+

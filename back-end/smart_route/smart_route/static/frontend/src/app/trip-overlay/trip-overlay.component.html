@@ -21,18 +21,65 @@
         <div class="buttons">
             <button mat-raised-button class="route"
             (click)="route()"
-            [disabled]="isRouteDisabled"><mat-icon>directions</mat-icon>Route</button>
-            <button mat-button class="trip-settings" [disabled]="isRouteDisabled"
-            (click)="explore()"><mat-icon>explore</mat-icon>Explore</button>
+            [disabled]="isRouteDisabled"><mat-icon>directions</mat-icon> Route</button>
         </div>
     </div>
+
+    <div *ngIf="currentStep === 1" class="col-md-12 container-trips">
+        <div class="col-md-12">
+            <button mat-raised-button class="refreshButton"
+                (click)="route()"
+                [disabled]="isRouteDisabled"><mat-icon>refresh</mat-icon> Refresh Trip</button>
+        </div>
+        <app-carousel [items]="carouselOffers" [label]="test"></app-carousel>
+    </div>
+<!-- 
+    <div *ngIf="currentStep === 1" class="col-md-12 edit-preferences">
+        <div [class]=""></div>
+ -->
+
+
+
+
+
+        <div [class]="editPreferencesClicked ? 'editPreferencesButtonClicked' : 'editPreferencesButton'" (click)="clickEditPreferences()">
+           <button [class]="editPreferencesClicked ? 'openTitle' : ''">
+                <mat-icon>edit_location_alt</mat-icon> Edit Preferences
+                <br>
+                <br>
+                <div *ngIf="editPreferencesClicked" style="float: left; text-align: left; font-size: 12pt;">
+                    <span>Number of Stops</span>
+                    <br>
+                    <span>Maximum Trip Duration (hours)</span>
+                    <br>
+                    <span>Trip Budget</span>
+                    <br>
+                    <span>Category Selection</span>
+                    <br>
+                    <span>Tag Search</span>
+                    <br>
+                    <button mat-raised-button class="refreshButton" (click)="closePreferences()">Cancel</button>
+                    <button mat-raised-button class="refreshButton" (click)="updatePreferences()">Done</button>
+                </div>
+            </button>
+        </div>
     
-    <div *ngIf="currentStep === 1">
+    <!-- TO BE REMOVED -->
+    <!-- <div *ngIf="currentStep === 1">
         <div class="col-md-12 overlay">
+            <carousel class="example-list">
+                <div class="carousel-cell">
+                    <span>Test</span>
+                </div>
+                <div class="carousel-cell">
+                    <span>Test</span>
+                </div>
+            </carousel>
             <br>
             <div class="locations">
                 <span class="title">Trip Details</span> 
             </div>
+
             <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box-undraggable">{{ startingLocation }}</div>
                 <div *ngFor="let address of addresses" class="example-box" cdkDrag>
@@ -153,5 +200,5 @@
                 ></mat-paginator>
             </div>
         </div>
-    </ng-container>
+    </ng-container> -->
 </div>

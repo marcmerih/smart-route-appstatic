@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddIntermediateStopComponent } from '../add-intermediate-stop/add-intermediate-stop.component';
 import { TripService } from '../trip.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
 import { HttpClient } from '@angular/common/http';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { RoutesComponent } from '../routes/routes.component';
@@ -17,7 +15,14 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./trip-overlay.component.scss']
 })
 export class TripOverlayComponent implements OnInit {
+  editPreferencesClicked = false;
   hasBeenRouted = false;
+  carouselOffers = [
+    { img: 'http://placehold.it/350x150/000000' },
+    { img: 'http://placehold.it/350x150/111111' },
+    { img: 'http://placehold.it/350x150/333333' },
+    { img: 'http://placehold.it/350x150/666666' }
+  ];
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
@@ -129,187 +134,12 @@ export class TripOverlayComponent implements OnInit {
     });
   }
 
-  explore() {
-    console.log("oops");
+  clickEditPreferences() {
+    this.editPreferencesClicked = !this.editPreferencesClicked;
   }
 
-  openTripSettings() {
-    let dialogRefSettings = this.dialog.open(TripSettingsComponent, {
-      height: '60vh',
-      width: '60vw'
-    });
-
-    dialogRefSettings.afterClosed().subscribe(result => {
-      this.tripSettings.maximumDetourDuration = result;
-    });
-  }
-
-  hasBeenClicked(tag: string) {
-    if (tag === 'restaurant') {
-      this.displayRestaurants();
-    } else if (tag === 'hotels') {
-      this.displayHotels();
-    } else {
-      this.displayTTD();
-    }
-  }
-
-  displayRestaurants() {
-    this.restaurantClicked = !this.restaurantClicked;
-    if (this.restaurantClicked) {
-      this.hotelsClicked = false;
-      this.ttdClicked = false;
-      this.getRestaurants();
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  displayHotels() {
-    this.hotelsClicked = !this.hotelsClicked;
-    if (this.hotelsClicked) {
-      this.restaurantClicked = false;
-      this.ttdClicked = false;
-      this.getHotels();
-
-        // To be Remoed Once Data Acquired
-        const currentHotel = this.mockHotels;
-        this.hotels = currentHotel.listOfHotelsInfo;
-        this.hotelsCoords = currentHotel.listOfHotelsCoords;
-
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  displayTTD() {
-    this.ttdClicked = !this.ttdClicked;
-    if (this.ttdClicked) {
-      this.restaurantClicked = false;
-      this.hotelsClicked = false;
-      this.getTTD();
-
-        // To be Remoed Once Data Acquired
-        const currentTTD = this.mockTTD;
-        this.ttds = currentTTD.listOfTTDInfo;
-        this.ttdsCoords = currentTTD.listOfTTDCoords;
-
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  sortBySelected($event) {
-    console.log($event);
-  }
-
-  poiAdded($event) {
-    this.tripService.poiAdded($event).subscribe(request => {
-      this.currentRoute = JSON.parse(request.listOfNodes);
-      this.tripService.setListOfNodes(this.currentRoute);
-      this.updateAddresses($event);
-      console.log(this.addresses)
-    });
-  }
-
-  poiLiked($event) {
-    this.tripService.poiLiked($event);
-  }
-
-  poiDisliked($event) {
-    this.tripService.poiDisliked($event);
-  }
-
-  updateAddresses(poi) {
-    if (poi.currentLabel === 'add') {
-      this.addresses.push(poi.poi[1])
-    } else {
-      this.addresses = this.addresses.filter(x => {
-        return x[0] != poi.poi[1];
-      });
-    }
-  }
-
-  captureValue($event) {
-    return $event + 'km';
-    // Call endpoint to change detour distance here.
-  }
-
-  updateMaximumDetour($event) {
-    this.tripSettings.maximumDetourDuration = $event.value;
-    this.tripService.route(this.startingLocation, this.endingLocation, this.tripSettings.maximumDetourDuration).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
-      this.tripService.setListOfNodes(this.currentRoute);
-      if (this.restaurantClicked) {
-        this.getRestaurants();
-      } else if (this.hotelsClicked) {
-        this.getHotels();
-      } else {
-        this.getTTD();
-      }
-      // Call /add-stop here with the latest this.addresses to reroute with the selected POIs after changing detour.
-    });
-  }
-
-  onPageChange($event: PageEvent) {
-    console.log(this.ttdsCoords);
-    let currentArray;
-    let currentArrayCoords;
-    if (this.restaurantClicked) {
-      currentArray = this.restaurants;
-      currentArrayCoords = this.restaurantsCoords;
-    } else if (this.hotelsClicked) {
-      currentArray = this.hotels;
-      currentArrayCoords = this.hotelsCoords;
-    } else {
-      currentArray = this.ttds;
-      currentArrayCoords = this.ttdsCoords;
-    }
-
-    const startIndex = $event.pageIndex * $event.pageSize;
-    let endIndex = startIndex + $event.pageSize - 1;
-    if (endIndex > currentArray.length) {
-      endIndex = currentArray.length;
-    }
-    this.pageSlice = currentArray.slice(startIndex, endIndex);
-    this.tripService.setPoiMarkers(currentArrayCoords.slice(startIndex,endIndex));
-  }
-
-  getRestaurants() {
-    this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
-      this.restaurants = request.listOfRestaurantsInfo;
-      this.restaurantsCoords = request.listOfRestaurantsCoords
-      this.pageSlice = this.restaurants.slice(0,9);
-      this.tripService.setPoiMarkers(this.restaurantsCoords.slice(0,9));
-    });
-
-    // this.restaurants = this.mockRestaurants.listOfRestaurantsInfo;
-    // this.restaurantsCoords = this.mockRestaurants.listOfRestaurantsCoords;
-    // this.pageSlice = this.restaurants.slice(0,9);
-    // this.tripService.setPoiMarkers(this.restaurantsCoords.slice(0,9));
-  }
-
-  getHotels() {
-    // this.tripService.getHotels().subscribe((request: HotelsModel) => {
-      // this.hotels = request.listOfHotelsInfo;
-      // this.hotelsCoords = request.listOfHotelsCoords
-      // this.pageSlice = this.hotels.slice(0, 9);
-      // this.tripService.setPoiMarkers(this.hotelsCoords.slice(0,9));
-    // });
-  }
-
-  getTTD() {
-    // this.tripService.getTTD().subscribe((request: HotelsModel) => {
-    //   this.ttds = request.listOfTTDInfo;
-    // this.ttdsCoords = request.listOfTTDCoords;
-    // this.pageSlice = this.ttds.slice(0,10);
-    //   console.log(request.listOfTTDsInfo);
-    // });
-
-    this.ttds = this.mockTTD.listOfTTDInfo;
-    this.ttdsCoords = this.mockTTD.listOfTTDCoords;
-    this.pageSlice = this.ttds.slice(0,9);
-    this.tripService.setPoiMarkers(this.ttdsCoords.slice(0,9));
+  closePreferences() {
+    this.clickEditPreferences();
   }
 
   get startingLocation() {

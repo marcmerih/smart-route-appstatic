@@ -24,13 +24,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { AddressCardComponent } from './address-card/address-card.component';
-import { AddIntermediateStopComponent } from './add-intermediate-stop/add-intermediate-stop.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
-import { TripSettingsComponent } from './trip-settings/trip-settings.component';
 import { CardComponent } from './card/card.component';
 import { TagComponent } from './tag/tag.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +42,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ProfileCreationComponent,
     TripOverlayComponent,
     AddressCardComponent,
-    AddIntermediateStopComponent,
     TagsComponent,
-    TripSettingsComponent,
     CardComponent,
-    TagComponent
+    TagComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +55,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
+    SlickCarouselModule,
 
     // Angular Material
     MatButtonToggleModule,
@@ -69,13 +70,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSliderModule,
     MatPaginatorModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
   ],
   providers: [
     MatDatepickerModule,
     MatDialogModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddIntermediateStopComponent]
+  entryComponents: []
 })
 export class AppModule { }
