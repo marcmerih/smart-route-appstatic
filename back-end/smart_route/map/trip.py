@@ -1,66 +1,99 @@
-from .routing import Router
-from .misc import getDistance
+from .planner import Planner
+from .user import User
+from .recommender import RecSys
+from .geographer import Geographer
 import pandas as pd
 import numpy as np
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 import json
 
+
 restaurants_data = pd.read_csv('resDataExample.csv')
+hotels_data = pd.read_csv('hotelDataExample.csv')
+ttds_data = pd.read_csv('ttdDataExample.csv')
 
 
 class Trip():
     def __init__(self):
+        self.users = []
+        self.recSys = RecSys()
+        self.geographer = Geographer()
+
         self.startingLocation = ''
         self.endingLocation = ''
-        self.maximumDetour = 3
+        self.destinations = []
+
         self.stops = []
         self.route = []
-        self.router = Router()
 
-        self.sort_by = "review_score"
+        self.lockedStops = {}
 
-        self.restaurantsInDistance = []
-        self.hotelsInDistance = []
-        self.ttdInDistance = []
+        # Trip Preferences --Replace None with Default Settings--
+        self.tripPreferences = {
+            'tripDuration': None, 'numStops': None, 'budget': None, 'keyphrases': None}
 
     def initializeDestinations(self):
-        self.stops = [self.router.GeoEncode(
-            self.startingLocation), self.router.GeoEncode(self.endingLocation)]
+        self.destinations = [self.geographer.GeoEncode(
+            self.startingLocation), self.geographer.GeoEncode(self.endingLocation)]
 
-    def setRoute(self):
-        self.route = self.router.Route(self.stops)
+    def addUserToTrip(self, user):
+        self.users.append(user)
 
-    def getRoute(self, request):
-        return HttpResponse('{ "listOfNodes":"' + str(self.route) + '"}')
+        # Build The Predicted Item Score Vector for each POI Type
+        self.recSys.predictRestaurantRatings(self.users)
+        self.recSys.predictHotelRatings(self.users)
+        self.recSys.predictTTDRatings(self.users)
 
-    def setRestaurantsInDistance(self):
+        # Update Predicted_Score Column in each CSV...
+        self.geographer.setPredictedScores('R', recSys.getRestaurantModel())
+        self.geographer.setPredictedScores('H', recSys.getHotelModel())
+        self.geographer.setPredictedScores('T', recSys.getTTDModel())
+
+    def planTrip(self):
+        self.route, self.stops = self.geographer.planTrip(
+            self.destinations, self.tripPrefences)
+
+    def getTrip(self, request):
+        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '" + }')
+
+    def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref, keyphrases):
+        self.tripPreferences['tripDuration'] = tripDurationPref
+        self.tripPreferences['numStops'] = numStopsPref
+        self.tripPreferences['budget'] = budgetPref
+        self.tripPreferences['keyphrases'] = keyphrases
+
+    def lockStop(self, poi_type, poi_id):
         global restaurants_data
-        poi_coords = restaurants_data[["lon", "lat"]].values.tolist()
-        distance_matrix = []
-        for poi in poi_coords:
-            clostest_node_in_route = np.sum(
-                abs(np.matrix(self.route)-poi), axis=1).argmin()
-            distance_matrix.append(getDistance(
-                self.route[clostest_node_in_route], poi))
-        self.restaurantsInDistance = [
-            dist <= self.maximumDetour for dist in distance_matrix]
+        global hotels_data
+        global ttds_data
 
-    def getRestaurantsInDistance(self):
-        restaurants = restaurants_data[self.restaurantsInDistance].sort_values(
-            "review_score", ascending=False).reset_index()
-        restaurants_info = restaurants[["restaurant_name",
-                                        "address", "review_score"]].values.tolist()
-        restaurants_coords = restaurants[["lon", "lat"]].values.tolist()
+        if poi_type == 'restaurant':
+            # Write To: restaurants_data (csv)
+            # For POI === poi_id: 1) Record predicted_score value, 2) Change predicted_score to infinity
+            self.lockedStops[poi_id] = recordedPredictedScore
+            ...
 
-        response_data = {}
-        response_data['listOfRestaurantsInfo'] = restaurants_info
-        response_data['listOfRestaurantsCoords'] = restaurants_coords
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
-        
-    def addStop(self, stops):
-        for stop in stops.split('-,'):
-            self.stops.insert(len(self.stops)-1, self.router.GeoEncode(stop))
+        else if poi_type == 'hotel':
+            ...
 
-        self.route = self.router.Route(self.stops)
-        return HttpResponse('{ "listOfNodes":"' + str(self.route) + '"}')
+        else if poi_type == 'ttd':
+            ...
+
+    def unlockStop(self, poi_type, poi_id):
+        global restaurants_data
+        global hotels_data
+        global ttds_data
+
+        if poi_type == 'restaurant':
+            # Write To: restaurants_data (csv)
+            # For POI === poi_id: 1) Change predicted_score to recordedPredicatedScore, 2) Remove from lockedStops
+            del self.lockedStops[poi_id]
+
+            ...
+
+        else if poi_type == 'hotel':
+            ...
+
+        else if poi_type == 'ttd':
+            ...

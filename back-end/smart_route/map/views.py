@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-# from pyroutelib3 import Router # Import the router
-
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import TemplateView
 from map.models import DefaultRoute
 from map.serializers import DefaultRouteSerializer
-from .routing import Router
+
 from .trip import Trip
+from .user import User
+from .recommender import RecSys
+
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from rest_framework.mixins import (
@@ -19,6 +20,10 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import viewsets
 
 trip = Trip()
+
+user = User()
+
+guests = []
 
 
 class DefaultRouteViewSet(viewsets.ModelViewSet):
@@ -31,30 +36,77 @@ class FrontendRenderView(View):
         return render(request, "home.html", {})
 
 
-def getInitialRoute(request, startingLocation, endingLocation, maximumDetour):
+def signIn(request, username, password):
+    global user
     global trip
-    trip.startingLocation = startingLocation
-    trip.endingLocation = endingLocation
-    trip.maximumDetour = int(maximumDetour)
-    trip.initializeDestinations()
-    trip.setRoute()
-    trip.setRestaurantsInDistance()
-    # must set hotels and ttd in distance here as well
-    return trip.getRoute(request)
+
+    signedIn = user.loadUser(username, password)
+
+    if signedIn == 0:
+        # Bad, Return No Account Found Error
+        print("No Account Found Error")
+
+    trip.addUserToTrip(user)
 
 
-def getRestaurants(request):
+def addGuestToTrip(request, username, password):
+    global user
+    global guests
+
+    guestUser = User()
+    signedIn = guestUser.loadUser(username, password)
+
+    guests.append(guestUser)
+
+    trip.addUserToTrip(guestUser)
+
+
+def createUser(request, username, password):
+    global user
+
+    created = user.createUser(username, password)
+
+    if created == 0:
+        # Bad, Return Unique Account Error
+        print("Unique Account Error")
+
+
+def getInitialTrip(request, startingLocation, endingLocation):
     global trip
-    return trip.getRestaurantsInDistance()
+    trip.startingLocation = startingLocation  # Set Starting Location
+    trip.endingLocation = endingLocation  # Set Ending Location
+    trip.initializeDestinations()  #
+    trip.planTrip()
+    return trip.getTrip(request)
 
-def addStop(request, startingLocation, endingLocation, maximumDetour, stops):
+
+def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref, keyphrases):
     global trip
-    trip.startingLocation = startingLocation
-    trip.endingLocation = endingLocation
-    trip.maximumDetour = maximumDetour
-    return trip.addStop(stops)
-    # trip.setRoute(request)
-    # trip.setRestaurantsInDistance()
-    # # must set hotels and ttd in distance here as well
-    # return trip.getRoute(request)
+    trip.updateTripPreferences(
+        tripDurationPref, numStopsPref, budgetPref, keyphrases)
+    trip.planTrip()
+    return trip.getTrip(request)
 
+
+def lockStop(request, poi_type, poi_id):
+    global trip
+
+    trip.lockStop(poi_type, poi_id)
+
+
+def unlockStop(request, poi_type, poi_id):
+    global trip
+
+    trip.unlockStop(poi_type, poi_id)
+
+
+def setRating(request, poi_type, poi_id, rating):
+    global user
+    if poi_type == 'R':
+        user.setRestaruantRating(poi_type, poi_id, rating)
+
+    elif poi_type == 'H':
+        user.setHotelRating(poi_type, poi_id, rating)
+
+    elif poi_type == 'T':
+        user.setTTDRating(poi_type, poi_id, rating)

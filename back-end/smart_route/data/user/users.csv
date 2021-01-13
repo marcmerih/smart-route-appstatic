@@ -1,0 +1,4 @@
+username,password,restaurant_ratings,hotel_ratings,ttd_ratings
+randomuser,randompassword,{},{},{}
+chris,123,"{""R1"": 5, ""R2"": 5}","{""H1"": 2, ""H2"": 5}","{""T1"": 5, ""T2"": 5}"
+newUser1,123,{},"{""H1"": 5, ""H2"": 5}",{}

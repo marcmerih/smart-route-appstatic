@@ -8,15 +8,23 @@ router = DefaultRouter()
 router.register(r'route', views.DefaultRouteViewSet)
 
 urlpatterns = [
-    # url('^', include(router.urls)),
+    # Initial View, Landing Page for the App
     url(r'^$', FrontendRenderView.as_view(), name="home"),
-    url(r'^dir/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)/$',
-        views.getInitialRoute),
-    url(r'^restaurants/$', views.getRestaurants),
-    url(r'^add-stop/(?P<startingLocation>.+)\-(?P<endingLocation>.+)\-(?P<maximumDetour>.+)\-(?P<stops>.+)/$',
-        views.addStop)
+    # Initial Trip Planner is Called, Using Default Trip Preferences
+    url(r'^signIn/(?P<username>.+)\-(?P<password>.+)/$',
+        views.signIn),
+    url(r'^addGuest/(?P<username>.+)\-(?P<password>.+)/$',
+        views.addGuestToTrip),
+    url(r'^createUser/(?P<username>.+)\-(?P<password>.+)/$',
+        views.createUser),
+    url(r'^init/(?P<startingLocation>.+)\-(?P<endingLocation>.+)/$',
+        views.getInitialTrip),
+    url(r'^refresh/(?P<tripDurationPref>.+)\-(?P<numStopsPref>.+)\-(?P<budgetPref>.+)\-(?P<keyphrases>.+)/$',
+        views.refreshTrip),
+    url(r'^lockStop/(?P<poi_type>.+)\-(?P<poi_id>.+)/$',
+        views.lockStop),
+    url(r'^unlockStop/(?P<poi_type>.+)\-(?P<poi_id>.+)/$',
+        views.unlockStop),
+    url(r'^setRating/(?P<poi_type>.+)\-(?P<poi_id>.+)\-(?P<score>.+)/$',
+        views.setRating),
 ]
-
-# urlpatterns += [
-#     url(r'(?P<path>.*)', FrontendRenderView.as_view(), name="home")
-# ]
