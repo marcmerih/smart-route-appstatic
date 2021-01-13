@@ -18,3 +18,21 @@ class Restaruant(models.Model):
     price = models.FloatField()
     lat = models.FloatField()
     lon = models.FloatField()
+
+
+class Hotel(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    review_score = models.FloatField()
+    price = models.FloatField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+
+
+class TTD(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    review_score = models.FloatField()
+    price = models.FloatField()
+    lat = models.FloatField()
+    lon = models.FloatField()

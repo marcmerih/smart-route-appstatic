@@ -1,7 +1,8 @@
 import pandas as pd
+import jsonpickle
 
 
-users = pd.read_csv('users.csv')
+usersData = pd.read_csv('data/user/users.csv')
 
 
 class User():
@@ -11,71 +12,78 @@ class User():
         self.password = ''
 
         self.restaurant_ratings = {}  # Dictionary of Restaurant-Rating Pair
-        # Dictionary of Binary Restaurant-User Pairs where 1 -> Added, 0 -> Otherwise
-        self.restaruants_added = {}
-
         self.hotel_ratings = {}  # Dictionary of Hotel-Rating Pair
-        # Dictionary of Binary Hotel-User Pairs where 1 -> Added, 0 -> Otherwise
-        self.hotels_added = {}
-
         self.ttd_ratings = {}  # Dictionary of ThingsToDo-Rating Pair
-        # Dictionary of Binary ThingsToDo-User Pairs where 1 -> Added, 0 -> Otherwise
-        self.ttds_added = {}
 
     def loadUser(self, username, password):
-        global users
+        global usersData
 
-        userrow = users[users['username'] ==
-                        username & users['password'] == password]
+        userrow = usersData[(usersData['username'] ==
+                             username) & (usersData['password'] == password)]
 
-        if userrow == None:
-            return 0
+        if userrow.empty:
+            return False
 
-        self.username = userrow[0]
-        self.password = userrow[1]
+        self.username = userrow['username']
+        self.password = userrow['password']
 
-        # Properly load Dictionary somehow
-        self.restaurant_ratings = userrow[2]
-        self.restaruants_added = userrow[3]
-        self.hotel_ratings = userrow[4]
-        self.hotels_added = userrow[5]
-        self.ttd_ratings = userrow[6]
-        self.ttds_added = userrow[7]
+        # Properly load Dictionary
 
-        return 1
+        self.restaurant_ratings = jsonpickle.decode(
+            userrow['restaurant_ratings'].item())
+        self.hotel_ratings = jsonpickle.decode(userrow['hotel_ratings'].item())
+        self.ttd_ratings = jsonpickle.decode(userrow['ttd_ratings'].item())
+
+    def checkUnique(self, username, password):
+        global usersData
+
+        userrow = usersData[(usersData['username'] ==
+                             username) & (usersData['password'] == password)]
+
+        if userrow.empty:
+            return True
+        else:
+            return False
 
     def createUser(self, username, password):
+        global usersData
 
-        global users
+        check = User()
+        unique = check.checkUnique(username, password)
 
-        self.username = username
-        self.password = password
-        self.saveUserInfo
+        if unique:
+            self.username = username
+            self.password = password
+            self.saveUserInfo()
+
+        else:
+            print("Looks like there is already a user with that username. Try again.")
 
     def saveUserInfo(self):
-        global users
+        global usersData
 
-        users.set_value(self.username, 'username', self.username)
-        users.set_value(self.username, 'password', self.password)
-        users.set_value(self.username, 'restaurant_ratings',
-                        self.restaurant_ratings)
-        users.set_value(self.username, 'restaruants_added',
-                        self.restaruants_added)
-        users.set_value(self.username, 'hotel_ratings', self.hotel_ratings)
-        users.set_value(self.username, 'hotels_added', self.hotels_added)
-        users.set_value(self.username, 'ttd_ratings', self.ttd_ratings)
-        users.set_value(self.username, 'ttds_added', self.ttds_added)
+        usersData.at[self.username, 'username'] = self.username
+        usersData.at[self.username, 'password'] = self.password
+        usersData.at[self.username, 'restaurant_ratings'] = jsonpickle.encode(
+            self.restaurant_ratings)
+        usersData.at[self.username, 'hotel_ratings'] = jsonpickle.encode(
+            self.hotel_ratings)
+        usersData.at[self.username, 'ttd_ratings'] = jsonpickle.encode(
+            self.ttd_ratings)
 
-        users.to_csv('users.csv', index=False)
+        usersData.to_csv('data/users.csv', index=False)
 
-    def setRestaruantRating(self, restaurantID, rating):
+    def setRestaurantRating(self, poi_type, poi_id, rating):
+        restaurantID = poi_type + str(poi_id)
         self.restaurant_ratings[restaurantID] = rating
-        self.saveUserInfo
+        self.saveUserInfo()
 
-    def setHotelRating(self, hotelID, rating):
+    def setHotelRating(self, poi_type, poi_id, rating):
+        hotelID = poi_type + str(poi_id)
         self.hotel_ratings[hotelID] = rating
-        self.saveUserInfo
+        self.saveUserInfo()
 
-    def setTTDRating(self, ttdID, rating):
+    def setTTDRating(self, poi_type, poi_id, rating):
+        ttdID = poi_type + str(poi_id)
         self.ttd_ratings[ttdID] = rating
-        self.saveUserInfo
+        self.saveUserInfo()
