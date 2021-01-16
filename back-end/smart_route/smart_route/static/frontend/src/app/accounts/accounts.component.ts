@@ -3,10 +3,17 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
+import { UserService } from './user.service';
+
 enum profileCreationSteps {
   signUp = 0,
   profileDetails = 1,
   interestSelection = 2
+}
+
+export interface User {
+  username: string;
+  password: string;
 }
 @Component({
   selector: 'app-accounts',
@@ -23,7 +30,7 @@ export class AccountsComponent implements OnInit {
   subscription: Subscription = new Subscription();
   accountProgression = 0
 
-  constructor(private router: Router, private dialogRef: MatDialogRef<AccountsComponent>) {
+  constructor(private router: Router, private dialogRef: MatDialogRef<AccountsComponent>, private userService: UserService) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -56,14 +63,26 @@ export class AccountsComponent implements OnInit {
         this.currentProfileStep += 1;
         this.router.navigateByUrl('/accounts/profile-creation');
       }
-      console.log(formGroup);
-      // Make call to backend to save formgroup in db.
+      const userObject: User = {
+        username: formGroup.get('username').value,
+        password: formGroup.get('password').value  
+      }
+      this.userService.createAccount(userObject).subscribe(() => {
+        this.signupForm.reset();
+      })
     }
   }
 
   signIn(loginForm: FormGroup) {
-    // Call backend services to sign in here.
-    console.log('sing in clicked');
+    const userObject: User = {
+      username: loginForm.get('username').value,
+      password: loginForm.get('password').value
+    }
+    if (loginForm.valid) {
+      this.userService.signIn(userObject).subscribe(() => {
+        this.loginForm.reset();
+      });
+    }
   }
 
   incrementRoute() {

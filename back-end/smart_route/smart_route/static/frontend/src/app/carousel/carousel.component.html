@@ -1,7 +1,56 @@
 <div class="container">
-    <mat-card class="location-card">Starting Location</mat-card>
+    <mat-card class="location-card">
+        <div class="col">
+            <div class="icon">
+                <span class="material-icons">location_on</span>
+            </div>
+        </div>
+        <div class="col">
+            <span class="starting-location-text">Starting Location</span>
+            <br>
+            <div class="location-container">
+                <span class="starting-location">{{ this.startingLocation }}</span>
+            </div>
+        </div>
+    </mat-card>
     <div *ngFor="let item of items" class="slide">
-        <mat-card class="poi-card">POI</mat-card>
+        <mat-card class="poi-card">
+            <div class="image">
+                <img [src]="item.img">
+            </div>
+            <div class="col">
+                <div class="icon poi">
+                    <span class="material-icons">restaurant</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="poi-name-container">
+                    <span class="poi-name">Name of the Restaurant</span>
+                    <br>
+                    <span class="poi-address">77 Gerrard Street West, Toronto, ON</span>
+                </div>
+            </div>
+            <br>
+            <div *ngFor="let tag of item.tags" style="display: inline;">
+                <app-tag [tagName]="tag"></app-tag>
+            </div>
+            <br>
+            <span class="material-icons show-more">more_horiz</span>
+            <br>
+        </mat-card>
     </div>
-    <mat-card class="location-card">Ending Location</mat-card>
+    <mat-card class="location-card">
+        <div class="col">
+            <div class="icon">
+                <span class="material-icons">location_searching</span>
+            </div>
+        </div>
+        <div class="col">
+            <span class="starting-location-text">Ending Location</span>
+            <br>
+            <div class="location-container">
+                <span class="starting-location">{{ this.endingLocation }}</span>
+            </div>
+        </div>
+    </mat-card>
 </div>

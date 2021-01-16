@@ -42,52 +42,12 @@ export class TripService {
     this.resetMarkers$.emit();
   }
 
-  route(startingLocation, endingLocation, maximumDetourDuration) {
+  route(startingLocation, endingLocation) {
     this.currentRoute = {
       startingLocation: startingLocation,
-      endingLocation: endingLocation,
-      maximumDetourDuration: maximumDetourDuration,
-      stops: []
+      endingLocation: endingLocation
     }
-    return this.http.get(`./dir/${startingLocation}-${endingLocation}-${maximumDetourDuration}`);
+    return this.http.get(`./init/${startingLocation}-${endingLocation}`);
   }
 
-  getIntermediate(startingLocation, endingLocation, maximumDetourDuration, stops) {
-    this.currentRoute.stops.push(stops);
-    return this.http.get<RouteModel>(`./add-stop/${startingLocation}-${endingLocation}-${maximumDetourDuration}-${stops}`);
-  }
-  
-  getRestaurants() {
-    return this.http.get(`./restaurants`);
-  }
-
-  poiLiked(poi) {
-    console.log(poi);
-  }
-
-  poiDisliked(poi) {
-    console.log(poi);
-  }
-
-  poiAdded(poi) {
-    this.updateCurrentPOIs(poi);
-    console.log(this.currentRoute.stops);
-    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${this.currentRoute.stops}`);
-  }
-
-  orderOfStopsChanged(addresses) {
-    this.currentRoute.stops = addresses;
-    console.log(this.currentRoute);
-    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${addresses}`);
-  }
-
-  updateCurrentPOIs(poi) {
-    if (poi.currentLabel === 'add') {
-      this.currentRoute.stops.push(poi.poi[1] + '-');
-    } else {
-      this.currentRoute.stops = this.currentRoute.stops.filter(x => {
-        return x[0] != poi.poi[0];
-      });
-    }
-  }
 }

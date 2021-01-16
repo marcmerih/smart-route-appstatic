@@ -16,22 +16,19 @@ import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
 import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import { TagsComponent } from './tags/tags.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
-import { AddressCardComponent } from './address-card/address-card.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
-import { CardComponent } from './card/card.component';
-import { TagComponent } from './tag/tag.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CarouselComponent } from './carousel/carousel.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +38,8 @@ import { CarouselComponent } from './carousel/carousel.component';
     HeaderComponent,
     ProfileCreationComponent,
     TripOverlayComponent,
-    AddressCardComponent,
-    TagsComponent,
-    CardComponent,
-    TagComponent,
-    CarouselComponent
+    CarouselComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,

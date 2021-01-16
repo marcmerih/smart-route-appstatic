@@ -1,10 +1,11 @@
+@import '../../styles.scss';
 
 .container {
     height: 820px !important;
     margin-bottom: 25px;
     overflow-y: auto !important;
     margin-top: 20px;
-    margin-left: -127px;
+    margin-left: -120px;
     padding-bottom: 20px;
     padding-top: 10px;
     width: 550px;
@@ -16,17 +17,76 @@
         border-radius: 50px;
         margin-left: 180px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        display: inline-flexbox;
+
+
+        .starting-location-text {
+            margin-left: 10px;
+            font-size: 10pt;
+        }
+
+        .location-container {
+            width: 220px;
+            height: 64px;
+            text-align: left;
+            margin-top: 3px;
+            margin-left: 52px;
+
+            .starting-location {
+                object-fit: cover;
+                font-size: 20pt;
+                line-height: 15px;
+                word-wrap: normal;
+            }
+        }
     }
 
     .slide {
         margin: 15px;
 
         .poi-card {
-            height: 235px;
+            height: 275px;
             margin-left: 170px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             width: 324px;
             border-radius: 15px;
+
+            .image {
+                width: 324px !important;
+                margin-left: -16px;
+                margin-top: -16px;
+
+                img {
+                    height: 142px !important;
+                    width: 324px !important;
+                    object-fit: cover;
+                    border-radius: 15px;
+                }
+            }
+
+            .poi-name-container {
+                margin-left: 30px;
+                margin-top: 15px;
+                width: 250px;
+                height: 40px;
+
+                .poi-name {
+                    font-size: 16pt;
+                    font-weight: bold;
+                }
+
+                .poi-address {
+                    font-size: 10pt;
+                    margin-top: -15px !important;
+                    word-wrap: none;
+                }
+            }
+
+            .show-more {
+                margin-left: 128px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
         }
     }
       
@@ -56,3 +116,24 @@
     border-radius: 10px;
 }
 
+
+.icon {
+    background-color: $blue;
+    height: 45px;
+    width: 45px;
+    border-radius: 25px;
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+
+    span {
+        font-size: 20pt;
+        color: white;
+        margin-top: 10px;
+    }
+
+    &.poi {
+        margin-left: -20px;
+    }
+
+}

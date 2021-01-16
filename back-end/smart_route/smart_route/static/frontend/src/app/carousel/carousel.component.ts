@@ -13,6 +13,9 @@ export class CarouselComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (this.startingLocation.includes(',')) {
+      this.startingLocation = this.startingLocation.split(',')[0]
+    }
   }
 
 

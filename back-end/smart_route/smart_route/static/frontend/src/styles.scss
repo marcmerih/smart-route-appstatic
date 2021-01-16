@@ -99,6 +99,10 @@ button.primary:disabled {
   background-color: $yellow !important;
 }
 
+.mat-form-field::ng-deep {
+  font-size: 13pt;
+}
+
 // Animations
 
 // @keyframes on-hover {

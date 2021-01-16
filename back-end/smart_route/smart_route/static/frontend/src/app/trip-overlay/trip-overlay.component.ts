@@ -17,36 +17,17 @@ import { PageEvent } from '@angular/material/paginator';
 export class TripOverlayComponent implements OnInit {
   editPreferencesClicked = false;
   hasBeenRouted = false;
-  carouselOffers = [
-    { img: 'http://placehold.it/350x150/000000' },
-    { img: 'http://placehold.it/350x150/111111' },
-    { img: 'http://placehold.it/350x150/333333' },
-    { img: 'http://placehold.it/350x150/666666' }
+  tripStops = [
+    { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', tags: ['Asian', 'Buffet'] },
+    { img: 'https://www.niemanlab.org/images/hollywood-sign.jpg', tags: ['Attraction', 'Sunset', 'Views', 'Drinks'] },
+    { img: 'https://images.vailresorts.com/image/fetch/ar_4:3,c_scale,dpr_3.0,f_auto,q_auto,w_400/https://images.vrinntopia.com/photos/854813/854813-123.jpg', tags: ['Tour', 'Outdoors', 'Wine'] },
   ];
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
-  sortFormGroup: FormGroup;
-  intermediateLocationAddress = '';
-  addresses = [];
-  currentRoute: any;
-  pageSlice;
-  restaurantClicked = false;
-  hotelsClicked = false;
-  ttdClicked = false;
-  tripSettings: TripSettings = new TripSettings;
-  restaurants;
-  restaurantsCoords;
-  hotelsCoords;
-  ttdsCoords;
-  hotels;
-  ttds;
-  sortOptions = [
-    {value: 'recommended', viewValue: 'Recommended'},
-    {value: 'price-ascending', viewValue: 'Price: High-to-Low'},
-    {value: 'price-descending', viewValue: 'Price: Low-to-High'}
-  ];
-  defaulOption = {value: 'recommended', viewValue: 'Recommended'};
+  currentRoute;
+  currentStops;
+
   mockRestaurants = 
   {
     "listOfRestaurantsInfo": [['Prime Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
@@ -84,52 +65,21 @@ export class TripOverlayComponent implements OnInit {
     "listOfTTDCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514], [-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514], [-77.395401, 44.153139]] 
   };
 
-  constructor(private dialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-    private tripService: TripService, private http: HttpClient) {
+  constructor(private tripService: TripService) {
     this.startTripForm = this.tripService.tripSetupForm;
-    this.sortFormGroup = new FormGroup({
-      sortBy: new FormControl('')
-    });
-    this.tripSettings.maximumDetourDuration = 3;
-    this.restaurants = [];
-    this.restaurantsCoords = [];
-    this.hotels = [];
-    this.hotelsCoords = [];
-    this.ttds = [];
-    this.ttdsCoords = [];
   }
 
   ngOnInit(): void {
-    // this.restaurants = this.mockRestaurants;
-    // console.log(this.restaurants);
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.addresses, event.previousIndex, event.currentIndex);
-    console.log(this.addresses);
-    this.tripService.orderOfStopsChanged(this.addresses).subscribe(request => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
-      this.tripService.setListOfNodes(this.currentRoute);
-    })
   }
 
   route() {
-    const queryParams: Params = { startingLocation: this.startingLocation, 
-      endingLocation: this.endingLocation,
-      maximumDetour: this.tripSettings.maximumDetourDuration  
-    };
-    this.router.navigate(
-      [], 
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: queryParams, 
-        queryParamsHandling: 'merge', // remove to replace all query params by provided
-      });
-
     this.hasBeenRouted = true;
     this.currentStep = this.routingSteps.tripDetails;
-    this.tripService.route(this.startingLocation, this.endingLocation, this.tripSettings.maximumDetourDuration).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
+    this.tripService.route(this.startingLocation, this.endingLocation).subscribe((request: RouteModel) => {
+      this.currentRoute = JSON.parse(request.route);
+      this.currentStops = JSON.parse(request.stops)
+      console.log(this.currentRoute);
+      console.log(this.currentStops);
       this.tripService.setListOfNodes(this.currentRoute);
     });
   }

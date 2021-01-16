@@ -8,7 +8,8 @@ export enum RoutingSteps {
 }
   
 export class RouteModel {
-    listOfNodes: string;
+    route: any;
+    stops: any;
 }
 
 export class RestaurantsModel {
@@ -29,6 +30,4 @@ export class TTDModel {
 export class RouteObject {
     startingLocation: string;
     endingLocation: string;
-    maximumDetourDuration: number;
-    stops: string[];
 }
