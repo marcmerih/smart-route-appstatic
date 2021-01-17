@@ -1,87 +1,32 @@
 from math import sin, cos, sqrt, atan2, radians
-from .graph import Graph, Node, Edge
+from .graph import Graph, Node, Edge, object_decoder
 from geopy.geocoders import Nominatim
 import heapq as heap
 import jsonpickle
 import json
-from collections import namedtuple
+from types import SimpleNamespace
 
-class Graph(object):
-    def __init__(self):
-        self.nodes = {}
-
-    def reset(self):
-        for node_id in list(self.nodes.keys()):
-            self.nodes[node_id].estimatedCost = 0
-            self.nodes[node_id].history = []
-
-
-class Node(object):
-    def __init__(self, _id, lat, lon, _type, predicted_score, rev_score, edges=[], estimatedCost=None, history=[]):
-        self.id = _id
-        self.lat = lat
-        self.lon = lon
-        self.type = _type
-        self.rev_score = rev_score
-        self.predicted_score = predicted_score
-        self.edges = edges
-        self.estimatedCost = estimatedCost
-        self.history = history
-
-    def copy(self):
-        return Node(self.id, self.lat, self.lon, self.type, self.rev_score, self.predicted_score, self.edges, self.estimatedCost, self.history)
-
-    def __eq__(self, other):
-        return (self.id, self.estimatedCost, self.history) == (other.id, other.estimatedCost, other.history)
-
-    def __lt__(self, other):
-        return self.estimatedCost < other.estimatedCost
-
-    def __hash__(self):
-        return hash(self.id)
-
-    def __repr__(self):
-        return "<Node id=%(id)s, (lat,lon)=(%(lat)s,%(lon)s), rev_score=%(rev_score)s>" % {
-            'id': self.id,
-            'lat': self.lat,
-            'lon': self.lon,
-            'type': self.type,
-            'rev_score': self.rev_score,
-        }
-
-
-class Edge(object):
-    def __init__(self, _id, destinationNode, sourceNode, length):
-        self.id = _id
-        self.destinationNode = destinationNode
-        self.sourceNode = sourceNode
-        self.length = length
-
-    def __eq__(self, other):
-        return self.id == other.id
-
-    def __repr__(self):
-        return "<Edge destNode=%(destNode)s, sourceNode=%(sourceNode)s, length=%(length)s>" % {
-            'destNode': self.destinationNode.id,
-            'sourceNode': self.sourceNode.id,
-            'length': self.length,
-        }
 
 class Geographer():
 
     def __init__(self):
         self.geolocator = Nominatim(user_agent="smart-route")
-
         self.graph = Graph()
         self.LoadGraph()
 
     def LoadGraph(self):
-        global Graph
+        print("Loading Graph...")
         o = open('data/Graph/graph.json', 'r')
         frozen = o.read()
-        self.graph = jsonpickle.loads(frozen, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
-        print('Done loading graph')
-        print(frozen[:1000])
+        self.graph = json.loads(
+            frozen, object_hook=object_decoder)
+        print("Graph Object:", "Good" if isinstance(
+            self.graph, Graph) else 'Failed')
+        print("Node Object:", "Good" if isinstance(
+            self.graph.nodes['66'], Node) else 'Failed')
+        print("Edge Object:", "Good" if isinstance(
+            self.graph.nodes['66'].edges[0], Edge) else 'Failed')
+        print('Loaded Graph')
 
     def GeoEncode(self, address):
         location = self.geolocator.geocode(address)
@@ -109,6 +54,7 @@ class Geographer():
             distances.append(self.getDistance(
                 self.graph.nodes[node_id], newNode))
             ids.append(node_id)
+
         return ids[distances.index(min(distances))]
 
     def setPredictedScores(self, poi_type_identifier, scores):
@@ -169,6 +115,7 @@ class Geographer():
         geolist.append([goalNode.lat, goalNode.lon])
         thisNode = goalNode
         while (thisNode.id != startNode.id):
-            geolist.append([thisNode.lat, thisNode.lon])
+            # geolist.append([thisNode.lat, thisNode.lon])
+            geolist.append([thisNode.lon, thisNode.lat])
             thisNode = parents[thisNode]
         return [list(reversed(geolist)), list(reversed(poi_list))]

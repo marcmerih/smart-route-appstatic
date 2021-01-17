@@ -76,11 +76,11 @@ class Trip():
 
         elif poi_type == 'hotel':
             # ...
-            return;
+            return
 
         elif poi_type == 'ttd':
             # ...
-            return;
+            return
 
     def unlockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -96,8 +96,8 @@ class Trip():
 
         elif poi_type == 'hotel':
             # ...
-            return;
+            return
 
         elif poi_type == 'ttd':
             # ...
-            return;
+            return

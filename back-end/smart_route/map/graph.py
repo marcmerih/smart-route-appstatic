@@ -1,6 +1,16 @@
+def object_decoder(obj):
+    if 'py/object' in obj and obj['py/object'] == '__main__.Graph':
+        return Graph(obj['nodes'])
+    elif 'py/object' in obj and obj['py/object'] == '__main__.Node':
+        return Node(obj['id'], obj['lat'], obj['lon'], obj['type'], obj['rev_score'], obj['predicted_score'], obj['edges'], obj['estimatedCost'], obj['history'])
+    elif 'py/object' in obj and obj['py/object'] == '__main__.Edge':
+        return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'])
+    return obj
+
+
 class Graph(object):
-    def __init__(self):
-        self.nodes = {}
+    def __init__(self, nodes={}):
+        self.nodes = nodes
 
     def reset(self):
         for node_id in list(self.nodes.keys()):
@@ -45,8 +55,8 @@ class Node(object):
 class Edge(object):
     def __init__(self, _id, destinationNode, sourceNode, length):
         self.id = _id
-        self.destinationNode = destinationNode
-        self.sourceNode = sourceNode
+        self.destinationNodeID = destinationNode
+        self.sourceNodeID = sourceNode
         self.length = length
 
     def __eq__(self, other):
