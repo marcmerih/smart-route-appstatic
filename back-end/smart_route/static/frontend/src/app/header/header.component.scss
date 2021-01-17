@@ -1,0 +1,72 @@
+@import "../../styles.scss";
+
+.header {
+    border-radius: 100px;
+    background-color: $white;
+    z-index: 10;
+    opacity: 0.95;
+    height: 70px;
+    box-shadow: 0px 1px 9px $black;
+    margin-top: -10px;
+    min-width: 500px;
+
+    .header-menu {
+        margin-left: 2%;
+        margin-top: 18px;
+        z-index: 9999999 !important;
+
+        .app-title {
+            font-size: 12pt !important;
+            cursor: default;
+            top: -15px;
+            position: relative;
+            color: $grey;
+            margin-left: 12px;
+            font-family: Poppins;
+        }
+
+        span.icon {
+            font-size: 34pt;
+            color: $grey;
+            cursor: pointer;
+        }
+
+        span.icon:hover {
+            color: $blue;
+            transition: 0.15s ease-in;
+        }
+
+        span::selection {
+            color: none;
+            background: none;
+        }
+    }
+
+    .nav-icon {
+        float: right;
+        margin-right: 25px;
+        font-size: 22pt;
+        color: $grey;
+        cursor: pointer;
+
+        span:hover {
+            color: $blue;
+            transition: 0.15s ease-in;
+        }
+
+        span::selection {
+            color: none;
+            background: none;
+        }
+    }
+
+    .nav-icon > * {
+        margin-right: 15px;
+    }
+
+    .trip-overlay-card {
+        margin-top: -90px !important;
+        z-index: 4 !important;
+        width: 100% !important;
+    }
+}

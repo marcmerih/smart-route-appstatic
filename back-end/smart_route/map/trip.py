@@ -1,4 +1,4 @@
-from .planner import Planner
+# from .planner import Planner
 from .user import User
 from .recommender import RecSys
 from .geographer import Geographer
@@ -9,9 +9,9 @@ from django.http import HttpResponse, JsonResponse
 import json
 
 
-restaurants_data = pd.read_csv('resDataExample.csv')
-hotels_data = pd.read_csv('hotelDataExample.csv')
-ttds_data = pd.read_csv('ttdDataExample.csv')
+restaurants_data = pd.read_csv(r"data/resDataExample.csv")
+# hotels_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/hotelDataExample.csv")
+# ttds_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/ttdDataExample.csv")
 
 
 class Trip():
@@ -31,7 +31,7 @@ class Trip():
 
         # Trip Preferences --Replace None with Default Settings--
         self.tripPreferences = {
-            'tripDuration': None, 'numStops': None, 'budget': None, 'keyphrases': None}
+            'tripDuration': [], 'numStops': [], 'budget': [], 'keyphrases': []}
 
     def initializeDestinations(self):
         self.destinations = [self.geographer.GeoEncode(
@@ -52,7 +52,7 @@ class Trip():
 
     def planTrip(self):
         self.route, self.stops = self.geographer.planTrip(
-            self.destinations, self.tripPrefences)
+            self.destinations, self.tripPreferences)
 
     def getTrip(self, request):
         return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '" + }')
@@ -72,13 +72,15 @@ class Trip():
             # Write To: restaurants_data (csv)
             # For POI === poi_id: 1) Record predicted_score value, 2) Change predicted_score to infinity
             self.lockedStops[poi_id] = recordedPredictedScore
-            ...
+            # ...
 
-        else if poi_type == 'hotel':
-            ...
+        elif poi_type == 'hotel':
+            # ...
+            return;
 
-        else if poi_type == 'ttd':
-            ...
+        elif poi_type == 'ttd':
+            # ...
+            return;
 
     def unlockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -90,10 +92,12 @@ class Trip():
             # For POI === poi_id: 1) Change predicted_score to recordedPredicatedScore, 2) Remove from lockedStops
             del self.lockedStops[poi_id]
 
-            ...
+            # ...
 
-        else if poi_type == 'hotel':
-            ...
+        elif poi_type == 'hotel':
+            # ...
+            return;
 
-        else if poi_type == 'ttd':
-            ...
+        elif poi_type == 'ttd':
+            # ...
+            return;

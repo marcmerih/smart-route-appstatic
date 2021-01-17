@@ -80,42 +80,43 @@
 </div>
 
 <div class="row" *ngIf="currentProfileStep === createProfileSteps.profileDetails">
-<div class="col-md-12">
-    <div class="col-md-12 container">
-        <div class="account-forms">
-            <!-- Display Login Fields if selected account type is 'Login' -->
-            <ng-container [formGroup]="profileForm">
-                <mat-form-field appearence="fill" class="text-field">
-                    <mat-label>First Name</mat-label>
-                    <input matInput type="text" formControlName="firstName">
-                    <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
-                        First name is required.
-                    </mat-error>
-                </mat-form-field>
+    <div class="col-md-12">
+        <div class="col-md-12 container">
+            <!-- <div class="account-forms">
+                Display Login Fields if selected account type is 'Login'
+                <ng-container [formGroup]="profileForm">
+                    <mat-form-field appearence="fill" class="text-field">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" formControlName="firstName">
+                        <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
+                            First name is required.
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearence="fill" class="text-field">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" formControlName="lastName">
+                        <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
+                            Last name is required.
+                        </mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearence="fill" class="text-field">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
                 <br>
-                <mat-form-field appearence="fill" class="text-field">
-                    <mat-label>Last Name</mat-label>
-                    <input matInput type="text" formControlName="lastName">
-                    <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
-                        Last name is required.
-                    </mat-error>
-                </mat-form-field>
                 <br>
-                <mat-form-field appearence="fill" class="text-field">
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </ng-container>
-            <br>
-            <br>
-            <button mat-raised-button 
-                color="primary" 
-                class="primary"
-                [disabled]="profileForm.invalid"
-                (click)="submitForm(profileForm)"
-            >Next</button>
+                <button mat-raised-button 
+                    color="primary" 
+                    class="primary"
+                    [disabled]="profileForm.invalid"
+                    (click)="submitForm(profileForm)"
+                >Next</button>
+            </div> -->
         </div>
     </div>
 </div>
