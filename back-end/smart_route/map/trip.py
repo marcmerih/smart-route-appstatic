@@ -7,6 +7,7 @@ import numpy as np
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 import json
+import jsonpickle
 
 
 restaurants_data = pd.read_csv(r"data/resDataExample.csv")
@@ -46,16 +47,21 @@ class Trip():
         self.recSys.predictTTDRatings(self.users)
 
         # Update Predicted_Score Column in each CSV...
-        self.geographer.setPredictedScores('R', recSys.getRestaurantModel())
-        self.geographer.setPredictedScores('H', recSys.getHotelModel())
-        self.geographer.setPredictedScores('T', recSys.getTTDModel())
+        self.geographer.setPredictedScores(
+            'R', self.recSys.getRestaurantModel())
+        self.geographer.setPredictedScores('H', self.recSys.getHotelModel())
+        self.geographer.setPredictedScores('T', self.recSys.getTTDModel())
 
     def planTrip(self):
         self.route, self.stops = self.geographer.planTrip(
             self.destinations, self.tripPreferences)
 
     def getTrip(self, request):
-        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '" + }')
+        encodedRoute = jsonpickle.encode(
+            {"route": str(self.route), "stops": str([])})
+            #stops: self.stops
+        return HttpResponse(encodedRoute)
+        # return HttpResponse('{"route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '"}')
 
     def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref, keyphrases):
         self.tripPreferences['tripDuration'] = tripDurationPref

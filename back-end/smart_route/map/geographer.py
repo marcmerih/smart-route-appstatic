@@ -112,7 +112,7 @@ class Geographer():
         geolist = []
         poi_list = [["restaurant", "Name of Restaurant", "Address of Restaurant", "$$$"], [
             "ttd", "Name of Attraction", "Address of Attraction", "Type of TTD (Attraction)"]]
-        geolist.append([goalNode.lat, goalNode.lon])
+        geolist.append([goalNode.lon, goalNode.lat])
         thisNode = goalNode
         while (thisNode.id != startNode.id):
             # geolist.append([thisNode.lat, thisNode.lon])
