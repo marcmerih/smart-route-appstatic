@@ -4,7 +4,6 @@ from geopy.geocoders import Nominatim
 import heapq as heap
 import jsonpickle
 import json
-from types import SimpleNamespace
 
 
 class Geographer():
