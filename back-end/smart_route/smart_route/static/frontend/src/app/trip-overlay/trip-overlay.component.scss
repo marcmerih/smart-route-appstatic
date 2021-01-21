@@ -94,63 +94,163 @@
         margin-left: -100px;
         width: 250px;
         height: 120px;
+    }
 
-        .refreshButton::ng-deep {
-            margin-top: 120px;
-            margin-left: 70px;
+
+    .refreshButton::ng-deep {
+        margin-top: 120px;
+        margin-left: 70px;
+        margin-bottom: 20px;
+        height: 40px;
+        width: 324px;
+        border-radius: 50px;
+        background-color: $blue;
+        color: $white;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 12pt;
+    }
+
+    .editPreferences-container {
+        margin-left: 370px;
+        margin-bottom: 20px;
+        height: 40px;
+        width: 224px;
+        border-radius: 50px;
+        background-color: $white;
+        color: $black;
+        text-align: center;
+        transition: width 0.25s, height 0.125s;
+        transition-timing-function: ease-in-out;
+
+        .editPreferences {
             margin-bottom: 20px;
             height: 40px;
-            width: 324px;
+            width: 224px;
             border-radius: 50px;
-            background-color: $blue;
-            color: $white;
             font-family: Poppins;
             font-weight: 600;
             font-size: 12pt;
+            user-select: none;
+
+            mat-icon {
+                margin-top: 5px !important;
+            }
+
+            span {
+                margin-top: -3px;
+            }
         }
     }
 
-    .edit-preferences {
-        margin-left: 350px;
-        width: 330px;
+    .editPreferences-container-open {
+        margin-left: 370px;
+        margin-bottom: 20px;
+        height: 400px;
+        width: 400px;
+        border-radius: 20px;
+        background-color: $white;
+        color: $black;
         text-align: center;
+        transition: width 1s, height 0.5s;
+        transition-timing-function: ease-in-out;
 
-        .editPreferencesButton {
+        .editPreferences {
+            margin-bottom: 20px;
+            margin: 0 auto;
             height: 40px;
-            width: 250px;
+            width: 224px;
             border-radius: 50px;
-            background-color: $white;
-            color: $black;
             font-family: Poppins;
             font-weight: 600;
             font-size: 12pt;
-            cursor: pointer;
-            user-select:none;
-       
-            mat-icon {
-                margin-top: 10px;
-            }
-        }
-
-        .editPreferencesButtonClicked {
-            height: 800px;
-            width: 535px;
-            border-radius: 50px;
-            background-color: $white;
-            color: $black;
-            font-family: Poppins;
-            font-weight: 600;
-            font-size: 15pt;
-            font-style: bold;
-            user-select:none;
-       
-            .openTitle {
-                margin-top: -380px;
-            }
 
             mat-icon {
-                visibility: hidden;
+                margin-top: 5px !important;
+            }
+
+            span {
+                margin-top: -3px;
             }
         }
     }
+
+    .preferences-shown {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 1s;
+        width: 300px;
+        margin-left: -35px;
+        margin-top: 20px;
+    }
+
+    .preferences-hidden {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 1s;
+    }
+
+    .close-pref {
+        width: 100px;
+        background-color: $white;
+        border: 2px solid $black;
+        color: $black;
+        border-radius: 25px;
+    }
+
+    .update-pref {
+        width: 130px;
+        background-color: $blue;
+        color: $white;
+        border-radius: 25px;
+        float: right;
+    }
+
+    .preference-label {
+        font-size: 11pt;
+    }
+
+    input::-webkit-outer-spin-button,
+        
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type=number] {
+        -moz-appearance: textfield;
+        /* Firefox */
+    }
+
+    .incremental-button {
+        background-color: rgb(238, 238, 238);
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 5px;
+        text-align: center;
+        float: left;
+        cursor: pointer;
+    }
+
+    .preference-input {
+        height: 35px;
+        width: 80px;
+        background-color: rgb(238, 238, 238);
+        float: left;
+        font-size: 14pt;
+        border-radius: 25px;
+        border: none;
+        text-align: center;
+    }
+
+    @keyframes expand-container {
+        0% { width: 224px; height: 40px;}
+        50% { width: 324px; height: 250px; }
+        75% { wdith: 370px; height: 325px; }
+        100% { width: 400px; height: 400px; }
+    }
+
 }

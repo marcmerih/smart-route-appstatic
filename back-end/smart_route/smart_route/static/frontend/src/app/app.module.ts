@@ -55,6 +55,7 @@ import { TagComponent } from './tag/tag.component';
     MatButtonToggleModule,
     MatInputModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCheckboxModule,
     MatProgressBarModule,
     MatDatepickerModule,

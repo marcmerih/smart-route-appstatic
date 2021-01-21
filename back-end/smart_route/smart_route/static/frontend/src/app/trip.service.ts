@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouteModel, RouteObject } from './models';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class TripService {
   tripSetupForm: FormGroup;
   intermediateLocationForm: FormGroup;
+  preferencesForm: FormGroup;
   currentRoute: RouteObject;
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
@@ -26,6 +27,11 @@ export class TripService {
 
     this.intermediateLocationForm = new FormGroup({
       address: new FormControl('')
+    });
+
+    this.preferencesForm = new FormGroup({
+      maxNumberOfStops: new FormControl(''),
+      maxDuration: new FormControl('')
     })
   }
 

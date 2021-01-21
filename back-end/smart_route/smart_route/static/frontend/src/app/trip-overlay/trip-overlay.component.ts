@@ -25,6 +25,7 @@ export class TripOverlayComponent implements OnInit {
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
+  preferencesForm: FormGroup;
   currentRoute;
   currentStops;
 
@@ -67,6 +68,7 @@ export class TripOverlayComponent implements OnInit {
 
   constructor(private tripService: TripService) {
     this.startTripForm = this.tripService.tripSetupForm;
+    this.preferencesForm = this.tripService.preferencesForm;
   }
 
   ngOnInit(): void {
@@ -85,11 +87,34 @@ export class TripOverlayComponent implements OnInit {
   }
 
   clickEditPreferences() {
-    this.editPreferencesClicked = !this.editPreferencesClicked;
+    if (!this.editPreferencesClicked) {
+      this.editPreferencesClicked = !this.editPreferencesClicked;
+    }
   }
 
   closePreferences() {
-    this.clickEditPreferences();
+    this.editPreferencesClicked = false;
+  }
+
+  updatePreferences() {
+    // make a backend update call here
+    this.closePreferences();
+  }
+
+  incrementNumStops() {
+    this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value + 1));
+  }
+
+  decrementNumStops() {
+    this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value - 1));
+  }
+
+  incrementDuration() {
+    this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value + 1));
+  }
+  
+  decrementDuration() {
+    this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value - 1));
   }
 
   get startingLocation() {
