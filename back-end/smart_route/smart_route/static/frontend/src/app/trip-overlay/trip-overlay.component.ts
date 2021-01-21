@@ -86,14 +86,15 @@ export class TripOverlayComponent implements OnInit {
     });
   }
 
-  clickEditPreferences() {
-    if (!this.editPreferencesClicked) {
+  clickEditPreferences(override?: boolean) {
+    console.log('here')
+    if (!this.editPreferencesClicked || override) {
       this.editPreferencesClicked = !this.editPreferencesClicked;
     }
   }
 
   closePreferences() {
-    this.editPreferencesClicked = false;
+    this.clickEditPreferences(true);
   }
 
   updatePreferences() {

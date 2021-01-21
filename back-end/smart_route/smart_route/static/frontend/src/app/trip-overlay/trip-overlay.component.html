@@ -34,14 +34,16 @@
         <app-carousel [items]="tripStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
     </div>
 
-    <div [class]="editPreferencesClicked ? 'editPreferences-container-open' : 'editPreferences-container'" *ngIf="currentStep === 1" (click)="clickEditPreferences()">
+    <div [class]="editPreferencesClicked ? 'editPreferences-container-open' : 'editPreferences-container'" *ngIf="currentStep === 1">
         <div class="editPreferences">
-            <mat-icon>edit_location_alt</mat-icon> 
-            <span>Edit Preferences</span>
-            <br>
+            <div (click)="clickEditPreferences()">
+                <mat-icon>edit_location_alt</mat-icon> 
+                <span>Edit Preferences</span>
+                <br>
+            </div>
             <div [class]="editPreferencesClicked ? 'preferences-shown' : 'preferences-hidden'" [formGroup]="preferencesForm">
                 <div style="text-align: left !important; margin-bottom: 15px;">
-                    <span class="preference-label">Number of Stops</span>
+                    <span class="preference-label">Maximum Number of Stops</span>
                     <br>
                     <div style="margin-top: 10px;">
                         <div class="incremental-button" (click)="decrementNumStops()">
