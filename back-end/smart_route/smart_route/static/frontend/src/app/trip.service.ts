@@ -30,8 +30,9 @@ export class TripService {
     });
 
     this.preferencesForm = new FormGroup({
-      maxNumberOfStops: new FormControl(''),
-      maxDuration: new FormControl('')
+      maxNumberOfStops: new FormControl(3, [Validators.pattern('^[1-9]*$')]),
+      maxDuration: new FormControl(6, Validators.pattern('^[1-9]*$')),
+      budgetAmt: new FormControl('$$')
     })
   }
 

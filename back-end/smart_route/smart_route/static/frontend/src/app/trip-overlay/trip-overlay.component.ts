@@ -103,19 +103,32 @@ export class TripOverlayComponent implements OnInit {
   }
 
   incrementNumStops() {
-    this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value + 1));
+    if (this.preferencesForm.get('maxNumberOfStops').value !== 6) {
+      this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value + 1));
+    }
   }
 
-  decrementNumStops() {
-    this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value - 1));
+  decrementNumStops() {    
+    if (this.preferencesForm.get('maxNumberOfStops').value !== 0) {
+      this.preferencesForm.get('maxNumberOfStops').setValue(Number(this.preferencesForm.get('maxNumberOfStops').value - 1));
+    }
   }
 
   incrementDuration() {
-    this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value + 1));
+    if (this.preferencesForm.get('maxDuration').value !== 9) {
+      this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value + 1));
+    }
   }
   
   decrementDuration() {
-    this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value - 1));
+    if (this.preferencesForm.get('maxDuration').value !== 0) {
+      this.preferencesForm.get('maxDuration').setValue(Number(this.preferencesForm.get('maxDuration').value - 1));
+    }
+  }
+
+  setBudget(dollarAmt: string) {
+    this.preferencesForm.get('budgetAmt').setValue(dollarAmt);
+    console.log(this.preferencesForm.get('budgetAmt').value)
   }
 
   get startingLocation() {

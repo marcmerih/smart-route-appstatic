@@ -82,6 +82,21 @@
                 <br>
                 <div style="text-align: left !important; margin-bottom: 15px;">
                     <span class="preference-label">Trip Budget</span>
+                    <br>
+                    <div class="budget-container">
+                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$$')">
+                            <span>$$$$</span>
+                        </div>
+                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$')">
+                            <span>$$$</span>
+                        </div>
+                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$')">
+                            <span>$$</span>
+                        </div>
+                        <div [class]="(preferencesForm.get('budgetAmt').value === '$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$')">
+                            <span>$</span>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div>

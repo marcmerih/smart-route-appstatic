@@ -147,8 +147,8 @@
     .editPreferences-container-open {
         margin-left: 370px;
         margin-bottom: 20px;
-        height: 400px;
-        width: 400px;
+        height: 600px;
+        width: 470px;
         border-radius: 20px;
         background-color: $white;
         color: $black;
@@ -246,6 +246,32 @@
         border-radius: 25px;
         border: none;
         text-align: center;
+    }
+
+    .budget-container {        
+        background-color: rgb(238, 238, 238);
+        border-radius: 25px;
+        display: inline-block;
+        padding: 8px;
+        margin: 0 auto;
+        margin-top: 7px;
+
+        .budget-container-dollar {
+            float: right;
+            width: 45px;
+            margin-left: 3px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .selected-budget-container {
+            float: right;
+            width: 45px;
+            margin-left: 3px;
+            background-color: white;
+            border-radius: 15px;
+            text-align: center;
+        }
     }
 
     @keyframes expand-container {
