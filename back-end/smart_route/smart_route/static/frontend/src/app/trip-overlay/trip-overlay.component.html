@@ -98,14 +98,47 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div>
+                <div style="text-align: left !important; margin-bottom: 15px;">
                     <span class="preference-label">Category Selection</span>
+                    <br>
+                    <br>
+                    <!-- <mat-checkbox (ngModelChange)="updateAllComplete()">
+                        <span class="category-option">Restaurant</span>
+                    </mat-checkbox>
+                    <br>
+                    <mat-checkbox (ngModelChange)="updateAllComplete()">
+                        <span class="category-option">Hotels</span>
+                    </mat-checkbox>
+                    <br>
+                    <mat-checkbox (ngModelChange)="updateAllComplete()">
+                        <span class="category-option">Things to do</span>
+                    </mat-checkbox> -->
+                    <div *ngFor="let category of categories">
+                        <mat-checkbox [(ngModel)]="category.completed"
+                                      [color]="category.color"
+                                      (ngModelChange)="updateAllComplete()">
+                          {{category.name}}
+                        </mat-checkbox>
+                    </div>
                 </div>
-                <br>
-                <div>
-                    <span class="preference-label">Tag Search</span>
-                </div>
+                <!-- <br>
+                <div style="text-align: left !important; margin-bottom: 15px; width: 300px;">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="Tag search">
+                            <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                                    [removable]="removable" (removed)="remove(tag)">
+                            {{tag.name}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input  placeholder="Tag Search..."
+                                    aria-orientation="vertical"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </div> -->
                 <br>
                 <div style="width: 240px; display: inline-block; margin: 0 auto;">
                     <button mat-raised-button class="close-pref" (click)="closePreferences()">Cancel</button>

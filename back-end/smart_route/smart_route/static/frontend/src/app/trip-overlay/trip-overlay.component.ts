@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { TripService } from '../trip.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Router, Params, ActivatedRoute } from '@angular/router';
-import { RoutesComponent } from '../routes/routes.component';
-import { RoutingSteps, TripSettings, RouteModel, RestaurantsModel } from '../models';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { PageEvent } from '@angular/material/paginator';
+import { FormGroup } from '@angular/forms';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { RoutingSteps, RouteModel } from '../models';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -17,17 +13,31 @@ import { PageEvent } from '@angular/material/paginator';
 export class TripOverlayComponent implements OnInit {
   editPreferencesClicked = false;
   hasBeenRouted = false;
+  
   tripStops = [
     { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', tags: ['Asian', 'Buffet'] },
     { img: 'https://www.niemanlab.org/images/hollywood-sign.jpg', tags: ['Attraction', 'Sunset', 'Views', 'Drinks'] },
     { img: 'https://images.vailresorts.com/image/fetch/ar_4:3,c_scale,dpr_3.0,f_auto,q_auto,w_400/https://images.vrinntopia.com/photos/854813/854813-123.jpg', tags: ['Tour', 'Outdoors', 'Wine'] },
   ];
+
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
   preferencesForm: FormGroup;
   currentRoute;
+  removable = true;
+  visible = true;
+  selectable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   currentStops;
+  categories = [
+      {name: 'Restaurant', completed: false, color: 'primary'},
+      {name: 'Hotels', completed: false, color: 'primary'},
+      {name: 'Things to do', completed: false, color: 'primary'}
+  ];
+  allComplete: boolean = false;
+  tags = [];
 
   mockRestaurants = 
   {
@@ -72,6 +82,10 @@ export class TripOverlayComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  updateAllComplete() {
+    this.allComplete = this.categories != null && this.categories.every(t => t.completed);
   }
 
   route() {
@@ -131,6 +145,28 @@ export class TripOverlayComponent implements OnInit {
     console.log(this.preferencesForm.get('budgetAmt').value)
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push({name: value.trim()});
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
   get startingLocation() {
     return this.startTripForm.get('startingLocation').value;
   }

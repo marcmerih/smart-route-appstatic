@@ -20,6 +20,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
@@ -65,6 +66,7 @@ import { TagComponent } from './tag/tag.component';
     MatSliderModule,
     MatPaginatorModule,
     MatIconModule,
+    MatChipsModule,
     MatSelectModule,
     MatCardModule,
   ],

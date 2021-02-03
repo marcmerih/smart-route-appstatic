@@ -248,7 +248,7 @@
         text-align: center;
     }
 
-    .budget-container {        
+    .budget-container {
         background-color: rgb(238, 238, 238);
         border-radius: 25px;
         display: inline-block;
@@ -272,6 +272,16 @@
             border-radius: 15px;
             text-align: center;
         }
+
+        .category-option {
+            background-color: rgb(238, 238, 238);
+            border-radius: 15px;
+            
+        }
+
+        .example-chip-list::ng-deep {
+            width: 100% !important;
+          }
     }
 
     @keyframes expand-container {
