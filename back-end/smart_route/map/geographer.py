@@ -106,4 +106,6 @@ class Geographer():
         while (thisNode.id != startNode.id):
             geolist.append([thisNode.lat, thisNode.lon])
             thisNode = parents[thisNode]
+
+        
         return [list(reversed(geolist)), list(reversed(poi_list))]
