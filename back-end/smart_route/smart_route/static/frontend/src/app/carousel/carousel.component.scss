@@ -202,15 +202,18 @@
     text-align: center;
     margin-top: 20px;
     float: left;
+    -ms-user-select: none;
 
     span {
         font-size: 20pt;
         color: white;
         margin-top: 10px;
+        -ms-user-select: none;
     }
 
     &.poi {
         margin-left: -20px;
+        -ms-user-select: none;
     }
 
 }
@@ -228,5 +231,6 @@
     span {
         margin: 0 auto;
         color: black;
+        -ms-user-select: none;
     }
 }
