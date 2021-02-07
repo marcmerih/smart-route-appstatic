@@ -9,7 +9,10 @@ export class CarouselComponent implements OnInit {
   @Input() items;
   @Input() startingLocation;
   @Input() endingLocation;
+
+  isExpanded = false;
   
+
   constructor() { }
 
   ngOnInit(): void {
@@ -18,5 +21,20 @@ export class CarouselComponent implements OnInit {
     }
   }
 
+  toggleExpansion(item) {
+    item.isExpanded = !item.isExpanded;
+  }
+
+  amenities(item) {
+    if (item.amenities.length > 3) {
+      return item.amenities.slice(0, 3);
+    }
+    return item.amenities;
+  }
+
+  lockItem(item) {
+    item.isLocked = !item.isLocked;
+    // make backend call to show that item has been locked / unlocked;
+  }
 
 }

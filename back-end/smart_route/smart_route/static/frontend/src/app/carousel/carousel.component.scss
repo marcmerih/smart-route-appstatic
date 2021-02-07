@@ -50,6 +50,7 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             width: 324px;
             border-radius: 15px;
+            transition: height 0.125s;
 
             .image {
                 width: 324px !important;
@@ -88,12 +89,88 @@
                 cursor: pointer;
             }
         }
+
+        .poi-card-expanded {
+            height: auto;
+            margin-left: 170px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            width: 324px;
+            border-radius: 15px;
+            transition: height 0.125s;
+
+            .image {
+                width: 324px !important;
+                margin-left: -16px;
+                margin-top: -16px;
+
+                img {
+                    height: 142px !important;
+                    width: 324px !important;
+                    object-fit: cover;
+                    border-radius: 15px;
+                }
+            }
+
+            .poi-name-container {
+                margin-left: 30px;
+                margin-top: 15px;
+                width: 250px;
+                height: 40px;
+
+                .poi-name {
+                    font-size: 16pt;
+                    font-weight: bold;
+                }
+
+                .poi-address {
+                    font-size: 10pt;
+                    margin-top: -15px !important;
+                    word-wrap: none;
+                }
+            }
+
+            .show-more {
+                margin-left: 128px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+
+            .trip-advisor {
+
+                .rating {
+                    float: left;
+                    margin-left: 13px;
+                    margin-top: 3px;
+                    font-size: 14pt;
+                    width: 225px;
+                    font-size: 11pt;
+                }
+
+                .trip-advisor-logo {
+                    height: 35px;
+                    margin-top: 6px;
+                    float: left;
+                }
+            }
+
+            .cuisine-options {
+                margin-top: 15px;
+            }
+
+            .personal-rating {
+                .stars {
+                    font-size: 18pt;
+                    margin-bottom: 15px;
+                }
+            }
+        }
     }
       
 }
 
 .container::-webkit-scrollbar {
     width: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
   
 /* Track */
@@ -136,4 +213,20 @@
         margin-left: -20px;
     }
 
+}
+.lock-container {
+    position: absolute; 
+    z-index: 999;
+    background-color: white;
+    border-radius: 25px;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+
+    span {
+        margin: 0 auto;
+        color: black;
+    }
 }

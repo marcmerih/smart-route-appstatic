@@ -109,6 +109,7 @@
         font-family: Poppins;
         font-weight: 600;
         font-size: 12pt;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .editPreferences-container {
@@ -119,6 +120,7 @@
         border-radius: 50px;
         background-color: $white;
         color: $black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         text-align: center;
         transition: width 0.25s, height 0.125s;
         transition-timing-function: ease-in-out;
@@ -154,6 +156,7 @@
         color: $black;
         text-align: center;
         transition: width 1s, height 0.5s;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         transition-timing-function: ease-in-out;
 
         .editPreferences {
@@ -248,7 +251,7 @@
         text-align: center;
     }
 
-    .budget-container {        
+    .budget-container {
         background-color: rgb(238, 238, 238);
         border-radius: 25px;
         display: inline-block;
@@ -272,6 +275,16 @@
             border-radius: 15px;
             text-align: center;
         }
+
+        .category-option {
+            background-color: rgb(238, 238, 238);
+            border-radius: 15px;
+            
+        }
+
+        .example-chip-list::ng-deep {
+            width: 100% !important;
+          }
     }
 
     @keyframes expand-container {

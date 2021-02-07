@@ -28,7 +28,6 @@
     <div *ngIf="currentStep === 1" class="col-md-12 container-trips">
         <div class="col-md-12">
             <button mat-raised-button class="refreshButton"
-                (click)="route()"
                 [disabled]="isRouteDisabled"><mat-icon>refresh</mat-icon> Refresh Trip</button>
         </div>
         <app-carousel [items]="tripStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
@@ -98,13 +97,17 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div>
+                <div style="text-align: left !important; margin-bottom: 15px;">
                     <span class="preference-label">Category Selection</span>
-                </div>
-                <br>
-                <div>
-                    <span class="preference-label">Tag Search</span>
+                    <br>
+                    <br>
+                    <div *ngFor="let category of categories">
+                        <!-- <mat-checkbox [(ngModel)]="category.completed"
+                                      [color]="category.color"
+                                      (ngModelChange)="updateAllComplete()">
+                          {{category.name}}
+                        </mat-checkbox> -->
+                    </div>
                 </div>
                 <br>
                 <div style="width: 240px; display: inline-block; margin: 0 auto;">

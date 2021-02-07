@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,15 +20,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 import { HttpClientModule } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CarouselComponent } from './carousel/carousel.component';
 import { TagComponent } from './tag/tag.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import { TagComponent } from './tag/tag.component';
     MatButtonToggleModule,
     MatInputModule,
     MatButtonModule,
+    MatExpansionModule,
     MatButtonToggleModule,
     MatCheckboxModule,
     MatProgressBarModule,
@@ -65,8 +69,10 @@ import { TagComponent } from './tag/tag.component';
     MatSliderModule,
     MatPaginatorModule,
     MatIconModule,
+    MatChipsModule,
     MatSelectModule,
     MatCardModule,
+    NgbModule,
   ],
   providers: [
     MatDatepickerModule,
