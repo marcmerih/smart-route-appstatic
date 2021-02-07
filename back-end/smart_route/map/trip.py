@@ -32,7 +32,7 @@ class Trip():
 
         # Trip Preferences --Replace None with Default Settings--
         self.tripPreferences = {
-            'tripDuration': [], 'numStops': [], 'budget': [], 'keyphrases': []}
+            'tripDuration': None, 'numStops': None, 'budget': None}
 
     def initializeDestinations(self):
         self.destinations = [self.geographer.GeoEncode(
@@ -57,17 +57,14 @@ class Trip():
             self.destinations, self.tripPreferences)
 
     def getTrip(self, request):
-        encodedRoute = jsonpickle.encode(
-            {"route": str(self.route), "stops": str([])})
-            #stops: self.stops
-        return HttpResponse(encodedRoute)
-        # return HttpResponse('{"route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '"}')
+        stopsJSON = json.dumps(self.stops)
+        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + stopsJSON + '" + }')
 
-    def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref, keyphrases):
+    def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref):
         self.tripPreferences['tripDuration'] = tripDurationPref
         self.tripPreferences['numStops'] = numStopsPref
         self.tripPreferences['budget'] = budgetPref
-        self.tripPreferences['keyphrases'] = keyphrases
+        
 
     def lockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -81,12 +78,10 @@ class Trip():
             # ...
 
         elif poi_type == 'hotel':
-            # ...
-            return
+            ...
 
         elif poi_type == 'ttd':
-            # ...
-            return
+            ...
 
     def unlockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -101,9 +96,7 @@ class Trip():
             # ...
 
         elif poi_type == 'hotel':
-            # ...
-            return
+            ...
 
         elif poi_type == 'ttd':
-            # ...
-            return
+            ...
