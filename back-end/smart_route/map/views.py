@@ -75,7 +75,7 @@ def getInitialTrip(request, startingLocation, endingLocation):
     global trip
     trip.startingLocation = startingLocation  # Set Starting Location
     trip.endingLocation = endingLocation  # Set Ending Location
-    trip.tripPreferences =  {'tripDuration': None, 'numStops': None, 'budget': None, 'keyphrases': None}
+    trip.tripPreferences =  {'tripDuration': None, 'numStops': None, 'budget': None}
     trip.initializeDestinations()  #
     trip.planTrip()
     return trip.getTrip(request)
