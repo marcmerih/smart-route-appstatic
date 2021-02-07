@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
@@ -21,7 +22,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TripOverlayComponent } from './trip-overlay/trip-overlay.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
@@ -32,6 +33,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CarouselComponent } from './carousel/carousel.component';
 import { TagComponent } from './tag/tag.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InterceptorService } from './loader/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatButtonToggleModule,
     MatCheckboxModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
@@ -76,7 +79,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     MatDatepickerModule,
-    MatDialogModule
+    MatDialogModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: []
