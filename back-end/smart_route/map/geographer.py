@@ -117,4 +117,6 @@ class Geographer():
             # geolist.append([thisNode.lat, thisNode.lon])
             geolist.append([thisNode.lon, thisNode.lat])
             thisNode = parents[thisNode]
+
+        
         return [list(reversed(geolist)), list(reversed(poi_list))]
