@@ -183,9 +183,10 @@ class Geographer():
             geolist.append([thisNode.lon, thisNode.lat])
             thisNode = parents[thisNode]
             if (thisNode.type == 'poi'):
-                poi_list.append(thisNode)
                 resRow = restaurants[restaurants["osmid"]== int(thisNode.id)]
                 resID = "R"+str(thisNode.id)
+                resLat = thisNode.lat
+                resLon = thisNode.lon
                 resName = resRow["restaurant_name"].item()
                 resAddress = resRow["address"].item()
                 resTags = resRow["categories"].item()
@@ -193,7 +194,7 @@ class Geographer():
                 resTAURL = resRow["url"].item()
                 resTARating = resRow["review_score"].item()
                 resUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
-                poi_dict = {'id':resID,'name':resName,'address':resAddress,'resTags':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'res','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                poi_dict = {'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'resTags':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'res','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
 
         return [list(reversed(geolist)), list(reversed(poi_list))]
