@@ -31,7 +31,7 @@ class Trip():
 
         # Trip Preferences --Replace None with Default Settings--
         self.tripPreferences = {
-            'tripDuration': None, 'numStops': None, 'budget': None, 'keyphrases': None}
+            'tripDuration': None, 'numStops': None, 'budget': None}
 
     def initializeDestinations(self):
         self.destinations = [self.geographer.GeoEncode(
@@ -55,13 +55,14 @@ class Trip():
             self.destinations, self.tripPrefences)
 
     def getTrip(self, request):
-        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + str(self.stops) + '" + }')
+        stopsJSON = json.dumps(self.stops)
+        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + stopsJSON + '" + }')
 
-    def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref, keyphrases):
+    def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref):
         self.tripPreferences['tripDuration'] = tripDurationPref
         self.tripPreferences['numStops'] = numStopsPref
         self.tripPreferences['budget'] = budgetPref
-        self.tripPreferences['keyphrases'] = keyphrases
+        
 
     def lockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -74,10 +75,10 @@ class Trip():
             self.lockedStops[poi_id] = recordedPredictedScore
             ...
 
-        else if poi_type == 'hotel':
+        elif poi_type == 'hotel':
             ...
 
-        else if poi_type == 'ttd':
+        elif poi_type == 'ttd':
             ...
 
     def unlockStop(self, poi_type, poi_id):
@@ -92,8 +93,8 @@ class Trip():
 
             ...
 
-        else if poi_type == 'hotel':
+        elif poi_type == 'hotel':
             ...
 
-        else if poi_type == 'ttd':
+        elif poi_type == 'ttd':
             ...

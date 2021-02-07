@@ -24,7 +24,7 @@ class Node(object):
         return Node(self.id, self.lat, self.lon, self.type, self.rev_score, self.predicted_score, self.edges, self.estimatedCost, self.history)
 
     def __eq__(self, other):
-        return (self.id, self.estimatedCost, self.history) == (other.id, other.estimatedCost, other.history)
+        return (self.id,self.estimatedCost,self.history[0]) == (other.id,other.estimatedCost,other.history[0])
 
     def __lt__(self, other):
         return self.estimatedCost < other.estimatedCost
@@ -43,18 +43,20 @@ class Node(object):
 
 
 class Edge(object):
-    def __init__(self, _id, destinationNode, sourceNode, length):
+    def __init__(self, _id, destinationNode, sourceNode, length,speed):
         self.id = _id
         self.destinationNode = destinationNode
         self.sourceNode = sourceNode
         self.length = length
+        self.speed = speed
 
     def __eq__(self, other):
         return self.id == other.id
 
     def __repr__(self):
-        return "<Edge destNode=%(destNode)s, sourceNode=%(sourceNode)s, length=%(length)s>" % {
+        return "<Edge destNode=%(destNode)s, sourceNode=%(sourceNode)s, length=%(length)s, speed=%(speed)s>" % {
             'destNode': self.destinationNode.id,
             'sourceNode': self.sourceNode.id,
             'length': self.length,
+            'speed': self.speed
         }
