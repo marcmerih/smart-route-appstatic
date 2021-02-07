@@ -38,7 +38,7 @@
             text-align: center !important;
         }
     
-        button.route::ng-deep {
+        button.routeButton::ng-deep {
             border-radius: 15px;
             background-color: $blue;
             color: $white;
@@ -46,6 +46,7 @@
             font-weight: 600;
             margin-bottom: 5%;
             width: 45% !important;
+            height: 35px;
         }
         
         button.trip-settings::ng-deep {
@@ -59,11 +60,12 @@
             width: 45% !important;
         }
     
-        button.route:disabled::ng-deep {
+        button.routeButton:disabled::ng-deep {
             border-radius: 15px;
             // background-color: $disabled;
             // color: $grey;
             opacity: 0.5;
+            height: 35px;
             margin-bottom: 5%;
             width: 60%;
         }
@@ -195,20 +197,22 @@
         transition: opacity 1s;
     }
 
-    .close-pref {
+    .close-pref::ng-deep {
         width: 100px;
         background-color: $white;
         border: 2px solid $black;
         color: $black;
         border-radius: 25px;
+        height: 35px;
     }
 
-    .update-pref {
+    .update-pref::ng-deep {
         width: 130px;
         background-color: $blue;
         color: $white;
         border-radius: 25px;
         float: right;
+        height: 35px;
     }
 
     .preference-label {
@@ -274,12 +278,12 @@
             background-color: white;
             border-radius: 15px;
             text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .category-option {
             background-color: rgb(238, 238, 238);
             border-radius: 15px;
-            
         }
 
         .example-chip-list::ng-deep {
