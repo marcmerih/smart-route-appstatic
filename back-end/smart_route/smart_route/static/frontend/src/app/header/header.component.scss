@@ -43,18 +43,22 @@
     }
 
     .nav-icon {
-        float: right;
         margin-right: 25px;
         font-size: 22pt;
         color: $grey;
         cursor: pointer;
+        display: inline;
 
-        span:hover {
+        .item {
+            float: right;
+        }
+
+        .item:hover {
             color: $blue;
             transition: 0.15s ease-in;
         }
 
-        span::selection {
+        .item::selection {
             color: none;
             background: none;
         }

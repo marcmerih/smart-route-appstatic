@@ -227,6 +227,7 @@
     cursor: pointer;
     text-align: center;
     padding: 5px;
+    -ms-user-select: none;
 
     span {
         margin: 0 auto;
