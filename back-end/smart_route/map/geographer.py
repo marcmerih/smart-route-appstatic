@@ -9,7 +9,7 @@ import json
 
 import jsonpickle
 
-restaurants = pd.read_csv('data/osmidResDataExample.csv')
+restaurants = pd.read_csv('data/ResDataCleaned.csv')
 
 class Geographer():
 
@@ -67,10 +67,6 @@ class Geographer():
 
         return ids[distances.index(min(distances))]
 
-    def setPredictedScores(self, poi_type_identifier, scores):
-        for poi_id, predicted_score in enumerate(scores, start=1):
-            _id = poi_type_identifier + str(poi_id)
-            self.graph.nodes[_id].predicted_score = predicted_score
 
     def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants):
         global restaurants

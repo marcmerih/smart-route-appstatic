@@ -10,10 +10,8 @@ import json
 import jsonpickle
 
 
-restaurants_data = pd.read_csv(r"data/resDataExample.csv")
-# hotels_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/hotelDataExample.csv")
-# ttds_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/ttdDataExample.csv")
-# asd
+restaurants_data = pd.read_csv(r"data/resDataCleaned.csv")
+ttds_data = pd.read_csv(r"data/ttdDataCleaned.csv")
 
 class Trip():
     def __init__(self):
@@ -41,65 +39,49 @@ class Trip():
     def addUserToTrip(self, user):
         self.users.append(user)
 
+    def planTrip(self):
         # Build The Predicted Item Score Vector for each POI Type
-        # self.recSys.predictRestaurantRatings(self.users)
-        self.recSys.predictHotelRatings(self.users)
-        # self.recSys.predictTTDRatings(self.users)
+        self.recSys.predictRestaurantRatings(self.users)
+        self.recSys.predictTTDRatings(self.users)
 
         # Update Predicted_Score Column in each CSV...
-        self.geographer.setPredictedScores(
-            'R', self.recSys.getRestaurantModel())
-        self.geographer.setPredictedScores('H', self.recSys.getHotelModel())
-        self.geographer.setPredictedScores('T', self.recSys.getTTDModel())
+        self.geographer.graph.setPredictedScores('R', self.recSys.getRestaurantModel())
+        self.geographer.graph.setPredictedScores('T', self.recSys.getTTDModel())
 
-    def planTrip(self):
         self.route, self.stops = self.geographer.planTrip(
             self.destinations, self.tripPreferences)
 
     def getTrip(self, request):
         to_json = {"route":self.route,"stops":self.stops}
-        # dump = json.dumps(to_json)
         return JsonResponse(to_json)
-        # return HttpResponse(dump, mimetype='application/json')
-        # return HttpResponse('{ "route":"' + json.dumps(self.route) + '" , "stops":"' + json.dumps(self.stops) + '" }')
 
     def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref):
         self.tripPreferences['tripDuration'] = tripDurationPref
         self.tripPreferences['numStops'] = numStopsPref
         self.tripPreferences['budget'] = budgetPref
-        
 
     def lockStop(self, poi_type, poi_id):
-        global restaurants_data
-        global hotels_data
-        global ttds_data
 
-        if poi_type == 'restaurant':
+        if poi_type == 'R':
             # Write To: restaurants_data (csv)
             # For POI === poi_id: 1) Record predicted_score value, 2) Change predicted_score to infinity
-            self.lockedStops[poi_id] = recordedPredictedScore
-            # ...
+            self.lockedStops[poi_type + poi_id] = self.recSys.restaurant_prediction_vector[poi_id]
+            self.recSys.restaurant_prediction_vector[poi_id] = 0
 
-        # elif poi_type == 'hotel':
-        #     # ...
-
-        # elif poi_type == 'ttd':
-        #     # ...
+        elif poi_type == 'T':
+            self.lockedStops[poi_type + poi_id] = self.recSys.ttd_prediction_vector[poi_id]
+            self.recSys.ttd_prediction_vector[poi_id] = 0
 
     def unlockStop(self, poi_type, poi_id):
-        global restaurants_data
-        global hotels_data
-        global ttds_data
 
-        if poi_type == 'restaurant':
+
+        if poi_type == 'R':
             # Write To: restaurants_data (csv)
             # For POI === poi_id: 1) Change predicted_score to recordedPredicatedScore, 2) Remove from lockedStops
-            del self.lockedStops[poi_id]
-
+            self.recSys.restaurant_prediction_vector[poi_id] = self.lockedStops[poi_type + poi_id]
+            del self.lockedStops[poi_type + poi_id]
             # ...
 
-        # elif poi_type == 'hotel':
-        #     # ...
-
-        # elif poi_type == 'ttd':
-        #     # ...
+        elif poi_type == 'T':
+            self.recSys.ttd_prediction_vector[poi_id] = self.lockedStops[poi_type + poi_id]
+            del self.lockedStops[poi_type + poi_id]

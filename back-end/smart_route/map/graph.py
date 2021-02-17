@@ -15,11 +15,6 @@ class Graph(object):
         self.nodes = nodes
 
     def reset(self):
-        # for node_id in list(self.nodes.keys()):
-        #     self.nodes[node_id].estimatedCost = 0
-        #     if (node_id == '939'): 
-        #         self.nodes[node_id].predicted_score = 5
-        #     self.nodes[node_id].history = [[], 0]
 
         for node_id in list(self.nodes.keys()):
             self.nodes[node_id].estimatedCost = 0
@@ -28,6 +23,11 @@ class Graph(object):
                 self.nodes[node_id].predicted_score = random.uniform(1, 5)
             else:
                 self.nodes[node_id].predicted_score = 0
+
+    def setPredictedScores(self, poi_type_identifier, scores):
+        for poi_id, predicted_score in enumerate(scores, start=0):
+            _id = poi_type_identifier + str(poi_id)
+            self.nodes[_id].predicted_score = predicted_score
 
 
 class Node(object):

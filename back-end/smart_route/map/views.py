@@ -95,23 +95,16 @@ def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref, keyphrases)
 
 def lockStop(request, poi_type, poi_id):
     global trip
-
     trip.lockStop(poi_type, poi_id)
 
 
 def unlockStop(request, poi_type, poi_id):
     global trip
-
     trip.unlockStop(poi_type, poi_id)
 
 
 def setRating(request, poi_type, poi_id, rating):
     global user
-    if poi_type == 'R':
-        user.setRestaruantRating(poi_type, poi_id, rating)
+    user.setItemRating(poi_type, poi_id, rating)
 
-    elif poi_type == 'H':
-        user.setHotelRating(poi_type, poi_id, rating)
 
-    elif poi_type == 'T':
-        user.setTTDRating(poi_type, poi_id, rating)
