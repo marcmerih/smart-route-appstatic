@@ -201,8 +201,8 @@ class Geographer():
                 poi_dict = {'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'resTags':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'res','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
 
-        hardcoded_dict = {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', 'isExpanded': False, 'isLocked': False, 'currentRating': 0}
-        hardcoded_dict = json.dumps(hardcoded_dict)
+        hardcoded_dict = {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': 'https://www.google.ca','type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
+        # hardcoded_dict = json.dumps(hardcoded_dict)
         poi_list.append(hardcoded_dict)
 
         return [list(reversed(geolist)), list(reversed(poi_list))]

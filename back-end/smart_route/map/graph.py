@@ -17,7 +17,7 @@ class Graph(object):
     def reset(self):
         # for node_id in list(self.nodes.keys()):
         #     self.nodes[node_id].estimatedCost = 0
-        #     if (node_id == '939'):
+        #     if (node_id == '939'): 
         #         self.nodes[node_id].predicted_score = 5
         #     self.nodes[node_id].history = [[], 0]
 

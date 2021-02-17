@@ -57,8 +57,11 @@ class Trip():
             self.destinations, self.tripPreferences)
 
     def getTrip(self, request):
-        stopsJSON = json.dumps(self.stops)
-        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + stopsJSON + '" }')
+        to_json = {"route":self.route,"stops":self.stops}
+        # dump = json.dumps(to_json)
+        return JsonResponse(to_json)
+        # return HttpResponse(dump, mimetype='application/json')
+        # return HttpResponse('{ "route":"' + json.dumps(self.route) + '" , "stops":"' + json.dumps(self.stops) + '" }')
 
     def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref):
         self.tripPreferences['tripDuration'] = tripDurationPref
