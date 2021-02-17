@@ -183,8 +183,8 @@ export class RoutesComponent implements AfterViewInit {
     this.map.addLayer(vectorLayer);
     this.layers.push(vectorLayer);
     
-    this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
-    this.map.getView().setZoom(12);
+    // this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
+    // this.map.getView().setZoom(12);
   }
 
   resetMarkers() {
@@ -192,9 +192,9 @@ export class RoutesComponent implements AfterViewInit {
       this.map.removeLayer(element);
     });
 
-    this.layers.forEach(element => {
-      this.map.removeLayer(element);
-    });
+    // this.layers.forEach(element => {
+    //   this.map.removeLayer(element);
+    // });
   }
 
   resetRoute() {

@@ -83,16 +83,16 @@
                     <span class="preference-label">Trip Budget</span>
                     <br>
                     <div class="budget-container">
-                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '4') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('4')">
                             <span>$$$$</span>
                         </div>
-                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '3') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('3')">
                             <span>$$$</span>
                         </div>
-                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '2') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('2')">
                             <span>$$</span>
                         </div>
-                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '1') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('1')">
                             <span>$</span>
                         </div>
                     </div>

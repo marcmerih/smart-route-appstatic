@@ -47,4 +47,16 @@ export class CarouselComponent implements OnInit {
     this.tripService.updateRating(item);
   }
 
+  restaurantTags(item) {
+    return JSON.parse(item.resTags);
+  }
+
+  isRestaurant(item) {
+    return (item.type === 'res');
+  }
+
+  isHotel(item) {
+    return (item.type === 'hot');
+  }
+
 }

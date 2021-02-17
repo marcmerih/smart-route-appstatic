@@ -67,11 +67,10 @@ export class TripService {
     const obj = {
       tripDurationPref: preferencesForm.get('maxDuration').value,
       numStopsPref: preferencesForm.get('maxNumberOfStops').value,
-      budgetPref: preferencesForm.get('budgetAmt').value,
-      keyphrases: ''
+      budgetPref: preferencesForm.get('budgetAmt').value
     }
 
-    return this.http.get(`./refresh/${obj.tripDurationPref}-${obj.numStopsPref}-${obj.budgetPref}-${obj.keyphrases}`);
+    return this.http.get(`./refresh/${obj.tripDurationPref}-${obj.numStopsPref}-${obj.budgetPref}`);
   }
 
   lockPOI(item) {

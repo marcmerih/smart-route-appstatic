@@ -36,7 +36,7 @@
             <br>
             <div *ngIf="item.type !== 'hotel'">
                 <!-- <br> -->
-                <div *ngFor="let tag of item.resTags" style="display: inline;">
+                <div *ngFor="let tag of restaurantTags(item)" style="display: inline;">
                     <app-tag [tagName]="tag"></app-tag>
                 </div>
             </div>
@@ -52,13 +52,13 @@
                     <br>
                     <br>
                     <div class="cuisine-options">
-                        <div *ngIf="isRestaurant">
+                        <div *ngIf="isRestaurant(item)">
                             <span class="rating"><b>Cuisine (Friendly) Options</b></span>
                             <div *ngFor="let option of item.cuisineOptions" class="option">
                                 <span>{{ option }}</span>
                             </div>
                         </div>
-                        <div *ngIf="isHotel">
+                        <div *ngIf="isHotel(item)">
                             <span class="rating"><b>Amenities</b></span>
                             <div *ngFor="let option of amenities(item)" class="option">
                                 <span>{{ option }}</span>

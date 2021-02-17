@@ -98,7 +98,7 @@ export class TripOverlayComponent implements OnInit {
     this.intermediatePreferencesForm = new FormGroup({
       maxNumberOfStops: new FormControl(3, [Validators.pattern('^[1-9]*$')]),
       maxDuration: new FormControl(6, Validators.pattern('^[1-9]*$')),
-      budgetAmt: new FormControl('$$')
+      budgetAmt: new FormControl('2')
     })
   }
 
@@ -114,8 +114,8 @@ export class TripOverlayComponent implements OnInit {
     this.currentStep = this.routingSteps.tripDetails;
 
     this.tripService.route(this.startingLocation, this.endingLocation).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.route);
-      this.currentStops = JSON.parse(request.stops);
+      this.currentRoute = request.route;
+      this.currentStops = request.stops;
       console.log(this.currentRoute);
       console.log(this.currentStops);
       this.tripService.setListOfNodes(this.currentRoute);
@@ -202,8 +202,8 @@ export class TripOverlayComponent implements OnInit {
 
   refreshTrip() {
     this.tripService.refreshTrip(this.preferencesForm).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.route);
-      this.currentStops = JSON.parse(request.stops);
+      this.currentRoute = request.route;
+      this.currentStops = request.stops;
       console.log(this.currentRoute);
       console.log(this.currentStops);
       this.tripService.setListOfNodes(this.currentRoute);
