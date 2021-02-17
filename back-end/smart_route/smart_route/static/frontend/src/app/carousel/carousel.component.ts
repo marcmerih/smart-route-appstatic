@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TripService } from '../trip.service';
 
 @Component({
   selector: 'app-carousel',
@@ -13,7 +14,7 @@ export class CarouselComponent implements OnInit {
   isExpanded = false;
   
 
-  constructor() { }
+  constructor(private tripService: TripService) { }
 
   ngOnInit(): void {
     if (this.startingLocation.includes(',')) {
@@ -34,7 +35,16 @@ export class CarouselComponent implements OnInit {
 
   lockItem(item) {
     item.isLocked = !item.isLocked;
+    if (item.isLocked) {
+      this.tripService.lockPOI(item);
+    } else {
+      this.tripService.unlockPOI(item);
+    }
     // make backend call to show that item has been locked / unlocked;
+  }
+
+  updateRating(item) {
+    this.tripService.updateRating(item);
   }
 
 }

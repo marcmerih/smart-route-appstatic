@@ -135,15 +135,14 @@
                 cursor: pointer;
             }
 
-            .trip-advisor {
+            .trip-advisor, .cuisine-options, .personal-rating {
 
                 .rating {
-                    float: left;
                     margin-left: 13px;
                     margin-top: 3px;
                     font-size: 14pt;
                     width: 225px;
-                    font-size: 11pt;
+                    font-size: 13pt;
                 }
 
                 .trip-advisor-logo {
@@ -154,13 +153,22 @@
             }
 
             .cuisine-options {
-                margin-top: 15px;
+                margin-top: -10px;
+
+                .option {
+                    margin-left: 20px;
+                }
             }
 
             .personal-rating {
+
+                .personal-rating-span {
+                    margin-left: 13px;
+                }
                 .stars {
                     font-size: 18pt;
                     margin-bottom: 15px;
+                    margin-left: 10px;
                 }
             }
         }

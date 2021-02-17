@@ -1,10 +1,12 @@
+import random
+
 def object_decoder(obj):
     if 'py/object' in obj and obj['py/object'] == '__main__.Graph':
         return Graph(obj['nodes'])
     elif 'py/object' in obj and obj['py/object'] == '__main__.Node':
         return Node(obj['id'], obj['lat'], obj['lon'], obj['type'], obj['rev_score'], obj['predicted_score'], obj['edges'], obj['estimatedCost'], obj['history'])
     elif 'py/object' in obj and obj['py/object'] == '__main__.Edge':
-        return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'])
+        return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'], obj['speed'])
     return obj
 
 
@@ -13,9 +15,19 @@ class Graph(object):
         self.nodes = nodes
 
     def reset(self):
+        # for node_id in list(self.nodes.keys()):
+        #     self.nodes[node_id].estimatedCost = 0
+        #     if (node_id == '939'):
+        #         self.nodes[node_id].predicted_score = 5
+        #     self.nodes[node_id].history = [[], 0]
+
         for node_id in list(self.nodes.keys()):
             self.nodes[node_id].estimatedCost = 0
-            self.nodes[node_id].history = []
+            self.nodes[node_id].history = [[],0] #Selected POIS, Total Travel Time  
+            if self.nodes[node_id].type == 'poi':
+                self.nodes[node_id].predicted_score = random.uniform(1, 5)
+            else:
+                self.nodes[node_id].predicted_score = 0
 
 
 class Node(object):
@@ -34,7 +46,7 @@ class Node(object):
         return Node(self.id, self.lat, self.lon, self.type, self.rev_score, self.predicted_score, self.edges, self.estimatedCost, self.history)
 
     def __eq__(self, other):
-        return (self.id, self.estimatedCost, self.history) == (other.id, other.estimatedCost, other.history)
+        return (self.id,self.history[0]) == (other.id,other.history[0])
 
     def __lt__(self, other):
         return self.estimatedCost < other.estimatedCost
@@ -53,11 +65,12 @@ class Node(object):
 
 
 class Edge(object):
-    def __init__(self, _id, destinationNode, sourceNode, length):
+    def __init__(self, _id, destinationNode, sourceNode, length, speed):
         self.id = _id
         self.destinationNodeID = destinationNode
         self.sourceNodeID = sourceNode
         self.length = length
+        self.speed = speed
 
     def __eq__(self, other):
         return self.id == other.id

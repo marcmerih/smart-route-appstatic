@@ -20,20 +20,26 @@ export class TripService {
     this.nodes$ = new EventEmitter();
     this.poiMarkers$ = new EventEmitter();
     this.resetMarkers$ = new EventEmitter();
-    this.tripSetupForm = new FormGroup({
-      startingLocation: new FormControl(''),
-      endingLocation: new FormControl('')
-    });
-
+    this.initializeTripSetupForm();
     this.intermediateLocationForm = new FormGroup({
       address: new FormControl('')
     });
+    this.initializePreferencesForm();
+  }
 
+  initializePreferencesForm() {
     this.preferencesForm = new FormGroup({
       maxNumberOfStops: new FormControl(3, [Validators.pattern('^[1-9]*$')]),
       maxDuration: new FormControl(6, Validators.pattern('^[1-9]*$')),
       budgetAmt: new FormControl('$$')
-    })
+    });
+  }
+
+  initializeTripSetupForm() {
+    this.tripSetupForm = new FormGroup({
+      startingLocation: new FormControl(''),
+      endingLocation: new FormControl('')
+    });
   }
 
   setListOfNodes(nodes) {
@@ -55,6 +61,29 @@ export class TripService {
       endingLocation: endingLocation
     }
     return this.http.get(`./init/${startingLocation}-${endingLocation}`);
+  }
+
+  refreshTrip(preferencesForm: FormGroup) {
+    const obj = {
+      tripDurationPref: preferencesForm.get('maxDuration').value,
+      numStopsPref: preferencesForm.get('maxNumberOfStops').value,
+      budgetPref: preferencesForm.get('budgetAmt').value,
+      keyphrases: ''
+    }
+
+    return this.http.get(`./refresh/${obj.tripDurationPref}-${obj.numStopsPref}-${obj.budgetPref}-${obj.keyphrases}`);
+  }
+
+  lockPOI(item) {
+    return this.http.get(`./lockStop/${item.type}-${item.id}`);
+  }
+
+  unlockPOI(item) {
+    return this.http.get(`./unlockStop/${item.type}-${item.id}`);
+  }
+
+  updateRating(item) {
+    return this.http.get(`./setRating/${item.type}-${item.id}-${item.currentRating}`);
   }
 
 }

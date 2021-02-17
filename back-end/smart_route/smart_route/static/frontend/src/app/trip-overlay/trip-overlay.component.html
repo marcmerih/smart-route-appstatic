@@ -27,12 +27,12 @@
 
     <div *ngIf="currentStep === 1" class="col-md-12 container-trips">
         <div class="col-md-12">
-            <button mat-raised-button class="refreshButton"
+            <button mat-raised-button class="refreshButton" (click)="refreshTrip()"
                 [disabled]="isRouteDisabled"><mat-icon>refresh</mat-icon> Refresh Trip</button>
         </div>
-        <app-carousel [items]="tripStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
+        <app-carousel [items]="getCurrentStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
     </div>
-
+    <button mat-raised-button class="col-md-12 startOver" *ngIf="currentStep === 1" (click)="startOver()">Start Over</button>
     <div [class]="editPreferencesClicked ? 'editPreferences-container-open' : 'editPreferences-container'" *ngIf="currentStep === 1">
         <div class="editPreferences">
             <div (click)="clickEditPreferences()">
@@ -40,7 +40,7 @@
                 <span>Edit Preferences</span>
                 <br>
             </div>
-            <div [class]="editPreferencesClicked ? 'preferences-shown' : 'preferences-hidden'" [formGroup]="preferencesForm">
+            <div [class]="editPreferencesClicked ? 'preferences-shown' : 'preferences-hidden'" [formGroup]="intermediatePreferencesForm">
                 <div style="text-align: left !important; margin-bottom: 15px;">
                     <span class="preference-label">Maximum Number of Stops</span>
                     <br>
@@ -83,32 +83,32 @@
                     <span class="preference-label">Trip Budget</span>
                     <br>
                     <div class="budget-container">
-                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$$')">
                             <span>$$$$</span>
                         </div>
-                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$$')">
                             <span>$$$</span>
                         </div>
-                        <div [class]="(preferencesForm.get('budgetAmt').value === '$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$$')">
                             <span>$$</span>
                         </div>
-                        <div [class]="(preferencesForm.get('budgetAmt').value === '$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$')">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '$') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('$')">
                             <span>$</span>
                         </div>
                     </div>
                 </div>
-                <div style="text-align: left !important; margin-bottom: 15px;">
+                <!-- <div style="text-align: left !important; margin-bottom: 15px;">
                     <span class="preference-label">Category Selection</span>
                     <br>
                     <br>
                     <div *ngFor="let category of categories">
-                        <!-- <mat-checkbox [(ngModel)]="category.completed"
+                        <mat-checkbox [(ngModel)]="category.completed"
                                       [color]="category.color"
                                       (ngModelChange)="updateAllComplete()">
                           {{category.name}}
-                        </mat-checkbox> -->
+                        </mat-checkbox>
                     </div>
-                </div>
+                </div> -->
                 <br>
                 <div style="width: 240px; display: inline-block; margin: 0 auto;">
                     <button mat-raised-button class="close-pref" (click)="closePreferences()">Cancel</button>
@@ -118,3 +118,4 @@
         </div>
     </div>
 </div>
+

@@ -1,5 +1,5 @@
 from math import sin, cos, sqrt, atan2, radians, ceil
-from .graph import Graph, Node, Edge
+from .graph import Graph, Node, Edge, object_decoder
 from geopy.geocoders import Nominatim
 import heapq as heap
 import jsonpickle
@@ -7,8 +7,9 @@ import pandas as pd
 import copy
 import json
 
-restaurants = pd.read_csv('data/osmidResDataExample.csv')
+import jsonpickle
 
+restaurants = pd.read_csv('data/osmidResDataExample.csv')
 
 class Geographer():
 
@@ -16,6 +17,7 @@ class Geographer():
         self.geolocator = Nominatim(user_agent="smart-route")
         self.graph = Graph()
         self.LoadGraph()
+        self.graph.reset()
 
     def LoadGraph(self):
         print("Loading Graph...")
@@ -40,9 +42,11 @@ class Geographer():
         startNode_id = self.getClosestGraphNode(destinations[0])
         endNode_id = self.getClosestGraphNode(destinations[1])
 
-        tripPreferencesList = [tripPreferences['numStops'],tripPreferences['tripDuration'],tripPreferences['budget']]
+        # tripPreferencesList = [tripPreferences['numStops'],tripPreferences['tripDuration'],tripPreferences['budget']]
+        
+        tripPreferencesList = [4,4,4]
+        costFunctionConstants = [1,0.5,1]
 
-        costFunctionConstants = [10,0.2, 100]
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
         trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants)
 
@@ -73,7 +77,7 @@ class Geographer():
         startNode = self.graph.nodes[str(startNode_id)]
         goalNode = self.graph.nodes[str(goalNode_id)]
         tripStopsBudget = tripPreferences[0]
-        tripDurationBudget = tripPreferences[1]
+        tripDurationBudget = tripPreferences[1] * 60
         tripBudgetBudget = tripPreferences[2]
         parents = {} 
         costs = {}
@@ -120,10 +124,9 @@ class Geographer():
 
                 costAtNode = costs[node] 
                 newCost = costAtNode + self.costFunction(self.graph,startNode,nextNode,edge,cfConstants) 
-                nextNode.history[1] += (((edge.length/1000)/(edge.speed))) #Update Total Travel Time Cost
+                nextNode.history[1] += (((edge.length/1000)/edge.speed)*60) #Update Total Travel Time Cost
                 
                 # This is the cost function
-                newCost = costs[node] + edge.length  # g(n)
 
                 if ((nextNode not in parents.keys()) or (newCost < costs[nextNode])):
                     parents[nextNode] = node
@@ -137,7 +140,7 @@ class Geographer():
         
         if nextNode.type != 'poi':
 
-            cost += const[0] * ((edge.length/1000)/(edge.speed))
+            cost += const[0] * (((edge.length/1000)/edge.speed)*60)
             
             if len(nextNode.history[0]) == 0:
                 distanceSinceLastPOI = self.getManhattenDistance(nextNode,startNode)
@@ -152,7 +155,7 @@ class Geographer():
 
     def heuristic(self,node,goalNode): 
         distance = self.getDistance(node,goalNode)
-        return ((distance)/60) 
+        return ((distance)/60)*60 
 
     def getDistance(self,node,goalNode):
         point1 = [node.lat,node.lon]
@@ -174,9 +177,10 @@ class Geographer():
         return R * c 
 
     def getGeoList(self, parents, startNode, goalNode):
+        print("Route Done")
         geolist = []
         poi_list = []
-        geolist.append([goalNode.lat, goalNode.lon])
+        geolist.append([goalNode.lon, goalNode.lat])
         thisNode = goalNode
         while (thisNode.id != startNode.id):
             # geolist.append([thisNode.lat, thisNode.lon])
@@ -196,5 +200,9 @@ class Geographer():
                 resUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
                 poi_dict = {'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'resTags':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'res','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
+
+        hardcoded_dict = {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', 'isExpanded': False, 'isLocked': False, 'currentRating': 0}
+        hardcoded_dict = json.dumps(hardcoded_dict)
+        poi_list.append(hardcoded_dict)
 
         return [list(reversed(geolist)), list(reversed(poi_list))]

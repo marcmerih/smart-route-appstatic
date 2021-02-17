@@ -15,7 +15,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutesComponent } from './routes/routes.component';
 import { HeaderComponent } from './header/header.component';
-import { ProfileCreationComponent } from './accounts/profile-creation/profile-creation.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
@@ -34,6 +33,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { TagComponent } from './tag/tag.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InterceptorService } from './loader/interceptor.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import { InterceptorService } from './loader/interceptor.service';
     AccountsComponent,
     RoutesComponent,
     HeaderComponent,
-    ProfileCreationComponent,
     TripOverlayComponent,
     CarouselComponent,
     TagComponent
@@ -55,6 +54,7 @@ import { InterceptorService } from './loader/interceptor.service';
     ReactiveFormsModule,
     DragDropModule,
     SlickCarouselModule,
+    CommonModule,
 
     // Angular Material
     MatButtonToggleModule,
@@ -87,6 +87,6 @@ import { InterceptorService } from './loader/interceptor.service';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [AccountsComponent]
 })
 export class AppModule { }

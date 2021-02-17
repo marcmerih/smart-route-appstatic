@@ -36,7 +36,7 @@
             <br>
             <div *ngIf="item.type !== 'hotel'">
                 <!-- <br> -->
-                <div *ngFor="let tag of item.tags" style="display: inline;">
+                <div *ngFor="let tag of item.resTags" style="display: inline;">
                     <app-tag [tagName]="tag"></app-tag>
                 </div>
             </div>
@@ -47,54 +47,29 @@
                 <div class="restaurant-item" *ngIf="item.type === 'res'">
                     <div class="trip-advisor">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>4.3</b>. Click <u><a href="">here</a></u> to see reviews!</span>
+                        <span class="rating">Trip advisor rating: <b>{{ item.tripAdvisorRating }}</b>. Click <u><a [href]="item.reviewsUrl">here</a></u> to see reviews!</span>
                     </div>
                     <br>
                     <br>
                     <div class="cuisine-options">
-                        <span class="rating"><b>Cuisine (Friendly) Options</b></span>
-                        <div *ngFor="let option of item.cuisineOptions">
-                            <span>{{ option }}</span>
+                        <div *ngIf="isRestaurant">
+                            <span class="rating"><b>Cuisine (Friendly) Options</b></span>
+                            <div *ngFor="let option of item.cuisineOptions" class="option">
+                                <span>{{ option }}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="isHotel">
+                            <span class="rating"><b>Amenities</b></span>
+                            <div *ngFor="let option of amenities(item)" class="option">
+                                <span>{{ option }}</span>
+                            </div>
                         </div>
                     </div>
                     <br>
                     <div class="personal-rating">
                         <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
-                        <ngb-rating [(rate)]="item.currentRate" max="5" class="stars"></ngb-rating>
-                    </div>
-                </div>
-
-                <div *ngIf="item.type === 'hotel'" class="hotel-item">
-                    <div class="trip-advisor">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>4.3</b>. Click <u><a href="">here</a></u> to see reviews!</span>
-                    </div>
-                    <br>
-                    <br>
-                    <div class="cuisine-options">
-                        <span class="rating"><b>Amenities</b></span>
-                        <div *ngFor="let option of amenities(item)">
-                            <span>{{ option }}</span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="personal-rating">
-                        <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
-                        <ngb-rating [(rate)]="item.currentRate" max="5" class="stars"></ngb-rating>
-                    </div>
-                </div>
-
-                <div *ngIf="item.type === 'ttd'" class="ttd-item">
-                    <div class="trip-advisor">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>4.3</b>. Click <u><a href="">here</a></u> to see reviews!</span>
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="personal-rating">
-                        <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
-                        <ngb-rating [(rate)]="item.currentRate" max="5" class="stars"></ngb-rating>
+                        <br>
+                        <ngb-rating [(rate)]="item.currentRating" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
                     </div>
                 </div>
             </div>

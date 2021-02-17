@@ -70,6 +70,10 @@ def createUser(request, username, password):
         # Bad, Return Unique Account Error
         print("Unique Account Error")
 
+    seedPreferences = user.getSeedPreferences()
+
+    return seedPreferences
+
 
 def getInitialTrip(request, startingLocation, endingLocation):
     global trip

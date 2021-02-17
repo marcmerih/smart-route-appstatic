@@ -13,7 +13,7 @@ import jsonpickle
 restaurants_data = pd.read_csv(r"data/resDataExample.csv")
 # hotels_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/hotelDataExample.csv")
 # ttds_data = pd.read_csv(r"/Users/merihatasoy/Documents/Projects/Web Apps/capstone/smart-route-appstatic/back-end/smart_route/map/ttdDataExample.csv")
-
+# asd
 
 class Trip():
     def __init__(self):
@@ -42,9 +42,9 @@ class Trip():
         self.users.append(user)
 
         # Build The Predicted Item Score Vector for each POI Type
-        self.recSys.predictRestaurantRatings(self.users)
+        # self.recSys.predictRestaurantRatings(self.users)
         self.recSys.predictHotelRatings(self.users)
-        self.recSys.predictTTDRatings(self.users)
+        # self.recSys.predictTTDRatings(self.users)
 
         # Update Predicted_Score Column in each CSV...
         self.geographer.setPredictedScores(
@@ -58,7 +58,7 @@ class Trip():
 
     def getTrip(self, request):
         stopsJSON = json.dumps(self.stops)
-        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + stopsJSON + '" + }')
+        return HttpResponse('{ "route":"' + str(self.route) + '" , "stops":"' + stopsJSON + '" }')
 
     def updateTripPreferences(self, tripDurationPref, numStopsPref, budgetPref):
         self.tripPreferences['tripDuration'] = tripDurationPref
@@ -77,11 +77,11 @@ class Trip():
             self.lockedStops[poi_id] = recordedPredictedScore
             # ...
 
-        elif poi_type == 'hotel':
-            ...
+        # elif poi_type == 'hotel':
+        #     # ...
 
-        elif poi_type == 'ttd':
-            ...
+        # elif poi_type == 'ttd':
+        #     # ...
 
     def unlockStop(self, poi_type, poi_id):
         global restaurants_data
@@ -95,8 +95,8 @@ class Trip():
 
             # ...
 
-        elif poi_type == 'hotel':
-            ...
+        # elif poi_type == 'hotel':
+        #     # ...
 
-        elif poi_type == 'ttd':
-            ...
+        # elif poi_type == 'ttd':
+        #     # ...
