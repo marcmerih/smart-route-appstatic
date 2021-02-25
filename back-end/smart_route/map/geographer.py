@@ -9,7 +9,7 @@ import json
 
 import jsonpickle
 
-restaurants = pd.read_csv('data/ResDataCleaned.csv')
+restaurants = pd.read_csv('data/osmidResDataExample.csv')
 
 class Geographer():
 

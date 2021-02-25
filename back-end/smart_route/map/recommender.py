@@ -5,8 +5,8 @@ import numpy as np
 # User Rating Vector for Each User - UxI (1 x I)
 # UxI : UxI mult IxI
 
-ii_sim_restaurant_matrix = pd.read_csv('itemitem_restaurant_sim.csv')
-ii_sim_ttd_matrix = pd.read_csv('itemitem_ttd_sim.csv')
+ii_sim_restaurant_matrix = pd.read_csv('data/similarity/itemitem_restaurant_sim.csv')
+ii_sim_ttd_matrix = pd.read_csv('data/similarity/itemitem_ttd_sim.csv')
 
 
 class RecSys():
@@ -18,7 +18,7 @@ class RecSys():
 
     def predictRestaurantRatings(self, users):
 
-        global ii_sim_restaurant_matrix
+        global ii_sim_restaurant_matrix 
 
         restaurant_prediction_vectors = []
 

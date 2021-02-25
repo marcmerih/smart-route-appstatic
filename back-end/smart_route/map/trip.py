@@ -10,8 +10,8 @@ import json
 import jsonpickle
 
 
-restaurants_data = pd.read_csv(r"data/resDataCleaned.csv")
-ttds_data = pd.read_csv(r"data/ttdDataCleaned.csv")
+restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
+ttds_data = pd.read_csv(r"data/item/ttdDataClean.csv")
 
 class Trip():
     def __init__(self):
