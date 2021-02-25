@@ -49,6 +49,15 @@
         cursor: pointer;
         display: inline;
 
+        .users-preview {
+            float: right;
+            display: flex;
+
+            .users-preview-each {
+                float: right;
+            }
+        }
+
         .item {
             float: right;
         }

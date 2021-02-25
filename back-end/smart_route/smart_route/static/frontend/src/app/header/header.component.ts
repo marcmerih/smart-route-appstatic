@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountsComponent } from '../accounts/accounts.component';
+import { UserService } from '../accounts/user.service';
+import { AddGuestComponent } from '../add-guest/add-guest.component';
  
  
 @Component({
@@ -12,10 +14,10 @@ import { AccountsComponent } from '../accounts/accounts.component';
  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
- userSignedIn = false;
+ userSignedIn = true;
  isTripOverlayExpanded = true;
 
- constructor(private router: Router, private dialog: MatDialog) {}
+ constructor(private router: Router, private dialog: MatDialog, public userService: UserService) {}
  
  ngOnInit(): void {
  }
@@ -29,6 +31,13 @@ export class HeaderComponent implements OnInit {
 
  toggleTripOverlay() {
    this.isTripOverlayExpanded = !this.isTripOverlayExpanded;
+ }
+
+ addGuest() {
+  let dialogRef = this.dialog.open(AddGuestComponent, {
+    height: '50vh',
+    width: '50vw'
+  });
  }
 
  get tripOverlayExpand() {

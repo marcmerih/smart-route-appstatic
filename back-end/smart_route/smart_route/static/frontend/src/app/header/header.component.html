@@ -8,7 +8,12 @@
                     <span class="material-icons">login</span>
                 </div>
                 <div class="item" *ngIf="userSignedIn">
-                    <span class="material-icons">group_add</span>
+                    <span class="material-icons" (click)="addGuest()">group_add</span>
+                </div>
+                <div *ngIf="userService.usersInTrip" class="users-preview">
+                    <div *ngFor="let user of userService.usersInTrip">
+                        <app-user-preview [usersInTrip]="user" class="users-preview-each"></app-user-preview>
+                    </div>
                 </div>
             </div>
         </div>

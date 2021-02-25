@@ -7,6 +7,10 @@ import { User } from './accounts.component';
 })
 export class UserService {
 
+  userSignedIn = false;
+  username: string;
+  usersInTrip: string[] = ["marc", "chris"];
+
   constructor(private http: HttpClient) { }
 
   signIn(userObject: User) {
@@ -15,5 +19,9 @@ export class UserService {
 
   createAccount(userObject: User) {
     return this.http.get(`./createUser/${userObject.username}-${userObject.password}`);
+  }
+  
+  addGuestToTrip(userObject: User) {
+    return this.http.get(`./addGuest/${userObject.username}-${userObject.password}`)
   }
 }

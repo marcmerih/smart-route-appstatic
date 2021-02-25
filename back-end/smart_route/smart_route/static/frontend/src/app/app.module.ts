@@ -34,6 +34,8 @@ import { TagComponent } from './tag/tag.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InterceptorService } from './loader/interceptor.service';
 import { CommonModule } from '@angular/common';
+import { UserPreviewComponent } from './user-preview/user-preview.component';
+import { AddGuestComponent } from './add-guest/add-guest.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     TripOverlayComponent,
     CarouselComponent,
-    TagComponent
+    TagComponent,
+    UserPreviewComponent,
+    AddGuestComponent
   ],
   imports: [
     BrowserModule,

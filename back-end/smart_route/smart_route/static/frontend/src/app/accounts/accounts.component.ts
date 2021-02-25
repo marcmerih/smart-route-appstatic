@@ -127,7 +127,12 @@ export class AccountsComponent implements OnInit {
       password: loginForm.get('password').value
     }
     if (loginForm.valid) {
-      this.userService.signIn(userObject).subscribe(() => {
+      this.userService.signIn(userObject).subscribe((username: string) => {
+        if (username) {
+          this.userService.username = username;
+          this.userService.userSignedIn = true;
+          this.userService.usersInTrip.push(username);
+        }
         this.loginForm.reset();
       });
     }
