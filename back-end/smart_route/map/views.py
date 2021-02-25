@@ -75,8 +75,9 @@ def createUser(request, username, password):
         print("Unique Account Error")
 
     seedPreferences = user.getSeedPreferences()
-
-    return seedPreferences
+    to_json = {"preferences": seedPreferences}
+    
+    return JsonResponse(to_json)
 
 
 def getInitialTrip(request, startingLocation, endingLocation):

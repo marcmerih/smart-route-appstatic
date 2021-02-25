@@ -114,7 +114,7 @@
                             <div class="personal-rating">
                                 <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
                                 <br>
-                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars"></ngb-rating>
+                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
                             </div>
                         </div>
                     </div>
