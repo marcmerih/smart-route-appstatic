@@ -14,10 +14,10 @@ import { AddGuestComponent } from '../add-guest/add-guest.component';
  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
- userSignedIn = true;
  isTripOverlayExpanded = true;
 
- constructor(private router: Router, private dialog: MatDialog, public userService: UserService) {}
+ constructor(private router: Router, private dialog: MatDialog, public userService: UserService) {
+ }
  
  ngOnInit(): void {
  }

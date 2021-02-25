@@ -9,7 +9,7 @@ export class UserService {
 
   userSignedIn = false;
   username: string;
-  usersInTrip: string[] = ["marc", "chris"];
+  usersInTrip: string[] = [];
 
   constructor(private http: HttpClient) { }
 
