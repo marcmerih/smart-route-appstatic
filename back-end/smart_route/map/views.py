@@ -48,6 +48,8 @@ def signIn(request, username, password):
 
     trip.addUserToTrip(user)
 
+    return HttpResponse(username)
+
 
 def addGuestToTrip(request, username, password):
     global user
@@ -59,6 +61,8 @@ def addGuestToTrip(request, username, password):
     guests.append(guestUser)
 
     trip.addUserToTrip(guestUser)
+
+    return HttpResponse(username)
 
 
 def createUser(request, username, password):
