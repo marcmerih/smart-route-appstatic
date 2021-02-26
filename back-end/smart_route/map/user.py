@@ -70,7 +70,7 @@ class User():
         usersData.at[self.username, 'ttd_ratings'] = jsonpickle.encode(
             self.ttd_ratings)
 
-        usersData.to_csv('data/users.csv', index=False)
+        usersData.to_csv('data/user/users.csv', index=False)
 
     def setItemRating(self, poi_type, poi_id, rating):
         ID = poi_type + str(poi_id)
