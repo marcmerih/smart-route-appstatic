@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12 header">
+        <div class="header-menu">
+            <span class="material-icons icon" (click)="toggleTripOverlay()"> {{ tripOverlayExpand }}</span>
+            <span class="app-title">Start planning a trip!</span>
+            <div class="nav-icon">
+                <div class="item" *ngIf="!userSignedIn" (click)="openSignUp()">
+                    <span class="material-icons">login</span>
+                </div>
+                <div class="item" *ngIf="userSignedIn">
+                    <span class="material-icons" (click)="addGuest()">group_add</span>
+                </div>
+                <div *ngIf="userService.usersInTrip" class="users-preview">
+                    <div *ngFor="let user of usersInTrip">
+                        <app-user-preview [usersInTrip]="usersInTrip" class="users-preview-each"></app-user-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 trip-overlay-card" *ngIf="isTripOverlayExpanded">
+            <app-trip-overlay></app-trip-overlay>
+        </div>
+    </div>
+ </div>

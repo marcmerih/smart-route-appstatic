@@ -1,0 +1,147 @@
+
+<span class="material-icons close-button" (click)="close()">
+    close
+</span>
+<div class="col-md-12 container" *ngIf="currentProfileStep === createProfileSteps.signUp">
+    <mat-button-toggle-group [(ngModel)]="accountType" aria-label="account-type"> 
+        <!-- ngModel will change the variable accountType to whatever is selected-->
+        <mat-button-toggle value="Login">Login</mat-button-toggle>
+        <mat-button-toggle value="Sign Up">Sign Up</mat-button-toggle>
+    </mat-button-toggle-group>
+    <br>
+    <div class="account-forms">
+        <!-- Display Login Fields if selected account type is 'Login' -->
+        <ng-container *ngIf="accountType === 'Login'" [formGroup]="loginForm">
+            <mat-form-field appearence="fill" class="text-field">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" formControlName="username">
+                <mat-error *ngIf="loginForm.get('username').hasError('required')">
+                    Username is required.
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearence="fill" class="text-field">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                    Password is required.
+                </mat-error>
+                <!-- Create custom password validator with regex and add mat error here -->
+            </mat-form-field>
+        </ng-container>
+
+        <!-- Display Signup Fields if selected account type is 'Sign Up' -->
+        <ng-container *ngIf="accountType === 'Sign Up'" [formGroup]="signupForm">
+            <mat-form-field appearence="fill" class="text-field">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" formControlName="username">
+                <mat-error *ngIf="signupForm.get('username').hasError('required')">
+                    Username is required.
+                </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearence="fill" class="text-field">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                    Password is required.
+                </mat-error>
+                <!-- Create custom password validator with regex and add mat error here -->
+            </mat-form-field>
+            <br>
+            <br>
+            <mat-checkbox color="primary" formControlName="agreedToTerms">I agree to the terms and conditions!</mat-checkbox>
+        </ng-container>
+        <br>
+        <br>
+        <button mat-raised-button 
+            color="primary" 
+            class="primary"
+            [disabled]="((accountType === 'Login') ? loginForm : signupForm).invalid"
+            (click)="(accountType === 'Login') ? signIn(loginForm) : submitForm(signupForm)"
+        >{{ accountType }}</button>
+    </div>
+</div>
+
+<div class="row" *ngIf="currentProfileStep === createProfileSteps.seedPreferences">
+    <div class="col-md-12">
+        <h2 style="text-align: center;">Please rate the POIs listed below to improve our recommendations!</h2>
+        <div class="col-md-12 containerPreferences" *ngIf="seedPreferences">
+            
+            <!-- RESTAURANTS -->
+            <div *ngFor="let item of seedPreferences.restaurants" class="slide">
+                <mat-card class="poi-card-expanded">
+                    <div class="image">
+                        <img [src]="item.img">
+                    </div>
+                    <div class="col">
+                        <div class="icon poi">
+                            <span class="material-icons">restaurant</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="poi-name-container">
+                            <span class="poi-name">{{ item.name }}</span>
+                            <br>
+                            <span class="poi-address">{{ item.address }}</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="restaurant-item">
+                            <br>
+                            <br>
+                            <div class="cuisine-options">
+                                <span class="rating"><b>Cuisine (Friendly) Options</b></span>
+                                <div *ngFor="let option of item.cuisineOptions" class="option">
+                                    <span>{{ option }}</span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="personal-rating">
+                                <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
+                                <br>
+                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+
+
+
+            <!-- TTDS -->
+            <div *ngFor="let item of seedPreferences.ttds" class="slide">
+                <mat-card class="poi-card-expanded">
+                    <div class="image">
+                        <img [src]="item.img">
+                    </div>
+                    <div class="col">
+                        <div class="icon poi">
+                            <span class="material-icons">attractions</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="poi-name-container">
+                            <span class="poi-name">{{ item.name }}</span>
+                            <br>
+                            <span class="poi-address">{{ item.address }}</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="restaurant-item">
+                            <br>
+                            <br>
+                            <div class="personal-rating">
+                                <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
+                                <br>
+                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
