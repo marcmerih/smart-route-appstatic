@@ -1,12 +1,14 @@
 import pandas as pd
 import numpy as np
+import math
+
 
 # Item-Item Similarity Matrix - IxI
 # User Rating Vector for Each User - UxI (1 x I)
 # UxI : UxI mult IxI
 
-ii_sim_restaurant_matrix = pd.read_csv('data/similarity/itemitem_restaurant_sim.csv')
-ii_sim_ttd_matrix = pd.read_csv('data/similarity/itemitem_ttd_sim.csv')
+ii_sim_restaurant_matrix = np.genfromtxt('data/similarity/itemitem_restaurant_sim.csv', delimiter=',')
+ii_sim_ttd_matrix = np.genfromtxt('data/similarity/itemitem_ttd_sim.csv', delimiter=',')
 
 
 class RecSys():
@@ -24,7 +26,7 @@ class RecSys():
 
         for user in users:
             ii_similarity = ii_sim_restaurant_matrix
-
+            
             # train_matrix is built from user_rating_dictionary
 
             train_vector = np.zeros(len(ii_similarity))

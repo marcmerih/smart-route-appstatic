@@ -40,14 +40,14 @@ def signIn(request, username, password):
     global user
     global trip
 
-    signedIn = user.loadUser(username, password)
+    signedIn = user.loadUser(username,password,trip)
 
     if signedIn == 0:
         # Bad, Return No Account Found Error
         print("No Account Found Error")
 
     trip.addUserToTrip(user)
-
+    
     return HttpResponse(username)
 
 
@@ -67,17 +67,16 @@ def addGuestToTrip(request, username, password):
 
 def createUser(request, username, password):
     global user
-
-    created = user.createUser(username, password)
-
-    if created == 0:
-        # Bad, Return Unique Account Error
-        print("Unique Account Error")
-
-    seedPreferences = user.getSeedPreferences()
-    to_json = {"preferences": seedPreferences}
+    global trip
+    user.createUser(username, password)
+    signedIn = user.loadUser(username,password,trip)
+    # if created == 0:
+    #     # Bad, Return Unique Account Error
+    #     print("Unique Account Error")
+        
+    seedPreferences = user.getSeedPreferences(request)
     
-    return JsonResponse(to_json)
+    return JsonResponse(seedPreferences)
 
 
 def getInitialTrip(request, startingLocation, endingLocation):

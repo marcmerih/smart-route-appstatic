@@ -1,5 +1,5 @@
 from math import sin, cos, sqrt, atan2, radians, ceil
-from .graph import Graph, Node, Edge, object_decoder
+from .graph import Graph, Node, Edge
 from geopy.geocoders import Nominatim
 import heapq as heap
 import jsonpickle
@@ -9,7 +9,8 @@ import json
 
 import jsonpickle
 
-restaurants = pd.read_csv('data/osmidResDataExample.csv')
+restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
+ttds_data = pd.read_csv(r"data/item/ttdDataClean.csv")
 
 class Geographer():
 
@@ -28,9 +29,9 @@ class Geographer():
         print("Graph Object:", "Good" if isinstance(
             self.graph, Graph) else 'Failed')
         print("Node Object:", "Good" if isinstance(
-            self.graph.nodes['66'], Node) else 'Failed')
+            self.graph.nodes["666"], Node) else 'Failed')
         print("Edge Object:", "Good" if isinstance(
-            self.graph.nodes['66'].edges[0], Edge) else 'Failed')
+            self.graph.nodes["666"].edges[0], Edge) else 'Failed')
         print('Loaded Graph')
 
     def GeoEncode(self, address):
@@ -69,7 +70,8 @@ class Geographer():
 
 
     def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants):
-        global restaurants
+        global restaurants_data
+        global ttds_data
         startNode = self.graph.nodes[str(startNode_id)]
         goalNode = self.graph.nodes[str(goalNode_id)]
         tripStopsBudget = tripPreferences[0]
@@ -173,6 +175,8 @@ class Geographer():
         return R * c 
 
     def getGeoList(self, parents, startNode, goalNode):
+        global restaurants_data
+        global ttds_data
         print("Route Done")
         geolist = []
         poi_list = []
@@ -182,8 +186,8 @@ class Geographer():
             # geolist.append([thisNode.lat, thisNode.lon])
             geolist.append([thisNode.lon, thisNode.lat])
             thisNode = parents[thisNode]
-            if (thisNode.type == 'poi'):
-                resRow = restaurants[restaurants["osmid"]== int(thisNode.id)]
+            if (thisNode.type == 'R'):
+                resRow = restaurants_data[restaurants_data["osmid"]== int(thisNode.id)]
                 resID = "R"+str(thisNode.id)
                 resLat = thisNode.lat
                 resLon = thisNode.lon
@@ -202,3 +206,34 @@ class Geographer():
         poi_list.append(hardcoded_dict)
 
         return [list(reversed(geolist)), list(reversed(poi_list))]
+
+
+    def getSeedRestaurants(self,num):
+        global restaurants_data
+        restaurants = []
+        for i in range(num):
+            _itemRow = restaurants_data.loc[i]
+            restaurant_dict = {'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':_itemRow["categories"],'cuisineOptions':_itemRow["diets"],'reviewsURL':_itemRow["url"],'type':'R','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            restaurants.append(restaurant_dict)
+        return restaurants
+
+    def getSeedTTDs(self,num):
+        global ttds_data
+        ttds = []
+        for i in range(num):
+            _itemRow = ttds_data.loc[i]
+            ttds_dict = {'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':_itemRow["categories"],'reviewsURL':_itemRow["url"],'type':'T','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            ttds.append(ttds_dict)
+        return ttds
+
+    
+
+def object_decoder(obj):
+    if 'py/object' in obj and obj['py/object'] == '__main__.Graph':
+        return Graph(obj['nodes'])
+    elif 'py/object' in obj and obj['py/object'] == '__main__.Node':
+        return Node(obj['id'], obj['lat'], obj['lon'], obj['type'], obj['predicted_score'], obj['edges'], obj['estimatedCost'], obj['history'])
+    elif 'py/object' in obj and obj['py/object'] == '__main__.Edge':
+        return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'], obj['speed'])
+    
+    return obj

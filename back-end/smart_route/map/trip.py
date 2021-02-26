@@ -45,6 +45,7 @@ class Trip():
         self.recSys.predictTTDRatings(self.users)
 
         # Update Predicted_Score Column in each CSV...
+        print(self.recSys.getRestaurantModel())
         self.geographer.graph.setPredictedScores('R', self.recSys.getRestaurantModel())
         self.geographer.graph.setPredictedScores('T', self.recSys.getTTDModel())
 
