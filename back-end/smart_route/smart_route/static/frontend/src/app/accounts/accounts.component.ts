@@ -113,12 +113,14 @@ export class AccountsComponent implements OnInit {
         username: formGroup.get('username').value,
         password: formGroup.get('password').value  
       }
-      this.incrementRoute();
       this.userService.createAccount(userObject).subscribe(preferences => {
+        this.setUserSession(userObject.username);
         this.signupForm.reset();
-        this.seedPreferences = preferences;
+        console.log(preferences);
         this.incrementRoute();
-      })
+        this.seedPreferences = preferences;
+        console.log(this.seedPreferences);
+      });
     }
   }
 
@@ -130,13 +132,20 @@ export class AccountsComponent implements OnInit {
     if (loginForm.valid) {
       this.userService.signIn(userObject).subscribe((username: string) => {
         if (username) {
-          this.userService.username = username;
-          this.userService.userSignedIn = true;
-          this.userService.usersInTrip.push(username);
+          this.setUserSession(username);
+          this.close();
         }
         this.loginForm.reset();
       });
     }
+  }
+
+  setUserSession(username) {
+    this.userService.username = username;
+    this.userService.userSignedIn = true;
+    this.userService.usersInTrip.push(username);
+    this.userService.userSignedInEmitter$.emit(true);
+    this.userService.usersInTripEmitter$.emit(this.userService.usersInTrip);
   }
 
   incrementRoute() {

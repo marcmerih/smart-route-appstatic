@@ -1,5 +1,5 @@
 import { Route } from '@angular/compiler/src/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +13,10 @@ import { AddGuestComponent } from '../add-guest/add-guest.component';
  templateUrl: './header.component.html',
  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
  isTripOverlayExpanded = true;
+ userSignedIn = false;
+ usersInTrip: string[] = [];
 
  constructor(private router: Router, private dialog: MatDialog, public userService: UserService) {
  }
@@ -22,11 +24,24 @@ export class HeaderComponent implements OnInit {
  ngOnInit(): void {
  }
 
+ ngAfterViewInit(): void {
+  this.userService.userSignedInEmitter$.subscribe(userSignedIn => this.setUserSignedIn(userSignedIn));
+  this.userService.usersInTripEmitter$.subscribe(usersInTrip => this.setUsersInTrip(usersInTrip));
+ }
+
  openSignUp() {
   let dialogRef = this.dialog.open(AccountsComponent, {
     height: '70vh',
     width: '70vw'
   });
+ }
+
+ setUserSignedIn(userSignedIn) {
+   this.userSignedIn = userSignedIn;
+ }
+
+ setUsersInTrip(usersInTrip) {
+   this.usersInTrip = usersInTrip;
  }
 
  toggleTripOverlay() {
