@@ -6,6 +6,9 @@ from django.http import HttpResponse, JsonResponse
 
 usersData = pd.read_csv('data/user/users.csv')
 
+def loadUsersData():
+    global usersData
+    usersData = pd.read_csv('data/user/users.csv')
 
 class User():
     def __init__(self):
@@ -18,13 +21,12 @@ class User():
 
     def loadUser(self, username, password,trip):
         global usersData
-
+        
         userrow = usersData[(usersData['username'] ==
                              username) & (usersData['password'] == password)]
 
-        if userrow.empty:
-            return False
-
+        
+    
         self.username = userrow['username']
         self.password = userrow['password']
         self.trip = trip
@@ -46,7 +48,7 @@ class User():
         else:
             return False
 
-    def createUser(self, username, password):
+    def createUser(self, username, password,trip):
         global usersData
 
         check = User()
@@ -55,6 +57,7 @@ class User():
         if unique:
             self.username = username
             self.password = password
+            self.trip = trip
             self.saveUserInfo()
 
         else:
@@ -81,7 +84,7 @@ class User():
         self.saveUserInfo()
 
 
-    def getSeedPreferences(self,request):
+    def getSeedPreferences(self):
         restaurants = self.trip.geographer.getSeedRestaurants(5)
         # restaurants = [
         #     {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'},

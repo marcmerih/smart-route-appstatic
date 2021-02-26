@@ -56,7 +56,7 @@ def addGuestToTrip(request, username, password):
     global guests
 
     guestUser = User()
-    signedIn = guestUser.loadUser(username, password)
+    signedIn = guestUser.loadUser(username, password, trip)
 
     guests.append(guestUser)
 
@@ -68,14 +68,10 @@ def addGuestToTrip(request, username, password):
 def createUser(request, username, password):
     global user
     global trip
-    user.createUser(username, password)
-    signedIn = user.loadUser(username,password,trip)
-    # if created == 0:
-    #     # Bad, Return Unique Account Error
-    #     print("Unique Account Error")
-        
-    seedPreferences = user.getSeedPreferences(request)
-    
+
+    user.createUser(username, password,trip)
+            
+    seedPreferences = user.getSeedPreferences()
     return JsonResponse(seedPreferences)
 
 
