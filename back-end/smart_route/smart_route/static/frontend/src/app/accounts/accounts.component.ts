@@ -165,4 +165,9 @@ export class AccountsComponent implements OnInit {
   updateRating(item) {
     this.tripService.updateRating(item);
   }
+
+  cuisineOptions(item) {
+    // ['test', 'asdasd']
+    return JSON.parse(item.cuisineOptions);
+  }
 }

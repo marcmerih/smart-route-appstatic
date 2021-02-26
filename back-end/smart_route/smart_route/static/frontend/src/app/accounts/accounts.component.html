@@ -93,7 +93,7 @@
                             <br>
                             <div class="cuisine-options">
                                 <span class="rating"><b>Cuisine (Friendly) Options</b></span>
-                                <div *ngFor="let option of item.cuisineOptions" class="option">
+                                <div *ngFor="let option of cuisineOptions(item)" class="option">
                                     <span>{{ option }}</span>
                                 </div>
                             </div>

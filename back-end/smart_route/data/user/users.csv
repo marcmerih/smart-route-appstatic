@@ -1,5 +1,5 @@
 username,password,restaurant_ratings,hotel_ratings,ttd_ratings
-chris,123.0,{},,{}
+chris,123.0,"{""0"":1}",,"{""0"":1}"
 chris1,123.0,{},,{}
 christopher,123.0,{},,{}
 chrus123123,123123.0,{},,{}
@@ -10,3 +10,6 @@ testmarc,123.0,{},,{}
 marcatasoytest,123.0,{},,{}
 testmarc1998,123.0,{},,{}
 marc123,123.0,{},,{}
+marcat,123.0,{},,{}
+christofus,123.0,{},,{}
+marc2,123.0,{},,{}
