@@ -9,6 +9,9 @@ usersData = pd.read_csv('data/user/users.csv')
 def loadUsersData():
     global usersData
     usersData = pd.read_csv('data/user/users.csv')
+    usersData["username"] = usersData["username"].astype(str)
+    usersData["password"] = usersData["password"].astype(str)
+    
 
 class User():
     def __init__(self):
@@ -21,17 +24,15 @@ class User():
 
     def loadUser(self, username, password,trip):
         global usersData
-        
-        userrow = usersData[(usersData['username'] ==
-                             username) & (usersData['password'] == password)]
+        loadUsersData()
+        userrow = usersData[(usersData['username'] == username)]
 
-        
+        print(userrow)
     
         self.username = userrow['username']
         self.password = userrow['password']
         self.trip = trip
         # Properly load Dictionary
-
         self.restaurant_ratings = jsonpickle.decode(
             userrow['restaurant_ratings'].item())
         self.ttd_ratings = jsonpickle.decode(userrow['ttd_ratings'].item())
@@ -41,7 +42,7 @@ class User():
         global usersData
 
         userrow = usersData[(usersData['username'] ==
-                             username) & (usersData['password'] == password)]
+                             username)]
 
         if userrow.empty:
             return True
@@ -55,8 +56,8 @@ class User():
         unique = check.checkUnique(username, password)
 
         if unique:
-            self.username = username
-            self.password = password
+            self.username = str(username)
+            self.password = str(password)
             self.trip = trip
             self.saveUserInfo()
 
@@ -66,8 +67,8 @@ class User():
     def saveUserInfo(self):
         global usersData
 
-        usersData.at[self.username, 'username'] = self.username
-        usersData.at[self.username, 'password'] = self.password
+        usersData.at[self.username, 'username'] = str(self.username)
+        usersData.at[self.username, 'password'] = str(self.password)
         usersData.at[self.username, 'restaurant_ratings'] = jsonpickle.encode(
             self.restaurant_ratings)
         usersData.at[self.username, 'ttd_ratings'] = jsonpickle.encode(
