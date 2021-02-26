@@ -10,8 +10,13 @@ export class UserService {
   userSignedIn = false;
   username: string;
   usersInTrip: string[] = [];
+  usersInTripEmitter: string[] = [];
+  public userSignedInEmitter$: EventEmitter<string>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.userSignedInEmitter$ = new EventEmitter();
+    this.usersInTripEmitter$ = new EventEmitter();
+  }
 
   signIn(userObject: User) {
     return this.http.get(`./signIn/${userObject.username}-${userObject.password}`);

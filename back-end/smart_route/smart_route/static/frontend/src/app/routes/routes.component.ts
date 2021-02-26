@@ -134,7 +134,7 @@ export class RoutesComponent implements AfterViewInit {
         source: new SourceVector({
           features: [
             new Feature({
-                geometry: new Point(fromLonLat(coordinates))
+                geometry: new Point(fromLonLat(coordinates)) // this is reversed.
             })
           ]
         }),

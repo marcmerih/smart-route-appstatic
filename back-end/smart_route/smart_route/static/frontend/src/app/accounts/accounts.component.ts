@@ -133,6 +133,9 @@ export class AccountsComponent implements OnInit {
           this.userService.username = username;
           this.userService.userSignedIn = true;
           this.userService.usersInTrip.push(username);
+          this.userService.userSignedInEmitter$.emit(true);
+          this.userService.usersInTripEmitter$.emit(this.userService.usersInTrip);
+          this.close();
         }
         this.loginForm.reset();
       });
