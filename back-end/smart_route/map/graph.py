@@ -1,13 +1,8 @@
 import random
+import pandas as pd
 
-def object_decoder(obj):
-    if 'py/object' in obj and obj['py/object'] == '__main__.Graph':
-        return Graph(obj['nodes'])
-    elif 'py/object' in obj and obj['py/object'] == '__main__.Node':
-        return Node(obj['id'], obj['lat'], obj['lon'], obj['type'], obj['rev_score'], obj['predicted_score'], obj['edges'], obj['estimatedCost'], obj['history'])
-    elif 'py/object' in obj and obj['py/object'] == '__main__.Edge':
-        return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'], obj['speed'])
-    return obj
+restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
+ttds_data = pd.read_csv(r"data/item/ttdDataClean.csv")
 
 
 class Graph(object):
@@ -19,31 +14,39 @@ class Graph(object):
         for node_id in list(self.nodes.keys()):
             self.nodes[node_id].estimatedCost = 0
             self.nodes[node_id].history = [[],0] #Selected POIS, Total Travel Time  
-            if self.nodes[node_id].type == 'poi':
-                self.nodes[node_id].predicted_score = random.uniform(1, 5)
-            else:
-                self.nodes[node_id].predicted_score = 0
+            # if self.nodes[node_id].type == 'poi':
+            #     self.nodes[node_id].predicted_score = random.uniform(1, 5)
+            # else:
+            #     self.nodes[node_id].predicted_score = 0
 
-    def setPredictedScores(self, poi_type_identifier, scores):
-        for poi_id, predicted_score in enumerate(scores, start=0):
-            _id = poi_type_identifier + str(poi_id)
-            self.nodes[_id].predicted_score = predicted_score
+    def setPredictedScores(self, restaurant_scores, ttd_scores):
+        # for poi_id, predicted_score in enumerate(scores, start=0):
+        for i in range(len(restaurant_scores)):
+            _itemRow = restaurants_data.loc[i]
+            _id = _itemRow["index"][1:]
+            self.nodes[_id].predicted_score = restaurant_scores[i] 
+
+        for j in range(len(ttd_scores)):
+            _itemRow = ttds_data.loc[i]
+            _id = _itemRow["index"][1:]
+            _TTDID = str(int(_id)+4000)
+            self.nodes[_id].predicted_score = ttd_scores[j] 
+    
 
 
 class Node(object):
-    def __init__(self, _id, lat, lon, _type, predicted_score, rev_score, edges=[], estimatedCost=None, history=[]):
+    def __init__(self, _id, lat, lon, _type, predicted_score, edges=[], estimatedCost=None, history=[]):
         self.id = _id
         self.lat = lat
         self.lon = lon
         self.type = _type
-        self.rev_score = rev_score
         self.predicted_score = predicted_score
         self.edges = edges
         self.estimatedCost = estimatedCost
         self.history = history
 
     def copy(self):
-        return Node(self.id, self.lat, self.lon, self.type, self.rev_score, self.predicted_score, self.edges, self.estimatedCost, self.history)
+        return Node(self.id, self.lat, self.lon, self.type, self.predicted_score, self.edges, self.estimatedCost, self.history)
 
     def __eq__(self, other):
         return (self.id,self.history[0]) == (other.id,other.history[0])
@@ -55,12 +58,12 @@ class Node(object):
         return hash(self.id)
 
     def __repr__(self):
-        return "<Node id=%(id)s, (lat,lon)=(%(lat)s,%(lon)s), rev_score=%(rev_score)s>" % {
+        return "<Node id=%(id)s, (lat,lon)=(%(lat)s,%(lon)s)>" % {
             'id': self.id,
             'lat': self.lat,
             'lon': self.lon,
             'type': self.type,
-            'rev_score': self.rev_score,
+            
         }
 
 
@@ -77,7 +80,7 @@ class Edge(object):
 
     def __repr__(self):
         return "<Edge destNode=%(destNode)s, sourceNode=%(sourceNode)s, length=%(length)s>" % {
-            'destNode': self.destinationNode.id,
-            'sourceNode': self.sourceNode.id,
+            'destNode': self.destinationNodeID,
+            'sourceNode': self.sourceNodeID,
             'length': self.length,
         }

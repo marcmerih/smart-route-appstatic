@@ -19,7 +19,7 @@ urlpatterns = [
         views.createUser),
     url(r'^init/(?P<startingLocation>.+)\-(?P<endingLocation>.+)/$',
         views.getInitialTrip),
-    url(r'^refresh/(?P<tripDurationPref>.+)\-(?P<numStopsPref>.+)\-(?P<budgetPref>.+)\-(?P<keyphrases>.+)/$',
+    url(r'^refresh/(?P<tripDurationPref>.+)\-(?P<numStopsPref>.+)\-(?P<budgetPref>.+)/$',
         views.refreshTrip),
     url(r'^lockStop/(?P<poi_type>.+)\-(?P<poi_id>.+)/$',
         views.lockStop),
