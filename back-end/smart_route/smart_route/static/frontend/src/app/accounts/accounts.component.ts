@@ -116,6 +116,7 @@ export class AccountsComponent implements OnInit {
       this.incrementRoute();
       this.userService.createAccount(userObject).subscribe(preferences => {
         this.signupForm.reset();
+        console.log(preferences);
         this.seedPreferences = preferences;
         this.incrementRoute();
       })

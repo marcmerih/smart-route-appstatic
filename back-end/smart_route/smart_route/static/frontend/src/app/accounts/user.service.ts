@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './accounts.component';
 
@@ -10,8 +10,8 @@ export class UserService {
   userSignedIn = false;
   username: string;
   usersInTrip: string[] = [];
-  usersInTripEmitter: string[] = [];
-  public userSignedInEmitter$: EventEmitter<string>;
+  public usersInTripEmitter$: EventEmitter<string[]>;
+  public userSignedInEmitter$: EventEmitter<boolean>;
 
   constructor(private http: HttpClient) {
     this.userSignedInEmitter$ = new EventEmitter();

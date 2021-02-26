@@ -67,14 +67,16 @@
     <div class="col-md-12">
         <h2 style="text-align: center;">Please rate the POIs listed below to improve our recommendations!</h2>
         <div class="col-md-12 containerPreferences" *ngIf="seedPreferences">
-            <div *ngFor="let item of seedPreferences" class="slide">
+            
+            <!-- RESTAURANTS -->
+            <div *ngFor="let item of seedPreferences.restaurants" class="slide">
                 <mat-card class="poi-card-expanded">
                     <div class="image">
                         <img [src]="item.img">
                     </div>
                     <div class="col">
                         <div class="icon poi">
-                            <span class="material-icons">{{ (item.type === 'res' ? 'restaurant' : (item.type === 'hotel' ? 'hotel' : 'attractions'))}}</span>
+                            <span class="material-icons">restaurant</span>
                         </div>
                     </div>
                     <div class="col">
@@ -85,31 +87,51 @@
                         </div>
                     </div>
                     <br>
-                    <div *ngIf="item.type !== 'hotel'">
-                        <!-- <br> -->
-                        <div *ngFor="let tag of item.tags" style="display: inline;">
-                            <app-tag [tagName]="tag"></app-tag>
+                    <div>
+                        <div class="restaurant-item">
+                            <br>
+                            <br>
+                            <div class="cuisine-options">
+                                <span class="rating"><b>Cuisine (Friendly) Options</b></span>
+                                <div *ngFor="let option of item.cuisineOptions" class="option">
+                                    <span>{{ option }}</span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="personal-rating">
+                                <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
+                                <br>
+                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+
+
+
+            <!-- TTDS -->
+            <div *ngFor="let item of seedPreferences.ttds" class="slide">
+                <mat-card class="poi-card-expanded">
+                    <div class="image">
+                        <img [src]="item.img">
+                    </div>
+                    <div class="col">
+                        <div class="icon poi">
+                            <span class="material-icons">attractions</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="poi-name-container">
+                            <span class="poi-name">{{ item.name }}</span>
+                            <br>
+                            <span class="poi-address">{{ item.address }}</span>
                         </div>
                     </div>
                     <br>
                     <div>
                         <div class="restaurant-item">
                             <br>
-                            <br>
-                            <div class="cuisine-options">
-                                <div *ngIf="isRestaurant">
-                                    <span class="rating"><b>Cuisine (Friendly) Options</b></span>
-                                    <div *ngFor="let option of item.cuisineOptions" class="option">
-                                        <span>{{ option }}</span>
-                                    </div>
-                                </div>
-                                <div *ngIf="isHotel">
-                                    <span class="rating"><b>Amenities</b></span>
-                                    <div *ngFor="let option of amenities(item)" class="option">
-                                        <span>{{ option }}</span>
-                                    </div>
-                                </div>
-                            </div>
                             <br>
                             <div class="personal-rating">
                                 <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
