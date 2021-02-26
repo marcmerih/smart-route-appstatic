@@ -113,13 +113,13 @@ export class AccountsComponent implements OnInit {
         username: formGroup.get('username').value,
         password: formGroup.get('password').value  
       }
-      this.incrementRoute();
       this.userService.createAccount(userObject).subscribe(preferences => {
         this.signupForm.reset();
         console.log(preferences);
-        this.seedPreferences = preferences;
         this.incrementRoute();
-      })
+        this.seedPreferences = preferences;
+        console.log(this.seedPreferences);
+      });
     }
   }
 
