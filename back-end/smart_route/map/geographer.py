@@ -6,6 +6,7 @@ import jsonpickle
 import pandas as pd
 import copy
 import json
+import ast
 
 import jsonpickle
 
@@ -194,12 +195,12 @@ class Geographer():
                 resLon = str(thisNode.lon)
                 resName = resRow["item_name"].item()
                 resAddress = resRow["item_address"].item()
-                resTags = resRow["categories"].item()
-                resCuisineOptions = resRow["diets"].item()
+                resTags = ast.literal_eval(resRow["categories"].item())
+                resCuisineOptions = ast.literal_eval(resRow["diets"].item())
                 resTAURL = resRow["url"].item()
                 resTARating = resRow["review_score"].item()
                 resUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
-                poi_dict = {'isExpanded':False,'isLocked':False,'currentRating':0,'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                poi_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
             if (thisNode.type == 'T'):
                 print("FOUND A TTD",thisNode.id,thisNode.lat,thisNode.lon)
@@ -209,14 +210,14 @@ class Geographer():
                 ttdLon = str(thisNode.lon)
                 ttdName = ttdRow["item_name"].item()
                 ttdAddress = ttdRow["item_address"].item()
-                ttdTags = ttdRow["categories"].item()
+                ttdTags = ast.literal_eval(ttdRow["categories"].item())
                 ttdTAURL = ttdRow["url"].item()
                 ttdTARating = ttdRow["review_score"].item()
                 ttdUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
-                poi_dict = {'isExpanded':False,'isLocked':False,'currentRating':0,'id':ttdID,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                poi_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':ttdID,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
 
-        hardcoded_dict = {'isExpanded':False,'isLocked':False,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
+        hardcoded_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': ["Asian", "Buffet"],'cuisineOptions': ["Vegan"],'reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
         # hardcoded_dict = json.dumps(hardcoded_dict)
         poi_list.append(hardcoded_dict)
 
@@ -228,7 +229,7 @@ class Geographer():
         restaurants = []
         for i in range(num):
             _itemRow = restaurants_data.loc[i]
-            restaurant_dict = {'isExpanded':False,'isLocked':False,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':_itemRow["categories"],'cuisineOptions':_itemRow["diets"],'reviewsURL':_itemRow["url"],'type':'R','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            restaurant_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'cuisineOptions':ast.literal_eval(_itemRow["diets"]),'reviewsURL':_itemRow["url"],'type':'R','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
             restaurants.append(restaurant_dict)
         return restaurants
 
@@ -237,7 +238,7 @@ class Geographer():
         ttds = []
         for i in range(num):
             _itemRow = ttds_data.loc[i]
-            ttds_dict = {'isExpanded':False,'isLocked':False,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':_itemRow["categories"],'reviewsURL':_itemRow["url"],'type':'T','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            ttds_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'reviewsURL':_itemRow["url"],'type':'T','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
             ttds.append(ttds_dict)
         return ttds
 
