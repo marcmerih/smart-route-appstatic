@@ -121,7 +121,7 @@ export class TripOverlayComponent implements OnInit {
       this.tripService.setListOfNodes(this.currentRoute);
       let stopsCoords = [];
       this.currentStops.forEach(stop => {
-        stopsCoords.push([stop.lat, stop.lon]);
+        stopsCoords.push([stop.lon, stop.lat]);
       });
       this.tripService.setPoiMarkers(stopsCoords);
     });
