@@ -16,14 +16,14 @@
     <div *ngFor="let item of items" class="slide">
         <mat-card [class]="(item.isExpanded) ? 'poi-card-expanded' : 'poi-card'">
             <div class="lock-container">
-                <span class="material-icons lock-top" (click)="lockItem(item)">{{ (item.isLocked) ? 'lock' : 'lock_open'}}</span>
+                <span class="material-icons lock-top" (click)="lockItem(item)">{{ (item.isLocked === 1) ? 'lock' : 'lock_open'}}</span>
             </div>
             <div class="image">
                 <img [src]="item.img">
             </div>
             <div class="col">
                 <div class="icon poi">
-                    <span class="material-icons">{{ (item.type === 'res' ? 'restaurant' : (item.type === 'hotel' ? 'hotel' : 'attractions'))}}</span>
+                    <span class="material-icons">{{ (item.type === 'R') ? 'restaurant' : 'attractions' }}</span>
                 </div>
             </div>
             <div class="col">
@@ -34,35 +34,44 @@
                 </div>
             </div>
             <br>
-            <div *ngIf="item.type !== 'hotel'">
-                <!-- <br> -->
-                <div *ngFor="let tag of restaurantTags(item)" style="display: inline;">
-                    <app-tag [tagName]="tag"></app-tag>
-                </div>
-            </div>
             <br>
-            <span class="material-icons show-more" (click)="toggleExpansion(item)">{{ item.isExpanded ? 'expand_less' : 'more_horiz'}}</span>
+            <span class="material-icons show-more" (click)="toggleExpansion(item)">{{ (item.isExpanded === 1) ? 'expand_less' : 'more_horiz'}}</span>
             <br>
-            <div *ngIf="item.isExpanded">
-                <div class="restaurant-item" *ngIf="item.type === 'res'">
+            <div *ngIf="item.isExpanded === 1">
+                <!-- RESTAURANT -->
+                <div class="restaurant-item" *ngIf="item.type === 'R'">
                     <div class="trip-advisor">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>{{ item.tripAdvisorRating }}</b>. Click <u><a [href]="item.reviewsUrl">here</a></u> to see reviews!</span>
+                        <span class="rating">Trip advisor rating: <b>{{ item.resTARating }}</b>. Click <u><a [href]="item.resTAURL">here</a></u> to see reviews!</span>
                     </div>
                     <br>
                     <br>
                     <div class="cuisine-options">
-                        <div *ngIf="isRestaurant(item)">
-                            <span class="rating"><b>Cuisine (Friendly) Options</b></span>
-                            <div *ngFor="let option of item.cuisineOptions" class="option">
-                                <span>{{ option }}</span>
-                            </div>
+                        <span class="rating"><b>Cuisine (Friendly) Options</b></span>
+                        <div *ngFor="let option of item.cuisineOptions" class="option">
+                            <span>{{ option }}</span>
                         </div>
-                        <div *ngIf="isHotel(item)">
-                            <span class="rating"><b>Amenities</b></span>
-                            <div *ngFor="let option of amenities(item)" class="option">
-                                <span>{{ option }}</span>
-                            </div>
+                    </div>
+                    <br>
+                    <div class="personal-rating">
+                        <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
+                        <br>
+                        <ngb-rating [(rate)]="item.currentRating" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                    </div>
+                </div>
+
+                <!-- TTD -->
+                <div class="restaurant-item" *ngIf="item.type === 'R'">
+                    <div class="trip-advisor">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
+                        <span class="rating">Trip advisor rating: <b>{{ item.ttdTARating }}</b>. Click <u><a [href]="item.ttdTAURL">here</a></u> to see reviews!</span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="cuisine-options">
+                        <span class="rating"><b>Categories</b></span>
+                        <div *ngFor="let option of item.cats" class="option">
+                            <span>{{ option }}</span>
                         </div>
                     </div>
                     <br>

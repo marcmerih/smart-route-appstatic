@@ -23,7 +23,7 @@ export class CarouselComponent implements OnInit {
   }
 
   toggleExpansion(item) {
-    item.isExpanded = !item.isExpanded;
+    item.isExpanded = Math.abs(item.isExpanded-1);
   }
 
   amenities(item) {
@@ -34,8 +34,8 @@ export class CarouselComponent implements OnInit {
   }
 
   lockItem(item) {
-    item.isLocked = !item.isLocked;
-    if (item.isLocked) {
+    item.isLocked = Math.abs(item.isLocked-1);
+    if (item.isLocked === 1) {
       this.tripService.lockPOI(item);
     } else {
       this.tripService.unlockPOI(item);
@@ -44,6 +44,7 @@ export class CarouselComponent implements OnInit {
   }
 
   updateRating(item) {
+    console.log(item);
     this.tripService.updateRating(item);
   }
 
@@ -52,11 +53,7 @@ export class CarouselComponent implements OnInit {
   }
 
   isRestaurant(item) {
-    return (item.type === 'res');
-  }
-
-  isHotel(item) {
-    return (item.type === 'hot');
+    return (item.type === 'R');
   }
 
 }
