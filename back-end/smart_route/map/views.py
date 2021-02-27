@@ -97,14 +97,20 @@ def lockStop(request, poi_type, poi_id):
     global trip
     trip.lockStop(poi_type, poi_id)
 
+    return 1
+
 
 def unlockStop(request, poi_type, poi_id):
     global trip
     trip.unlockStop(poi_type, poi_id)
 
+    return 1
+
 
 def setRating(request, poi_type, poi_id, rating):
     global user
     user.setItemRating(poi_type, poi_id, rating)
+
+    return 1
 
 

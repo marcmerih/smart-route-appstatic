@@ -93,7 +93,7 @@
                             <br>
                             <div class="cuisine-options">
                                 <span class="rating"><b>Cuisine (Friendly) Options</b></span>
-                                <div *ngFor="let option of cuisineOptions(item)" class="option">
+                                <div *ngFor="let option of item.cuisineOptions" class="option">
                                     <span>{{ option }}</span>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="personal-rating">
                                 <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
                                 <br>
-                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                                <ngb-rating [(rate)]="item.currentRating" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                             <div class="personal-rating">
                                 <span class="personal-rating-span"><b>Please rate this recommendation?</b></span>
                                 <br>
-                                <ngb-rating [(rate)]="item.currentRate" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
+                                <ngb-rating [(rate)]="item.currentRating" max="5" class="stars" (rateChange)="updateRating(item)"></ngb-rating>
                             </div>
                         </div>
                     </div>

@@ -26,34 +26,28 @@ export class CarouselComponent implements OnInit {
     item.isExpanded = Math.abs(item.isExpanded-1);
   }
 
-  amenities(item) {
-    if (item.amenities.length > 3) {
-      return item.amenities.slice(0, 3);
-    }
-    return item.amenities;
-  }
-
   lockItem(item) {
     item.isLocked = Math.abs(item.isLocked-1);
     if (item.isLocked === 1) {
-      this.tripService.lockPOI(item);
+      this.tripService.lockPOI(item).subscribe(res => {
+        console.log(res);
+      });
     } else {
-      this.tripService.unlockPOI(item);
+      this.tripService.unlockPOI(item).subscribe(res => {
+        console.log(res);
+      });
     }
     // make backend call to show that item has been locked / unlocked;
   }
 
   updateRating(item) {
     console.log(item);
-    this.tripService.updateRating(item);
-  }
-
-  restaurantTags(item) {
-    return JSON.parse(item.resTags);
+    this.tripService.updateRating(item).subscribe(res => {
+      console.log("success" + res);
+    });
   }
 
   isRestaurant(item) {
     return (item.type === 'R');
   }
-
 }
