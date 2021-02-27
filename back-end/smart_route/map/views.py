@@ -85,10 +85,10 @@ def getInitialTrip(request, startingLocation, endingLocation):
     return trip.getTrip(request)
 
 
-def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref, keyphrases):
+def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref):
     global trip
     trip.updateTripPreferences(
-        tripDurationPref, numStopsPref, budgetPref, keyphrases)
+        tripDurationPref, numStopsPref, budgetPref)
     trip.planTrip()
     return trip.getTrip(request)
 
