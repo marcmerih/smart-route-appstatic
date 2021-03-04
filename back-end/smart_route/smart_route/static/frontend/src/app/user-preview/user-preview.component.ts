@@ -16,8 +16,9 @@ export class UserPreviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get user() {
-    return this.usersInTrip[0].toUpperCase();
+  userName(user) {
+    console.log(user);
+    return user[0].toUpperCase();
   }
 
 }

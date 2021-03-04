@@ -192,7 +192,7 @@ export class RoutesComponent implements AfterViewInit {
       this.map.removeLayer(element);
     });
 
-    this.resetRoute();
+    // this.resetRoute();
   }
 
   resetRoute() {
