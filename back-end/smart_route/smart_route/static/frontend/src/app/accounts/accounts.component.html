@@ -1,5 +1,5 @@
 
-<span class="material-icons close-button" (click)="close()">
+<span class="material-icons close-button" (click)="close()" *ngIf="currentProfileStep === createProfileSteps.signUp">
     close
 </span>
 <div class="col-md-12 container" *ngIf="currentProfileStep === createProfileSteps.signUp">
@@ -142,6 +142,13 @@
                     </div>
                 </mat-card>
             </div>
+
+            <button mat-raised-button 
+                color="primary" 
+                class="primary"
+                [disabled]="seedPreferencesDoneButtonDisabled"
+                (click)="close()"
+            >Done</button>
         </div>
     </div>
 </div>
