@@ -61,7 +61,7 @@ def addGuestToTrip(request, username, password):
     guests.append(guestUser)
 
     trip.addUserToTrip(guestUser)
-
+    
     return HttpResponse(username)
 
 
@@ -72,6 +72,8 @@ def createUser(request, username, password):
     user.createUser(username, password,trip)
             
     seedPreferences = user.getSeedPreferences()
+    trip.addUserToTrip(user)
+    
     return JsonResponse(seedPreferences)
 
 
@@ -97,20 +99,20 @@ def lockStop(request, poi_type, poi_id):
     global trip
     trip.lockStop(poi_type, poi_id)
 
-    return 1
+    return HttpResponse(1)
 
 
 def unlockStop(request, poi_type, poi_id):
     global trip
     trip.unlockStop(poi_type, poi_id)
 
-    return 1
+    return HttpResponse(1)
 
 
-def setRating(request, poi_type, poi_id, rating):
+def setRating(request, poi_type, poi_id, score):
     global user
-    user.setItemRating(poi_type, poi_id, rating)
+    user.setItemRating(poi_type, poi_id, score)
 
-    return 1
+    return HttpResponse(1)
 
 

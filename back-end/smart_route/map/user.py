@@ -67,8 +67,8 @@ class User():
     def saveUserInfo(self):
         global usersData
 
-        usersData.at[self.username, 'username'] = str(self.username)
-        usersData.at[self.username, 'password'] = str(self.password)
+        usersData.at[str(self.username), 'username'] = str(self.username)
+        usersData.at[str(self.username), 'password'] = str(self.password)
         usersData.at[self.username, 'restaurant_ratings'] = jsonpickle.encode(
             self.restaurant_ratings)
         usersData.at[self.username, 'ttd_ratings'] = jsonpickle.encode(
@@ -77,7 +77,7 @@ class User():
         usersData.to_csv('data/user/users.csv', index=False)
 
     def setItemRating(self, poi_type, poi_id, rating):
-        ID = poi_type + str(poi_id)
+        ID = str(poi_id)
         if poi_type == 'R':
             self.restaurant_ratings[ID] = rating
         if poi_type == 'T':
