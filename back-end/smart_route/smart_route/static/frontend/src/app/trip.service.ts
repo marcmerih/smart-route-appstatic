@@ -15,11 +15,13 @@ export class TripService {
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
   public resetMarkers$: EventEmitter<string>;
+  public resetRoute$: EventEmitter<string>;
 
   constructor(private http: HttpClient, private router: Router) {
     this.nodes$ = new EventEmitter();
     this.poiMarkers$ = new EventEmitter();
     this.resetMarkers$ = new EventEmitter();
+    this.resetRoute$ = new EventEmitter();
     this.initializeTripSetupForm();
     this.intermediateLocationForm = new FormGroup({
       address: new FormControl('')
@@ -53,6 +55,10 @@ export class TripService {
 
   resetMarkers() {
     this.resetMarkers$.emit();
+  }
+
+  resetRoute() {
+    this.resetRoute$.emit();
   }
 
   route(startingLocation, endingLocation) {

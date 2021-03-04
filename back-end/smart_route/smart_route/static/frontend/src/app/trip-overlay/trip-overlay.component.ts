@@ -213,6 +213,7 @@ export class TripOverlayComponent implements OnInit {
 
   startOver() {
     this.tripService.resetMarkers();
+    this.tripService.resetRoute();
     this.tripService.initializePreferencesForm();
     this.tripService.initializeTripSetupForm();
 
