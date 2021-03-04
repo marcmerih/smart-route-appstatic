@@ -31,8 +31,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
  openSignUp() {
   let dialogRef = this.dialog.open(AccountsComponent, {
-    height: '70vh',
-    width: '70vw'
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    height: '100%',
+    width: '100%'
   });
  }
 

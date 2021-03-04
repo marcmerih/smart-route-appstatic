@@ -47,8 +47,8 @@ def signIn(request, username, password):
         print("No Account Found Error")
 
     trip.addUserToTrip(user)
-    
-    return HttpResponse(username)
+    userObject = {"username":username}
+    return JsonResponse(userObject)
 
 
 def addGuestToTrip(request, username, password):
@@ -61,8 +61,9 @@ def addGuestToTrip(request, username, password):
     guests.append(guestUser)
 
     trip.addUserToTrip(guestUser)
-    
-    return HttpResponse(username)
+
+    userObject = {"username":username}
+    return JsonResponse(userObject)
 
 
 def createUser(request, username, password):

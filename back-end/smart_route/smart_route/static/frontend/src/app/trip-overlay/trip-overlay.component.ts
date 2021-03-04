@@ -7,6 +7,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LoaderService } from '../loader/loader.service';
 import { Router } from '@angular/router';
+import { UserService } from '../accounts/user.service';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -92,7 +93,7 @@ export class TripOverlayComponent implements OnInit {
   allComplete: boolean = false;
   tags = [];
 
-  constructor(private tripService: TripService, private router: Router) {
+  constructor(private tripService: TripService, private router: Router, private userService: UserService) {
     this.startTripForm = this.tripService.tripSetupForm;
     this.preferencesForm = this.tripService.preferencesForm;
     this.intermediatePreferencesForm = new FormGroup({
@@ -121,7 +122,7 @@ export class TripOverlayComponent implements OnInit {
       this.tripService.setListOfNodes(this.currentRoute);
       let stopsCoords = [];
       this.currentStops.forEach(stop => {
-        stopsCoords.push([stop.lat, stop.lon]);
+        stopsCoords.push([stop.lon, stop.lat]);
       });
       this.tripService.setPoiMarkers(stopsCoords);
     });
@@ -234,8 +235,8 @@ export class TripOverlayComponent implements OnInit {
   }
 
   get isRouteDisabled() {
-    return !(this.startTripForm.get('startingLocation').value &&
-      this.startTripForm.get('endingLocation').value)
+    return (!(this.startTripForm.get('startingLocation').value &&
+      this.startTripForm.get('endingLocation').value) || !this.userService.userSignedIn)
   }
 
 }

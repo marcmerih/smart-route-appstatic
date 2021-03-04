@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AccountsComponent, User } from '../accounts/accounts.component';
 import { UserService } from '../accounts/user.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';''
+export interface UserNameObject {
+  username: string;
+}
 @Component({
   selector: 'app-add-guest',
   templateUrl: './add-guest.component.html',
@@ -26,18 +28,15 @@ export class AddGuestComponent implements OnInit {
   }
 
   addGuest(loginForm: FormGroup) {
-    const userObject: User = {
-      username: loginForm.get('username').value,
-      password: loginForm.get('password').value
-    }
     if (loginForm.valid) {
-      this.userService.addGuestToTrip(userObject).subscribe((username: string) => {
-        if (username) {
-          this.userService.usersInTrip.push(username);
-          this.userDNE = false;
-        } else {
-          this.userDNE = true;
-        }
+      const userObject: User = {
+        username: loginForm.get('username').value,
+        password: loginForm.get('password').value
+      }
+      this.userService.addGuestToTrip(userObject).subscribe((username: UserNameObject) => {
+        console.log(username.username);
+        this.userService.usersInTrip.push(username.username.toString()[0]);
+        this.userDNE = false;
         this.addGuestToTripForm.reset();
         this.close();
       });

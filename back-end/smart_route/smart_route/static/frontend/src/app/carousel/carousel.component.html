@@ -42,7 +42,7 @@
                 <div class="restaurant-item" *ngIf="item.type === 'R'">
                     <div class="trip-advisor">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>{{ item.resTARating }}</b>. Click <u><a [href]="item.resTAURL">here</a></u> to see reviews!</span>
+                        <span class="rating">Trip advisor rating: <b>{{ item.tripAdvisorRating }}</b>. Click <u><a [href]="item.reviewsURL">here</a></u> to see reviews!</span>
                     </div>
                     <br>
                     <br>
@@ -64,7 +64,7 @@
                 <div class="restaurant-item" *ngIf="item.type === 'T'">
                     <div class="trip-advisor">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKVgOyUkQKg31OI0RJ4F1XXftk_1SnPaUOQQ&usqp=CAU" class="trip-advisor-logo">
-                        <span class="rating">Trip advisor rating: <b>{{ item.ttdTARating }}</b>. Click <u><a [href]="item.ttdTAURL">here</a></u> to see reviews!</span>
+                        <span class="rating">Trip advisor rating: <b>{{ item.tripAdvisorRating }}</b>. Click <u><a [href]="item.reviewsURL">here</a></u> to see reviews!</span>
                     </div>
                     <br>
                     <br>
