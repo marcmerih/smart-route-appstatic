@@ -97,4 +97,5 @@ class RecSys():
         return self.ttd_prediction_vector
 
     def multiplicativeUtility(self, prediction_vectors):
+        print(prediction_vectors)
         return np.divide(np.prod(np.vstack(prediction_vectors), axis=0), math.pow(5, (len(prediction_vectors)-1)))

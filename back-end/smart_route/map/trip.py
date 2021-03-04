@@ -62,27 +62,28 @@ class Trip():
         self.tripPreferences['budget'] = budgetPref
 
     def lockStop(self, poi_type, poi_id):
-
+        id_ = int(poi_id[1:])
+        print(id_)
         if poi_type == 'R':
             # Write To: restaurants_data (csv)
             # For POI === poi_id: 1) Record predicted_score value, 2) Change predicted_score to infinity
-            self.lockedStops[poi_type + poi_id] = self.recSys.restaurant_prediction_vector[poi_id]
-            self.recSys.restaurant_prediction_vector[poi_id] = 0
+            self.lockedStops[poi_id] = self.recSys.restaurant_prediction_vector[id_]
+            self.recSys.restaurant_prediction_vector[id_] = -10000
 
         elif poi_type == 'T':
-            self.lockedStops[poi_type + poi_id] = self.recSys.ttd_prediction_vector[poi_id]
-            self.recSys.ttd_prediction_vector[poi_id] = 0
+            self.lockedStops[poi_id] = self.recSys.ttd_prediction_vector[id_]
+            self.recSys.ttd_prediction_vector[id_] = 0
 
     def unlockStop(self, poi_type, poi_id):
 
-
+        id_ = int(poi_id[1:])
         if poi_type == 'R':
             # Write To: restaurants_data (csv)
             # For POI === poi_id: 1) Change predicted_score to recordedPredicatedScore, 2) Remove from lockedStops
-            self.recSys.restaurant_prediction_vector[poi_id] = self.lockedStops[poi_type + poi_id]
-            del self.lockedStops[poi_type + poi_id]
+            self.recSys.restaurant_prediction_vector[id_] = self.lockedStops[poi_id]
+            del self.lockedStops[poi_id]
             # ...
 
         elif poi_type == 'T':
-            self.recSys.ttd_prediction_vector[poi_id] = self.lockedStops[poi_type + poi_id]
-            del self.lockedStops[poi_type + poi_id]
+            self.recSys.ttd_prediction_vector[id_] = self.lockedStops[poi_id]
+            del self.lockedStops[poi_id]

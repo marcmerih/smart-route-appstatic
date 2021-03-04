@@ -217,9 +217,9 @@ class Geographer():
                 poi_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':ttdID,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
 
-        hardcoded_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': ["Asian", "Buffet"],'cuisineOptions': ["Vegan"],'reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
-        # hardcoded_dict = json.dumps(hardcoded_dict)
-        poi_list.append(hardcoded_dict)
+        # hardcoded_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': ["Asian", "Buffet"],'cuisineOptions': ["Vegan"],'reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
+        
+        # poi_list.append(hardcoded_dict)
 
         return [list(reversed(geolist)), list(reversed(poi_list))]
 
