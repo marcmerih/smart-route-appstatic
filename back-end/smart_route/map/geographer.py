@@ -39,18 +39,21 @@ class Geographer():
         location = self.geolocator.geocode(address)
         return [location.latitude, location.longitude]
 
-    def planTrip(self, destinations, tripPreferences):
+    def planTrip(self, destinations, tripPreferences,lockedStops):
         # Add Destinations to Graph
         startNode_id = self.getClosestGraphNode(destinations[0])
         endNode_id = self.getClosestGraphNode(destinations[1])
 
-        # tripPreferencesList = [tripPreferences['numStops'],tripPreferences['tripDuration'],tripPreferences['budget']]
+        if tripPreferences['numStops'] == None:
+            tripPreferencesList = [4,4,4]
+        else:
+            tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
         
-        tripPreferencesList = [4,4,4]
-        costFunctionConstants = [1,0.5,1]
-
+        
+        costFunctionConstants = [1,1,0.2]
+        print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
-        trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants)
+        trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants,lockedStops)
 
         route = trip[0]  # List of coords for the full route
 
@@ -70,11 +73,12 @@ class Geographer():
         return ids[distances.index(min(distances))]
 
 
-    def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants):
+    def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants,lockedStops):
         global restaurants_data
         global ttds_data
         startNode = self.graph.nodes[str(startNode_id)]
         goalNode = self.graph.nodes[str(goalNode_id)]
+        print(startNode,goalNode)
         tripStopsBudget = tripPreferences[0]
         tripDurationBudget = tripPreferences[1] * 60
         tripBudgetBudget = tripPreferences[2]
@@ -84,16 +88,16 @@ class Geographer():
         startNode.estimatedCost = 0 + self.heuristic(startNode,goalNode) #node.estimatedCost is f(n) = g(n) + h(n) 
         parents[startNode] = None #Parents is a dictionary that stores a previousNode:nextNode pair on any given path
         costs[startNode] = 0 #Cost of the current path at any given node
-        priorityQueue.append(startNode)
+        heap.heappush(priorityQueue, startNode)
             
 
         while (len(priorityQueue) > 0):
-            heap.heapify(priorityQueue)
+            # heap.heapify(priorityQueue)
             node = heap.heappop(priorityQueue)
-            if (node == goalNode):
+            if (node.id == goalNode.id):
                 goalNode.estimatedCost = node.estimatedCost
                 goalNode.history = node.history
-                return self.getGeoList(parents, startNode, goalNode)
+                return self.getGeoList(parents, startNode, goalNode,lockedStops)
 
             if (node.history[1] >= tripDurationBudget):
                 continue
@@ -102,9 +106,10 @@ class Geographer():
                 nextNode = self.graph.nodes[str(edge.destinationNodeID)]
 
                 stop_price = 0
-                if nextNode.type == 'poi': #change type to restaurant
-                    resRow = restaurants[restaurants["osmid"]== int(nextNode.id)]
+                if nextNode.type == 'R' : #change type to restaurant
+                    resRow = restaurants_data[restaurants_data["index"]== ('R'+str(nextNode.id))]
                     stop_price = float(resRow["price"].item())
+                
 
                 # Stop if POI already stopped
                 if ((str(nextNode.id) in node.history[0]) or ((len(node.history[0])) > tripStopsBudget) or (stop_price > tripBudgetBudget)):
@@ -118,7 +123,7 @@ class Geographer():
                 nextNode.history = copy.deepcopy(previousNodeHistory)
 
                 #Update nextNode history based on previous Node 
-                if node.type == 'poi': # If previous Node was a POI
+                if node.type in ['R','T']: # If previous Node was a POI
                     nextNode.history[0].append(str(node.id)) #Add Previous Node to SelectedPOIs List
 
                 costAtNode = costs[node] 
@@ -126,30 +131,32 @@ class Geographer():
                 nextNode.history[1] += (((edge.length/1000)/edge.speed)*60) #Update Total Travel Time Cost
                 
                 # This is the cost function
-
-                if ((nextNode not in parents.keys()) or (newCost < costs[nextNode])):
+#  or (newCost < costs[nextNode])
+                if (nextNode not in parents.keys() or (newCost < costs[nextNode]) or (node.type in ['R','T'])):
                     parents[nextNode] = node
                     costs[nextNode] = newCost
                     nextNode.estimatedCost = self.heuristic(nextNode, goalNode) + newCost
-                    priorityQueue.append(nextNode)
+                    heap.heappush(priorityQueue, nextNode)
 
     def costFunction(self,graph,startNode,nextNode,edge,const):
         cost = 0
         distanceSinceLastPOI = 0
         
-        if nextNode.type != 'poi':
+        if nextNode.type == 'road':
 
             cost += const[0] * (((edge.length/1000)/edge.speed)*60)
             
             if len(nextNode.history[0]) == 0:
-                distanceSinceLastPOI = self.getManhattenDistance(nextNode,startNode)
+                distanceSinceLastPOI = self.getDistance(nextNode,startNode)
             else: 
-                distanceSinceLastPOI = self.getManhattenDistance(nextNode,graph.nodes[nextNode.history[0][-1]])
+                distanceSinceLastPOI = self.getDistance(nextNode,graph.nodes[nextNode.history[0][-1]])
             
-        cost += const[1] * distanceSinceLastPOI # Penalize too long a distance between POIs -> Calculate c2 based on Trip Length
+        cost *= const[1] * ((distanceSinceLastPOI)/60)*60  # Penalize too long a distance between POIs -> Calculate c2 based on Trip Length
         
-        if nextNode.type == 'poi':
+        if nextNode.type in ['R','T']:
             cost += const[2] * (5-nextNode.predicted_score) # Penalize derivation from perfect predicted POI score
+
+        
         return cost 
 
     def heuristic(self,node,goalNode): 
@@ -175,7 +182,7 @@ class Geographer():
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return R * c 
 
-    def getGeoList(self, parents, startNode, goalNode):
+    def getGeoList(self, parents, startNode, goalNode,lockedStops):
         global restaurants_data
         global ttds_data
         print("Route Done")
@@ -191,6 +198,7 @@ class Geographer():
                 print("FOUND A RESTAURANT")
                 resID = "R"+str(thisNode.id)
                 resRow = restaurants_data[restaurants_data["index"]== resID]
+                resIndex = resRow["index"].item()
                 resLat = str(thisNode.lat)
                 resLon = str(thisNode.lon)
                 resName = resRow["item_name"].item()
@@ -200,12 +208,16 @@ class Geographer():
                 resTAURL = resRow["url"].item()
                 resTARating = resRow["review_score"].item()
                 resUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
-                poi_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':resID,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                isLocked = 0
+                if resIndex in lockedStops:
+                    isLocked = 1
+                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':resIndex,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
             if (thisNode.type == 'T'):
-                print("FOUND A TTD",thisNode.id,thisNode.lat,thisNode.lon)
+                print("FOUND A TTD",thisNode.id,thisNode.lat,thisNode.lon,thisNode.predicted_score)
                 ttdID = "T"+str(thisNode.id-4000)
                 ttdRow = ttds_data[ttds_data["index"]== ttdID]
+                ttdIndex = ttdRow["index"].item()
                 ttdLat = str(thisNode.lat)
                 ttdLon = str(thisNode.lon)
                 ttdName = ttdRow["item_name"].item()
@@ -214,7 +226,10 @@ class Geographer():
                 ttdTAURL = ttdRow["url"].item()
                 ttdTARating = ttdRow["review_score"].item()
                 ttdUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
-                poi_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':ttdID,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                isLocked = 0
+                if ttdIndex in lockedStops:
+                    isLocked = 1
+                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':ttdIndex,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
                 poi_list.append(poi_dict)
 
         # hardcoded_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': ["Asian", "Buffet"],'cuisineOptions': ["Vegan"],'reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}

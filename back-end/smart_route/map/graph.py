@@ -19,18 +19,28 @@ class Graph(object):
             # else:
             #     self.nodes[node_id].predicted_score = 0
 
-    def setPredictedScores(self, restaurant_scores, ttd_scores):
+    def setPredictedScores(self, restaurant_scores,restaruants_to_truncate,ttd_scores,ttds_to_truncate):
         # for poi_id, predicted_score in enumerate(scores, start=0):
         for i in range(len(restaurant_scores)):
             _itemRow = restaurants_data.loc[i]
-            _id = _itemRow["index"][1:]
-            self.nodes[_id].predicted_score = restaurant_scores[i] 
+            index = _itemRow["index"]
+            _id = index[1:]
+            if index in restaruants_to_truncate:
+                print(_itemRow["item_name"])
+                self.nodes[_id].predicted_score = -100000000
+            else:
+                self.nodes[_id].predicted_score = restaurant_scores[i] 
 
         for j in range(len(ttd_scores)):
-            _itemRow = ttds_data.loc[i]
-            _id = _itemRow["index"][1:]
+            _itemRow = ttds_data.loc[j]
+            index = _itemRow["index"]
+            _id = index[1:]
             _TTDID = str(int(_id)+4000)
-            self.nodes[_id].predicted_score = ttd_scores[j] 
+            if index in ttds_to_truncate:
+                print(_itemRow["item_name"])
+                self.nodes[_TTDID].predicted_score = -100000000
+            else:
+                self.nodes[_TTDID].predicted_score = ttd_scores[j] 
     
 
 
@@ -49,13 +59,15 @@ class Node(object):
         return Node(self.id, self.lat, self.lon, self.type, self.predicted_score, self.edges, self.estimatedCost, self.history)
 
     def __eq__(self, other):
-        return (self.id,self.history[0]) == (other.id,other.history[0])
+        return (self.id,frozenset(self.history[0])) == (other.id,frozenset(other.history[0]))
+        # return (self.id) == (other.id)
 
     def __lt__(self, other):
         return self.estimatedCost < other.estimatedCost
 
     def __hash__(self):
-        return hash(self.id)
+        return hash((self.id,frozenset(self.history[0])))
+        # return hash((self.id))
 
     def __repr__(self):
         return "<Node id=%(id)s, (lat,lon)=(%(lat)s,%(lon)s)>" % {

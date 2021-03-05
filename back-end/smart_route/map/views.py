@@ -65,7 +65,7 @@ def addGuestToTrip(request, username, password):
     userObject = {"username":username}
     return JsonResponse(userObject)
 
-
+ 
 def createUser(request, username, password):
     global user
     global trip

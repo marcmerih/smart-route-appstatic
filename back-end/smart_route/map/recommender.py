@@ -10,6 +10,8 @@ import math
 ii_sim_restaurant_matrix = np.genfromtxt('data/similarity/itemitem_restaurant_sim.csv', delimiter=',')
 ii_sim_ttd_matrix = np.genfromtxt('data/similarity/itemitem_ttd_sim.csv', delimiter=',')
 
+restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
+ttds_data = pd.read_csv(r"data/item/ttdDataClean.csv")
 
 class RecSys():
 
@@ -31,7 +33,10 @@ class RecSys():
 
             train_vector = np.zeros(len(ii_similarity))
             for item in user.restaurant_ratings.keys():
-                item_id = int(item[1:])
+                resRow = restaurants_data[restaurants_data["index"]== item]
+                item_id = resRow.index
+                # print(item_id,len(train_vector))
+                # item_id = int(item[1:])
                 train_vector[item_id] = user.restaurant_ratings[item]
 
             # Initialize the predicted rating vector with zeros (# of Restaurants in DB)
@@ -68,7 +73,9 @@ class RecSys():
 
             train_vector = np.zeros(len(ii_similarity))
             for item in user.ttd_ratings.keys():
-                item_id = int(item[1:])
+                ttdRow = ttds_data[ttds_data["index"]== item]
+                item_id = ttdRow.index
+                # item_id = int(item[1:])
                 train_vector[item_id] = user.ttd_ratings[item]
 
             # Initialize the predicted rating vector with zeros (# of TTDs in DB)

@@ -69,9 +69,9 @@ class User():
 
         usersData.at[str(self.username), 'username'] = str(self.username)
         usersData.at[str(self.username), 'password'] = str(self.password)
-        usersData.at[self.username, 'restaurant_ratings'] = jsonpickle.encode(
+        usersData.at[str(self.username), 'restaurant_ratings'] = jsonpickle.encode(
             self.restaurant_ratings)
-        usersData.at[self.username, 'ttd_ratings'] = jsonpickle.encode(
+        usersData.at[str(self.username), 'ttd_ratings'] = jsonpickle.encode(
             self.ttd_ratings)
 
         usersData.to_csv('data/user/users.csv', index=False)
