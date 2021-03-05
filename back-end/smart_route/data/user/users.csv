@@ -1,12 +1,8 @@
 username,password,restaurant_ratings,ttd_ratings
-chris,palumbo93,"{""R1"":1}","{""R1"":1}"
-asfasd,sdsdfsdf,{},{}
-tra,chrris,{},{}
-marcatasoy,marc123,"{""1"": 1}","{""1"": 1}"
-marc123,123,{},{}
-marc123123,123,{},{}
-marc123123123,123,{},{}
-marcmerih,123,{},{}
-marcotest,123,{},{}
-johnmayer,123,{},{}
-johnmayer2,123,{},{}
+palumbo93,123,"{""R0"": ""5"", ""R2"": ""5"", ""R11"": ""5"", ""R18"": ""2"", ""R20"": ""5""}","{""T0"": ""5"", ""T1"": ""5"", ""T2"": ""3"", ""T3"": ""5""}"
+"0    palumbo93
+Name: username, dtype: object","0    123
+Name: password, dtype: object","{""R0"": ""5"", ""R2"": ""5"", ""R11"": ""5"", ""R18"": ""2"", ""R20"": ""5""}","{""T0"": ""5"", ""T1"": ""5"", ""T2"": ""3"", ""T3"": ""5"", ""T1218"": ""4"", ""T1202"": ""1""}"
+"0    palumbo93
+Name: username, dtype: object","0    123
+Name: password, dtype: object","{""R0"": ""5"", ""R2"": ""5"", ""R11"": ""5"", ""R18"": ""2"", ""R20"": ""5""}","{""T0"": ""5"", ""T1"": ""5"", ""T2"": ""3"", ""T3"": ""5"", ""T1181"": ""5""}"
