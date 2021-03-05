@@ -54,6 +54,7 @@ export class RoutesComponent implements AfterViewInit {
     this.tripService.nodes$.subscribe(listOfNodes => this.onListOfNodesReturned(listOfNodes));
     this.tripService.poiMarkers$.subscribe(coords => this.setPOIMarkers(coords));
     this.tripService.resetMarkers$.subscribe(coords => this.resetMarkers());
+    this.tripService.resetRoute$.subscribe(coords => this.resetRoute());
   }
 
   onListOfNodesReturned(nodes) {
@@ -191,8 +192,6 @@ export class RoutesComponent implements AfterViewInit {
     this.markers.forEach(element => {
       this.map.removeLayer(element);
     });
-
-    this.resetRoute();
   }
 
   resetRoute() {

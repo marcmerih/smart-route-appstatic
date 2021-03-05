@@ -11,9 +11,7 @@
                     <span class="material-icons" (click)="addGuest()">group_add</span>
                 </div>
                 <div *ngIf="usersInTrip" class="users-preview">
-                    <div *ngFor="let user of usersInTrip">
-                        <app-user-preview [usersInTrip]="usersInTrip" class="users-preview-each"></app-user-preview>
-                    </div>
+                    <app-user-preview [usersInTrip]="usersInTrip" class="users-preview-each"></app-user-preview>
                 </div>
             </div>
         </div>
