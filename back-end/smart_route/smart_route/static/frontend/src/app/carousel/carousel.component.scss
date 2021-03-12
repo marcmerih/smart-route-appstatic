@@ -203,7 +203,7 @@
 
 
 .icon {
-    background-color: $blue;
+    // background-color: $blue;
     height: 45px;
     width: 45px;
     border-radius: 25px;
@@ -217,6 +217,25 @@
         color: white;
         margin-top: 10px;
         -ms-user-select: none;
+
+        &.orange {
+            background-color: rgb(231, 158, 89);
+        }
+        &.green {
+            background-color: rgb(114, 210, 54);
+        }
+        &.teal {
+            background-color: rgb(83, 227, 238);
+        }
+        &.blue {
+            background-color: rgb(34, 122, 230);
+        }
+        &.purple {
+            background-color: rgb(140, 47, 228);
+        }
+        &.pink {
+            background-color: rgb(235, 80, 191);
+        }
     }
 
     &.poi {

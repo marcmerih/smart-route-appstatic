@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TripService } from '../trip.service';
 import { FormGroup, Form, FormControl, Validators } from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -8,6 +8,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { LoaderService } from '../loader/loader.service';
 import { Router } from '@angular/router';
 import { UserService } from '../accounts/user.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -17,62 +18,6 @@ import { UserService } from '../accounts/user.service';
 export class TripOverlayComponent implements OnInit {
   editPreferencesClicked = false;
   hasBeenRouted = false;
-  // poiis = [{'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', 'isExpanded': false, 'isLocked': false, 'currentRating': 0}];
-  // tripStops = [
-  //   // Restaurant
-  //   { 
-  //     img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', 
-  //     tags: ['Asian', 'Buffet'],
-  //     name: "Bjrog's Lobster & Fish",
-  //     address: '1250 Bay Street, Toronto, Ontario',
-  //     isExpanded: false,
-  //     cuisineOptions: ['Vegan'],
-  //     currentRate: 0,
-  //     reviewsUrl: '',
-  //     id: 'R123',
-  //     type: 'res',
-  //     lat: 'asd',
-  //     lon: 'asd',
-  //     isLocked: false,
-  //     usersMatchPercentage: 0,
-  //     tripAdvisorRating: 4.7
-  //   },
-  //   // TTD
-  //   { 
-  //     img: 'https://www.niemanlab.org/images/hollywood-sign.jpg', 
-  //     tags: ['Parks', 'Nature', 'Wildlife'],
-  //     name: 'Algonquin Reservation',
-  //     address: '1234 Lake Oaowa, Ontario',
-  //     isExpanded: false,
-  //     currentRate: 0,
-  //     reviewsUrl: '',
-  //     id: 'T04',
-  //     type: 'ttd',
-  //     lat: 'asd',
-  //     lon: 'asd',
-  //     isLocked: false,
-  //     usersMatchPercentage: 0,
-  //     tripAdvisorRating: 4.1
-  //   },
-  //   // Hotel
-  //   { 
-  //     img: 'https://images.vailresorts.com/image/fetch/ar_4:3,c_scale,dpr_3.0,f_auto,q_auto,w_400/https://images.vrinntopia.com/photos/854813/854813-123.jpg', 
-  //     amenities: ['Free Breakfast', 'Free Wi-fi', 'Pool'], 
-  //     isExpanded: false,
-  //     name: 'Best Western Kawartha',
-  //     address: '1234 Kawartha Lakes Drive, Ontario',
-  //     currentRate: 0,
-  //     reviewsUrl: '',
-  //     id: 'H64',
-  //     lat: 'asd',
-  //     lon: 'asd',
-  //     type: 'hotel',
-  //     isLocked: false,
-  //     usersMatchPercentage: 0,
-  //     tripAdvisorRating: 3.9
-  //   },
-  // ];
-
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
@@ -92,8 +37,7 @@ export class TripOverlayComponent implements OnInit {
   ];
   allComplete: boolean = false;
   tags = [];
-
-  constructor(private tripService: TripService, private router: Router, private userService: UserService) {
+  constructor(private tripService: TripService, private router: Router, private userService: UserService, @Inject(DOCUMENT) private document: Document) {
     this.startTripForm = this.tripService.tripSetupForm;
     this.preferencesForm = this.tripService.preferencesForm;
     this.intermediatePreferencesForm = new FormGroup({
@@ -220,6 +164,10 @@ export class TripOverlayComponent implements OnInit {
     this.preferencesForm = this.tripService.preferencesForm;
     this.startTripForm = this.tripService.tripSetupForm;
     this.currentStep = 0;
+  }
+
+  letsGo() {
+    this.document.location.href = 'http://www.inago.com/';
   }
 
   get getCurrentStops() {

@@ -50,4 +50,10 @@ export class CarouselComponent implements OnInit {
   isRestaurant(item) {
     return (item.type === 'R');
   }
+
+  getColour(i) {
+    const colours = ['material-icons orange', 'material-icons teal', 'material-icons green', 'material-icons blue', 
+      'material-icons purple', 'material-icons pink'];
+    return colours[i];
+  }
 }
