@@ -117,7 +117,7 @@
     .editPreferences-container {
         margin-left: 370px;
         z-index: 12;
-        margin-top: -60px;
+        margin-top: -700px;
         height: 40px;
         width: 224px;
         display: inline-flex;
@@ -153,8 +153,10 @@
 
     .editPreferences-container-open {
         margin-left: 370px;
-        margin-top: 200px;
-        z-index: 12;;
+        margin-top: -650px;
+        z-index: 12;
+        float: left;
+        display: flex;
         height: 450px;
         width: 430px;
         border-radius: 20px;

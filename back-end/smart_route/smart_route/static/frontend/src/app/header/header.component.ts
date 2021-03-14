@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountsComponent } from '../accounts/accounts.component';
 import { UserService } from '../accounts/user.service';
 import { AddGuestComponent } from '../add-guest/add-guest.component';
+import { TripService } from '../trip.service';
  
  
 @Component({
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
  userSignedIn = false;
  usersInTrip: string[] = [];
 
- constructor(private router: Router, private dialog: MatDialog, public userService: UserService) {
+ constructor(private router: Router, private dialog: MatDialog, public userService: UserService, private tripService: TripService) {
  }
  
  ngOnInit(): void {
@@ -43,7 +44,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
  }
 
  setUsersInTrip(usersInTrip) {
-   this.usersInTrip = usersInTrip;
+    this.usersInTrip = usersInTrip;
+    this.tripService.usersInTrip = this.usersInTrip;
  }
 
  toggleTripOverlay() {
@@ -55,6 +57,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     height: '50vh',
     width: '50vw'
   });
+ }
+
+ get shouldAddGuest() {
+   return (this.userSignedIn && !this.tripService.routed)
  }
 
  get tripOverlayExpand() {

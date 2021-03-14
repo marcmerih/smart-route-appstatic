@@ -66,8 +66,6 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setStartEndMarkers(nodes) {
-    console.log(nodes);
-    console.log(typeof(nodes));
     const startingCoordinates = nodes[0];
     const endingCoordinates = nodes[nodes.length - 1];
 
@@ -187,9 +185,8 @@ export class RoutesComponent implements AfterViewInit {
     vectorLayer.getSource().addFeature(route);
     this.map.addLayer(vectorLayer);
     this.layers.push(vectorLayer);
-    console.log(nodes);
-    this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
-    this.map.getView().setZoom(12);
+    this.map.getView().setCenter(transform([nodes[Math.floor(nodes.length / 2)][0], nodes[Math.floor(nodes.length / 2)][1]], 'EPSG:4326', 'EPSG:3857'));
+    this.map.getView().setZoom(14);
   }
 
   resetMarkers() {

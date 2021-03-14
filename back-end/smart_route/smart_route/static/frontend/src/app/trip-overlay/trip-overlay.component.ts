@@ -56,13 +56,12 @@ export class TripOverlayComponent implements OnInit {
 
   route() {
     this.hasBeenRouted = true;
+    this.tripService.routed = true;
     this.currentStep = this.routingSteps.tripDetails;
 
     this.tripService.route(this.startingLocation, this.endingLocation).subscribe((request: RouteModel) => {
       this.currentRoute = request.route;
       this.currentStops = request.stops;
-      console.log(this.currentRoute);
-      console.log(this.currentStops);
       this.tripService.setListOfNodes(this.currentRoute);
       let stopsCoords = [];
       this.currentStops.forEach(stop => {
@@ -160,6 +159,7 @@ export class TripOverlayComponent implements OnInit {
     this.tripService.resetRoute();
     this.tripService.initializePreferencesForm();
     this.tripService.initializeTripSetupForm();
+    this.tripService.routed = false;
 
     this.preferencesForm = this.tripService.preferencesForm;
     this.startTripForm = this.tripService.tripSetupForm;
@@ -185,7 +185,7 @@ export class TripOverlayComponent implements OnInit {
 
   get isRouteDisabled() {
     return (!(this.startTripForm.get('startingLocation').value &&
-      this.startTripForm.get('endingLocation').value) || !this.userService.userSignedIn)
+      this.startTripForm.get('endingLocation').value) || !this.userService.userSignedIn);
   }
 
 }

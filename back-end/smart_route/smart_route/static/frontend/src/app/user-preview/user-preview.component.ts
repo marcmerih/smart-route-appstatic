@@ -17,7 +17,6 @@ export class UserPreviewComponent implements OnInit {
   }
 
   userName(user) {
-    console.log(user);
     return user[0].toUpperCase();
   }
 

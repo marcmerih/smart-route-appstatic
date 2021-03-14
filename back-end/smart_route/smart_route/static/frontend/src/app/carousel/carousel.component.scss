@@ -45,7 +45,7 @@
         margin: 15px;
 
         .poi-card {
-            height: 275px;
+            height: 295px;
             margin-left: 170px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             width: 324px;
@@ -203,6 +203,49 @@
 
 
 .icon {
+    background-color: $blue;
+    height: 45px;
+    width: 45px;
+    border-radius: 25px;
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+    -ms-user-select: none;
+
+    span {
+        font-size: 20pt;
+        color: white;
+        margin-top: 10px;
+        -ms-user-select: none;
+
+        &.orange {
+            background-color: rgb(231, 158, 89);
+        }
+        &.green {
+            background-color: rgb(114, 210, 54);
+        }
+        &.teal {
+            background-color: rgb(83, 227, 238);
+        }
+        &.blue {
+            background-color: rgb(34, 122, 230);
+        }
+        &.purple {
+            background-color: rgb(140, 47, 228);
+        }
+        &.pink {
+            background-color: rgb(235, 80, 191);
+        }
+    }
+
+    &.poi {
+        margin-left: -20px;
+        -ms-user-select: none;
+    }
+
+}
+
+.icons {
     // background-color: $blue;
     height: 45px;
     width: 45px;

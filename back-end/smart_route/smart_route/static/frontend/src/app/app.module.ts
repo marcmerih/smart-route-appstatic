@@ -36,6 +36,7 @@ import { InterceptorService } from './loader/interceptor.service';
 import { CommonModule } from '@angular/common';
 import { UserPreviewComponent } from './user-preview/user-preview.component';
 import { AddGuestComponent } from './add-guest/add-guest.component';
+import { UserMatchComponent } from './user-match/user-match.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AddGuestComponent } from './add-guest/add-guest.component';
     CarouselComponent,
     TagComponent,
     UserPreviewComponent,
-    AddGuestComponent
+    AddGuestComponent,
+    UserMatchComponent
   ],
   imports: [
     BrowserModule,

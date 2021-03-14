@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TripService } from '../trip.service';
+import { UserService } from '../accounts/user.service';
 
 @Component({
   selector: 'app-carousel',
@@ -14,7 +15,7 @@ export class CarouselComponent implements OnInit {
   isExpanded = false;
   
 
-  constructor(private tripService: TripService) { }
+  constructor(private tripService: TripService, private userService: UserService) { }
 
   ngOnInit(): void {
     if (this.startingLocation.includes(',')) {
@@ -56,4 +57,9 @@ export class CarouselComponent implements OnInit {
       'material-icons purple', 'material-icons pink'];
     return colours[i];
   }
+
+  get numberOfUsersInTrip() {
+    return (this.userService.usersInTrip.length > 1);
+  }
+
 }

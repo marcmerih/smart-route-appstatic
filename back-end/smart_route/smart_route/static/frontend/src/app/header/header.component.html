@@ -7,7 +7,7 @@
                 <div class="item" *ngIf="!userSignedIn" (click)="openSignUp()">
                     <span class="material-icons">login</span>
                 </div>
-                <div class="item" *ngIf="userSignedIn">
+                <div class="item" *ngIf="shouldAddGuest">
                     <span class="material-icons" (click)="addGuest()">group_add</span>
                 </div>
                 <div *ngIf="usersInTrip" class="users-preview">
