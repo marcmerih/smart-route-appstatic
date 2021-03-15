@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddIntermediateStopComponent } from '../add-intermediate-stop/add-intermediate-stop.component';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TripService } from '../trip.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { TripSettingsComponent } from '../trip-settings/trip-settings.component';
-import { HttpClient } from '@angular/common/http';
-import { Router, Params, ActivatedRoute } from '@angular/router';
-import { RoutesComponent } from '../routes/routes.component';
-import { RoutingSteps, TripSettings, RouteModel, RestaurantsModel } from '../models';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { PageEvent } from '@angular/material/paginator';
+import { FormGroup, Form, FormControl, Validators } from '@angular/forms';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { RoutingSteps, RouteModel } from '../models';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { LoaderService } from '../loader/loader.service';
+import { Router } from '@angular/router';
+import { UserService } from '../accounts/user.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-trip-overlay',
@@ -17,301 +16,165 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./trip-overlay.component.scss']
 })
 export class TripOverlayComponent implements OnInit {
+  editPreferencesClicked = false;
   hasBeenRouted = false;
   routingSteps: any = RoutingSteps;
   currentStep: RoutingSteps = RoutingSteps.routeStartEnd;
   startTripForm: FormGroup;
-  sortFormGroup: FormGroup;
-  intermediateLocationAddress = '';
-  addresses = [];
-  currentRoute: any;
-  pageSlice;
-  restaurantClicked = false;
-  hotelsClicked = false;
-  ttdClicked = false;
-  tripSettings: TripSettings = new TripSettings;
-  restaurants;
-  restaurantsCoords;
-  hotelsCoords;
-  ttdsCoords;
-  hotels;
-  ttds;
-  sortOptions = [
-    {value: 'recommended', viewValue: 'Recommended'},
-    {value: 'price-ascending', viewValue: 'Price: High-to-Low'},
-    {value: 'price-descending', viewValue: 'Price: Low-to-High'}
+  preferencesForm: FormGroup;
+  intermediatePreferencesForm: FormGroup;
+  currentRoute;
+  removable = true;
+  visible = true;
+  selectable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  currentStops;
+  categories = [
+      {name: 'Restaurant', completed: false, color: 'primary'},
+      {name: 'Hotels', completed: false, color: 'primary'},
+      {name: 'Things to do', completed: false, color: 'primary'}
   ];
-  defaulOption = {value: 'recommended', viewValue: 'Recommended'};
-  mockRestaurants = 
-  {
-    "listOfRestaurantsInfo": [['Prime Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
-    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
-    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
-    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
-    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7],
-    ['Marcs Place', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7]],
-    "listOfRestaurantsCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514], [-79.596524, 43.613142]] 
-  };
-
-  mockHotels = 
-  {
-    "listOfHotelsInfo": [['Hotels Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
-    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
-    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
-    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
-    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7]],
-    "listOfHotelsCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514]] 
-  };
-
-  mockTTD = 
-  {
-    "listOfTTDInfo": [['TTD Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
-    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
-    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
-    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
-    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7],
-    ['Legend Steakhouse Niagara Falls', '5685 Falls Avenue, Niagara Falls, Ontario L2E 6W7 Canada', 4.8],
-    ['Est Restaurant', '729 Queen St E, Toronto, Ontario M4M 1H1 Canada', 4.8],
-    ["lo Presti's at Maxwell's", 'Jackson st.e, Hamilton, Ontario Canada', 4.7],
-    ['Tide and Vine Oyster House', '3491 Portage Rd, Niagara Falls, Ontario L2J 2K5 Canada', 4.7],
-    ['Beechwood Doughnuts', '165 St. Paul Street, St. Catharines, Ontario L2R 3M5 Canada', 4.7],
-    ['Estate Palace', '216 Dundas ST W, Belleville, Ontario L2R 3M5 Canada', 4.7]],
-    "listOfTTDCoords": [[-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514], [-79.07169652, 43.09269115], [-79.3489562, 43.65893534], [-79.86933370000001, 43.2543027], [-79.09977664, 43.1215245], [-79.24467442, 43.15773514], [-77.395401, 44.153139]] 
-  };
-
-  constructor(private dialog: MatDialog, private router: Router, private activatedRoute: ActivatedRoute,
-    private tripService: TripService, private http: HttpClient) {
+  allComplete: boolean = false;
+  tags = [];
+  constructor(private tripService: TripService, private router: Router, private userService: UserService, @Inject(DOCUMENT) private document: Document) {
     this.startTripForm = this.tripService.tripSetupForm;
-    this.sortFormGroup = new FormGroup({
-      sortBy: new FormControl('')
-    });
-    this.tripSettings.maximumDetourDuration = 3;
-    this.restaurants = [];
-    this.restaurantsCoords = [];
-    this.hotels = [];
-    this.hotelsCoords = [];
-    this.ttds = [];
-    this.ttdsCoords = [];
-  }
-
-  ngOnInit(): void {
-    // this.restaurants = this.mockRestaurants;
-    // console.log(this.restaurants);
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.addresses, event.previousIndex, event.currentIndex);
-    console.log(this.addresses);
-    this.tripService.orderOfStopsChanged(this.addresses).subscribe(request => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
-      this.tripService.setListOfNodes(this.currentRoute);
+    this.preferencesForm = this.tripService.preferencesForm;
+    this.intermediatePreferencesForm = new FormGroup({
+      maxNumberOfStops: new FormControl(3, [Validators.pattern('^[1-9]*$')]),
+      maxDuration: new FormControl(6, Validators.pattern('^[1-9]*$')),
+      budgetAmt: new FormControl('2')
     })
   }
 
+  ngOnInit(): void {
+  }
+
+  updateAllComplete() {
+    this.allComplete = this.categories != null && this.categories.every(t => t.completed);
+  }
+
   route() {
-    const queryParams: Params = { startingLocation: this.startingLocation, 
-      endingLocation: this.endingLocation,
-      maximumDetour: this.tripSettings.maximumDetourDuration  
-    };
-    this.router.navigate(
-      [], 
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: queryParams, 
-        queryParamsHandling: 'merge', // remove to replace all query params by provided
-      });
-
     this.hasBeenRouted = true;
+    this.tripService.routed = true;
     this.currentStep = this.routingSteps.tripDetails;
-    this.tripService.route(this.startingLocation, this.endingLocation, this.tripSettings.maximumDetourDuration).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
+
+    this.tripService.route(this.startingLocation, this.endingLocation).subscribe((request: RouteModel) => {
+      this.currentRoute = request.route;
+      this.currentStops = request.stops;
       this.tripService.setListOfNodes(this.currentRoute);
-    });
-  }
-
-  explore() {
-    console.log("oops");
-  }
-
-  openTripSettings() {
-    let dialogRefSettings = this.dialog.open(TripSettingsComponent, {
-      height: '60vh',
-      width: '60vw'
-    });
-
-    dialogRefSettings.afterClosed().subscribe(result => {
-      this.tripSettings.maximumDetourDuration = result;
-    });
-  }
-
-  hasBeenClicked(tag: string) {
-    if (tag === 'restaurant') {
-      this.displayRestaurants();
-    } else if (tag === 'hotels') {
-      this.displayHotels();
-    } else {
-      this.displayTTD();
-    }
-  }
-
-  displayRestaurants() {
-    this.restaurantClicked = !this.restaurantClicked;
-    if (this.restaurantClicked) {
-      this.hotelsClicked = false;
-      this.ttdClicked = false;
-      this.getRestaurants();
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  displayHotels() {
-    this.hotelsClicked = !this.hotelsClicked;
-    if (this.hotelsClicked) {
-      this.restaurantClicked = false;
-      this.ttdClicked = false;
-      this.getHotels();
-
-        // To be Remoed Once Data Acquired
-        const currentHotel = this.mockHotels;
-        this.hotels = currentHotel.listOfHotelsInfo;
-        this.hotelsCoords = currentHotel.listOfHotelsCoords;
-
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  displayTTD() {
-    this.ttdClicked = !this.ttdClicked;
-    if (this.ttdClicked) {
-      this.restaurantClicked = false;
-      this.hotelsClicked = false;
-      this.getTTD();
-
-        // To be Remoed Once Data Acquired
-        const currentTTD = this.mockTTD;
-        this.ttds = currentTTD.listOfTTDInfo;
-        this.ttdsCoords = currentTTD.listOfTTDCoords;
-
-    } else {
-      this.tripService.resetMarkers();
-    }
-  }
-
-  sortBySelected($event) {
-    console.log($event);
-  }
-
-  poiAdded($event) {
-    this.tripService.poiAdded($event).subscribe(request => {
-      this.currentRoute = JSON.parse(request.listOfNodes);
-      this.tripService.setListOfNodes(this.currentRoute);
-      this.updateAddresses($event);
-      console.log(this.addresses)
-    });
-  }
-
-  poiLiked($event) {
-    this.tripService.poiLiked($event);
-  }
-
-  poiDisliked($event) {
-    this.tripService.poiDisliked($event);
-  }
-
-  updateAddresses(poi) {
-    if (poi.currentLabel === 'add') {
-      this.addresses.push(poi.poi[1])
-    } else {
-      this.addresses = this.addresses.filter(x => {
-        return x[0] != poi.poi[1];
+      let stopsCoords = [];
+      this.currentStops.forEach(stop => {
+        stopsCoords.push([stop.lon, stop.lat]);
       });
+      this.tripService.setPoiMarkers(stopsCoords);
+    });
+  }
+
+  clickEditPreferences(override?: boolean) {
+    console.log('here')
+    if (!this.editPreferencesClicked || override) {
+      this.editPreferencesClicked = !this.editPreferencesClicked;
     }
   }
 
-  captureValue($event) {
-    return $event + 'km';
-    // Call endpoint to change detour distance here.
+  closePreferences() {
+    this.clickEditPreferences(true);
+    this.intermediatePreferencesForm.get('maxNumberOfStops').setValue(this.preferencesForm.get('maxNumberOfStops').value);
+    this.intermediatePreferencesForm.get('maxDuration').setValue(this.preferencesForm.get('maxDuration').value);
+    this.intermediatePreferencesForm.get('budgetAmt').setValue(this.preferencesForm.get('budgetAmt').value);
   }
 
-  updateMaximumDetour($event) {
-    this.tripSettings.maximumDetourDuration = $event.value;
-    this.tripService.route(this.startingLocation, this.endingLocation, this.tripSettings.maximumDetourDuration).subscribe((request: RouteModel) => {
-      this.currentRoute = JSON.parse(request.listOfNodes)
+  updatePreferences() {
+    this.clickEditPreferences(true);
+    this.preferencesForm.get('maxNumberOfStops').setValue(this.intermediatePreferencesForm.get('maxNumberOfStops').value);
+    this.preferencesForm.get('maxDuration').setValue(this.intermediatePreferencesForm.get('maxDuration').value);
+    this.preferencesForm.get('budgetAmt').setValue(this.intermediatePreferencesForm.get('budgetAmt').value);
+  }
+
+  incrementNumStops() {
+    if (this.intermediatePreferencesForm.get('maxNumberOfStops').value !== 6) {
+      this.intermediatePreferencesForm.get('maxNumberOfStops').setValue(Number(this.intermediatePreferencesForm.get('maxNumberOfStops').value + 1));
+    }
+  }
+
+  decrementNumStops() {    
+    if (this.intermediatePreferencesForm.get('maxNumberOfStops').value !== 0) {
+      this.intermediatePreferencesForm.get('maxNumberOfStops').setValue(Number(this.intermediatePreferencesForm.get('maxNumberOfStops').value - 1));
+    }
+  }
+
+  incrementDuration() {
+    if (this.intermediatePreferencesForm.get('maxDuration').value !== 9) {
+      this.intermediatePreferencesForm.get('maxDuration').setValue(Number(this.intermediatePreferencesForm.get('maxDuration').value + 1));
+    }
+  }
+  
+  decrementDuration() {
+    if (this.intermediatePreferencesForm.get('maxDuration').value !== 0) {
+      this.intermediatePreferencesForm.get('maxDuration').setValue(Number(this.intermediatePreferencesForm.get('maxDuration').value - 1));
+    }
+  }
+
+  setBudget(dollarAmt: string) {
+    this.intermediatePreferencesForm.get('budgetAmt').setValue(dollarAmt);
+    console.log(this.intermediatePreferencesForm.get('budgetAmt').value)
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push({name: value.trim()});
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  refreshTrip() {
+    this.tripService.refreshTrip(this.preferencesForm).subscribe((request: RouteModel) => {
+      this.currentRoute = request.route;
+      this.currentStops = request.stops;
+      console.log(this.currentRoute);
+      console.log(this.currentStops);
       this.tripService.setListOfNodes(this.currentRoute);
-      if (this.restaurantClicked) {
-        this.getRestaurants();
-      } else if (this.hotelsClicked) {
-        this.getHotels();
-      } else {
-        this.getTTD();
-      }
-      // Call /add-stop here with the latest this.addresses to reroute with the selected POIs after changing detour.
     });
   }
 
-  onPageChange($event: PageEvent) {
-    console.log(this.ttdsCoords);
-    let currentArray;
-    let currentArrayCoords;
-    if (this.restaurantClicked) {
-      currentArray = this.restaurants;
-      currentArrayCoords = this.restaurantsCoords;
-    } else if (this.hotelsClicked) {
-      currentArray = this.hotels;
-      currentArrayCoords = this.hotelsCoords;
-    } else {
-      currentArray = this.ttds;
-      currentArrayCoords = this.ttdsCoords;
+  startOver() {
+    this.tripService.resetMarkers();
+    this.tripService.resetRoute();
+    this.tripService.initializePreferencesForm();
+    this.tripService.initializeTripSetupForm();
+    this.tripService.routed = false;
+
+    this.preferencesForm = this.tripService.preferencesForm;
+    this.startTripForm = this.tripService.tripSetupForm;
+    this.currentStep = 0;
+  }
+
+  letsGo() {
+    this.document.location.href = 'http://www.inago.com/';
+  }
+
+  get getCurrentStops() {
+    if (this.currentStops) {
+      return this.currentStops;
     }
-
-    const startIndex = $event.pageIndex * $event.pageSize;
-    let endIndex = startIndex + $event.pageSize - 1;
-    if (endIndex > currentArray.length) {
-      endIndex = currentArray.length;
-    }
-    this.pageSlice = currentArray.slice(startIndex, endIndex);
-    this.tripService.setPoiMarkers(currentArrayCoords.slice(startIndex,endIndex));
   }
-
-  getRestaurants() {
-    this.tripService.getRestaurants().subscribe((request: RestaurantsModel) => {
-      this.restaurants = request.listOfRestaurantsInfo;
-      this.restaurantsCoords = request.listOfRestaurantsCoords
-      this.pageSlice = this.restaurants.slice(0,9);
-      this.tripService.setPoiMarkers(this.restaurantsCoords.slice(0,9));
-    });
-
-    // this.restaurants = this.mockRestaurants.listOfRestaurantsInfo;
-    // this.restaurantsCoords = this.mockRestaurants.listOfRestaurantsCoords;
-    // this.pageSlice = this.restaurants.slice(0,9);
-    // this.tripService.setPoiMarkers(this.restaurantsCoords.slice(0,9));
-  }
-
-  getHotels() {
-    // this.tripService.getHotels().subscribe((request: HotelsModel) => {
-      // this.hotels = request.listOfHotelsInfo;
-      // this.hotelsCoords = request.listOfHotelsCoords
-      // this.pageSlice = this.hotels.slice(0, 9);
-      // this.tripService.setPoiMarkers(this.hotelsCoords.slice(0,9));
-    // });
-  }
-
-  getTTD() {
-    // this.tripService.getTTD().subscribe((request: HotelsModel) => {
-    //   this.ttds = request.listOfTTDInfo;
-    // this.ttdsCoords = request.listOfTTDCoords;
-    // this.pageSlice = this.ttds.slice(0,10);
-    //   console.log(request.listOfTTDsInfo);
-    // });
-
-    this.ttds = this.mockTTD.listOfTTDInfo;
-    this.ttdsCoords = this.mockTTD.listOfTTDCoords;
-    this.pageSlice = this.ttds.slice(0,9);
-    this.tripService.setPoiMarkers(this.ttdsCoords.slice(0,9));
-  }
-
   get startingLocation() {
     return this.startTripForm.get('startingLocation').value;
   }
@@ -321,8 +184,8 @@ export class TripOverlayComponent implements OnInit {
   }
 
   get isRouteDisabled() {
-    return !(this.startTripForm.get('startingLocation').value &&
-      this.startTripForm.get('endingLocation').value)
+    return (!(this.startTripForm.get('startingLocation').value &&
+      this.startTripForm.get('endingLocation').value) || !this.userService.userSignedIn);
   }
 
 }

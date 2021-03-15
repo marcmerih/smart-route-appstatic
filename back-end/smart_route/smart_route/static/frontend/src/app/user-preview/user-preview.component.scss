@@ -1,0 +1,63 @@
+.res-circle {
+    /* (A) PERCENTAGE WIDTH & BORDER RADIUS */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  
+    /* (B) BACKGROUND COLOR */ 
+    background: rgb(20, 57, 112);
+   
+    /* (C) NECESSARY TO POSITION TEXT BLOCK */
+    line-height: 0;
+    position: relative;
+    float: right;
+  }
+   
+  /* (D) MATCH HEIGHT */
+  .res-circle::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+
+
+  .name {
+    font-size: 14pt;
+    margin: 0 auto;
+    color: white;
+    /* (E1) CENTER TEXT IN CIRCLE */
+    position: absolute;
+    bottom: 50%;
+    left: 8px;
+    text-align: center;
+    
+    /* (E2) THE FONT - NOT REALLY IMPORTANT */
+    font-family: arial, sans-serif;
+    font-weight: bold;
+}
+
+// .container {
+//     height: 30px;
+//     width: 30px;
+//     border-radius: 100%;
+//     border: none;
+//     text-align: center;
+//     background-color: skyblue;
+//     vertical-align: middle;
+//     margin: 0 auto;
+
+//     .name {
+//         font-size: 14pt;
+//         margin: 0 auto;
+//         color: white;
+//         /* (E1) CENTER TEXT IN CIRCLE */
+//         position: absolute;
+//         bottom: 50%;
+//         width: 100%;
+//         text-align: center;
+        
+//         /* (E2) THE FONT - NOT REALLY IMPORTANT */
+//         font-family: arial, sans-serif;
+//         font-weight: bold;
+//     }
+// }

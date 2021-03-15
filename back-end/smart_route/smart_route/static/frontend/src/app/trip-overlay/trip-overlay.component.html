@@ -19,139 +19,104 @@
         </mat-form-field>
         <br>
         <div class="buttons">
-            <button mat-raised-button class="route"
+            <button mat-raised-button class="routeButton"
             (click)="route()"
-            [disabled]="isRouteDisabled"><mat-icon>directions</mat-icon>Route</button>
-            <button mat-button class="trip-settings" [disabled]="isRouteDisabled"
-            (click)="explore()"><mat-icon>explore</mat-icon>Explore</button>
+            [disabled]="isRouteDisabled"><mat-icon>directions</mat-icon> Route</button>
         </div>
     </div>
-    
-    <div *ngIf="currentStep === 1">
-        <div class="col-md-12 overlay">
-            <br>
-            <div class="locations">
-                <span class="title">Trip Details</span> 
+
+    <div *ngIf="currentStep === 1" class="col-md-12 container-trips">
+        <div class="col-md-12">
+            <button mat-raised-button class="refreshButton" (click)="refreshTrip()"
+                [disabled]="isRouteDisabled"><mat-icon>refresh</mat-icon> Refresh Trip</button>
+        </div>
+        <app-carousel [items]="getCurrentStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
+    </div>
+    <button mat-raised-button class="col-md-12 startOver" *ngIf="currentStep === 1" (click)="startOver()">Start Over</button>
+    <button mat-raised-button class="col-md-12 letsGo" *ngIf="currentStep === 1" (click)="letsGo()">Let's Go!</button>
+
+    <div [class]="editPreferencesClicked ? 'editPreferences-container-open' : 'editPreferences-container'" *ngIf="currentStep === 1">
+        <div class="editPreferences">
+            <div (click)="clickEditPreferences()">
+                <mat-icon>edit_location_alt</mat-icon> 
+                <span>Edit Preferences</span>
+                <br>
             </div>
-            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box-undraggable">{{ startingLocation }}</div>
-                <div *ngFor="let address of addresses" class="example-box" cdkDrag>
-                    <mat-icon>drag_indicator</mat-icon>
-                    <span class="draggableAddress">{{ address }}</span>
+            <div [class]="editPreferencesClicked ? 'preferences-shown' : 'preferences-hidden'" [formGroup]="intermediatePreferencesForm">
+                <div style="text-align: left !important; margin-bottom: 15px;">
+                    <span class="preference-label">Maximum Number of Stops</span>
+                    <br>
+                    <div style="margin-top: 10px;">
+                        <div class="incremental-button" (click)="decrementNumStops()">
+                            <span>
+                                <b>-</b>
+                            </span>
+                        </div>
+                        <input disabled maxlength="1" class="preference-input" formControlName="maxNumberOfStops">
+                        <div class="incremental-button" (click)="incrementNumStops()">
+                            <span>
+                                <b>+</b>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
                 </div>
-                <div class="example-box-undraggable">{{ endingLocation }}</div>
+                <br>
+                <div style="text-align: left !important; margin-bottom: 15px;">
+                    <span class="preference-label">Maximum Trip Duration (hrs)</span>
+                    <br>
+                    <div style="margin-top: 10px;">
+                        <div class="incremental-button" (click)="decrementDuration()">
+                            <span>
+                                <b>-</b>
+                            </span>
+                        </div>
+                        <input disabled maxlength="2" class="preference-input" formControlName="maxDuration">
+                        <div class="incremental-button" (click)="incrementDuration()">
+                            <span>
+                                <b>+</b>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <div style="text-align: left !important; margin-bottom: 15px;">
+                    <span class="preference-label">Trip Budget</span>
+                    <br>
+                    <div class="budget-container">
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '4') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('4')">
+                            <span>$$$$</span>
+                        </div>
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '3') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('3')">
+                            <span>$$$</span>
+                        </div>
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '2') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('2')">
+                            <span>$$</span>
+                        </div>
+                        <div [class]="(intermediatePreferencesForm.get('budgetAmt').value === '1') ? 'selected-budget-container' : 'budget-container-dollar'" (click)="setBudget('1')">
+                            <span>$</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div style="text-align: left !important; margin-bottom: 15px;">
+                    <span class="preference-label">Category Selection</span>
+                    <br>
+                    <br>
+                    <div *ngFor="let category of categories">
+                        <mat-checkbox [(ngModel)]="category.completed"
+                                      [color]="category.color"
+                                      (ngModelChange)="updateAllComplete()">
+                          {{category.name}}
+                        </mat-checkbox>
+                    </div>
+                </div> -->
+                <br>
+                <div style="width: 240px; display: inline-block; margin: 0 auto;">
+                    <button mat-raised-button class="close-pref" (click)="closePreferences()">Cancel</button>
+                    <button mat-raised-button class="update-pref" (click)="updatePreferences()">Apply Changes</button>
+                </div>
             </div>
-            <br>
         </div>
     </div>
-    <div class="col-md-12 tags" *ngIf="hasBeenRouted">
-        <app-tags tagName="Restaurants" icon="restaurant" color="#E96A6A" (click)="hasBeenClicked('restaurant')"
-        [hasBeenClicked]="restaurantClicked"></app-tags>
-        <app-tags tagName="Hotels" icon="hotel" color="#E76F51" (click)="hasBeenClicked('hotels')"
-        [hasBeenClicked]="hotelsClicked"></app-tags>
-        <app-tags tagName="Things to do" icon="event_available" color="#F4A261" (click)="hasBeenClicked('ttd')"
-        [hasBeenClicked]="ttdClicked"></app-tags>
-    </div>
-
-    <ng-container *ngIf="restaurantClicked" class="container-card">
-        <div class="poi-card" [formGroup]="sortFormGroup">
-            <div class="top-info">
-                <h5 class="restaurants-info">Restaurants</h5>
-                <mat-icon class="close-info">close</mat-icon>
-                <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-slider
-                    thumbLabel
-                    value="5"
-                    min="1"
-                    max="99"
-                    [displayWith]="captureValue"
-                    (change)="updateMaximumDetour($event)"
-                ></mat-slider>
-            </div>
-            <br>
-            <hr>
-            <div *ngFor="let restaurant of pageSlice">
-                <app-card [name]="restaurant[0]"
-                    [address]="restaurant[1]"
-                    [rating]="restaurant[2]"
-                    [poi]="restaurant"
-                    (poiAdded)="poiAdded($event)"
-                    (poiLiked)="poiLiked($event)"
-                    (poiDisliked)="poiDisliked($event)"
-                ></app-card>
-            </div>
-            <div class="col-md-12 paginator">
-                <mat-paginator [length]="restaurants.length"
-                    [pageSize]="10"
-                    (page)="onPageChange($event)"
-                ></mat-paginator>
-            </div>
-        </div>
-    </ng-container>
-
-    <ng-container *ngIf="hotelsClicked" class="container-card">
-        <div class="poi-card" [formGroup]="sortFormGroup">
-            <div class="top-info">
-                <h5 class="restaurants-info">Hotels</h5>
-                <mat-icon class="close-info">close</mat-icon>
-                <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-slider
-                    thumbLabel
-                    value="5"
-                    min="1"
-                    max="99"
-                    [displayWith]="captureValue"
-                    (change)="updateMaximumDetour($event)"
-                ></mat-slider>
-            </div>
-            <br>
-            <hr>
-            <div *ngFor="let hotel of pageSlice">
-                <app-card [name]="hotel[0]"
-                    [address]="hotel[1]"
-                    [rating]="hotel[2]"
-                    (poiAdded)="poiAdded($event)"
-                ></app-card>
-            </div>
-            <div class="col-md-12 paginator">
-                <mat-paginator [length]="hotels.length"
-                    [pageSize]="10"
-                    (page)="onPageChange($event)"
-                ></mat-paginator>
-            </div>
-        </div>
-    </ng-container>
-
-    <ng-container *ngIf="ttdClicked" class="container-card">
-        <div class="poi-card" [formGroup]="sortFormGroup">
-            <div class="top-info">
-                <h5 class="restaurants-info">Things to do</h5>
-                <mat-icon class="close-info">close</mat-icon>
-                <mat-icon class="filter-info">filter_alt</mat-icon>
-                <mat-slider
-                    thumbLabel
-                    value="5"
-                    min="1"
-                    max="99"
-                    [displayWith]="captureValue"
-                    (change)="updateMaximumDetour($event)"
-                ></mat-slider>
-            </div>
-            <br>
-            <hr>
-            <div *ngFor="let ttd of pageSlice">
-                <app-card [name]="ttd[0]"
-                    [address]="ttd[1]"
-                    [rating]="ttd[2]"
-                    (poiAdded)="poiAdded($event)"
-                ></app-card>
-            </div>
-            <div class="col-md-12 paginator">
-                <mat-paginator [length]="ttds.length"
-                    [pageSize]="10"
-                    (page)="onPageChange($event)"
-                ></mat-paginator>
-            </div>
-        </div>
-    </ng-container>
 </div>

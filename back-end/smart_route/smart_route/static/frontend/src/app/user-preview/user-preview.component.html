@@ -1,0 +1,5 @@
+<div *ngIf="usersInTrip">
+    <div class="col-md-12 res-circle" *ngFor="let user of usersInTrip">
+        <span class="name">{{ userName(user) }}</span>
+    </div>
+</div>

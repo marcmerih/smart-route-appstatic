@@ -141,7 +141,6 @@ STATIC_URL = '/static/'
 #     os.path.join(PROJECT_ROOT, 'static'),
 # ]
 
-print(PROJECT_ROOT)
 # STATIC_ROOT = FRONTEND_ROOT
 # STATIC_URL = '/static/'
 

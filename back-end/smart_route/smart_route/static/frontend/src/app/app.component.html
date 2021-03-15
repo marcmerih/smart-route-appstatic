@@ -15,9 +15,19 @@
 
 </head>
 <body>
-  <!-- <p>Hello World</p> -->
   <app-header></app-header>
+
   <router-outlet></router-outlet>
+
+  <div class="overlay" *ngIf="loaderService.isLoading | async" >
+    <div class="overlay__wrapper">
+        <div class="overlay__spinner">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <span>{{ showedFact }}</span>
+        </div>
+    </div>
+  </div>
+  
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

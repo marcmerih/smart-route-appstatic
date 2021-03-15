@@ -3,10 +3,21 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
+import { UserService } from './user.service';
+import { TripService } from '../trip.service';
+
 enum profileCreationSteps {
   signUp = 0,
-  profileDetails = 1,
-  interestSelection = 2
+  seedPreferences = 1,
+}
+
+export interface User {
+  username: string;
+  password: string;
+}
+
+export interface UserNameObject {
+  username: string;
 }
 @Component({
   selector: 'app-accounts',
@@ -21,24 +32,22 @@ export class AccountsComponent implements OnInit {
   signupForm: FormGroup;
   profileForm: FormGroup;
   subscription: Subscription = new Subscription();
-  accountProgression = 0
+  accountProgression;
+  seedPreferences;
 
-  constructor(private router: Router, private dialogRef: MatDialogRef<AccountsComponent>) {
+  constructor(private router: Router, private dialogRef: MatDialogRef<AccountsComponent>, private userService: UserService, private tripService: TripService) {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
+    
     this.signupForm = new FormGroup({
-      email: new FormControl('', [Validators.email, Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
       agreedToTerms: new FormControl(false, Validators.requiredTrue),
-    })
-    this.profileForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      dateOfBirth: new FormControl('', Validators.required)
-    })
+    });
+
+    this.accountProgression = 0;
   }
 
   @HostListener('window:popstate', ['$event'])
@@ -50,20 +59,43 @@ export class AccountsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitForm(formGroup: FormGroup) {
+  submitForm(formGroup: FormGroup) { // Sign Up
     if (formGroup.valid) {
-      if (this.accountType === 'Sign Up') {
-        this.currentProfileStep += 1;
-        this.router.navigateByUrl('/accounts/profile-creation');
+      const userObject: User = {
+        username: formGroup.get('username').value,
+        password: formGroup.get('password').value  
       }
-      console.log(formGroup);
-      // Make call to backend to save formgroup in db.
+      this.userService.createAccount(userObject).subscribe(preferences => {
+        this.setUserSession(userObject.username);
+        this.signupForm.reset();
+        console.log(preferences);
+        this.incrementRoute();
+        this.seedPreferences = preferences;
+      });
     }
   }
 
   signIn(loginForm: FormGroup) {
-    // Call backend services to sign in here.
-    console.log('sing in clicked');
+    if (loginForm.valid) {
+      const userObject: User = {
+        username: loginForm.get('username').value,
+        password: loginForm.get('password').value
+      }  
+      this.userService.signIn(userObject).subscribe((username: UserNameObject) => {
+        console.log(username.username);
+        this.setUserSession(username.username);
+        this.close();
+        this.loginForm.reset();
+      });
+    }
+  }
+
+  setUserSession(username) {
+    this.userService.username = username[0];
+    this.userService.userSignedIn = true;
+    this.userService.usersInTrip.push(username[0]);
+    this.userService.userSignedInEmitter$.emit(true);
+    this.userService.usersInTripEmitter$.emit(this.userService.usersInTrip);
   }
 
   incrementRoute() {
@@ -78,5 +110,16 @@ export class AccountsComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  updateRating(item) {
+    this.accountProgression += 1;
+    this.tripService.updateRating(item).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  get seedPreferencesDoneButtonDisabled() {
+    return (this.accountProgression <= 8);
   }
 }

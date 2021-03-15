@@ -4,11 +4,15 @@
             <span class="material-icons icon" (click)="toggleTripOverlay()"> {{ tripOverlayExpand }}</span>
             <span class="app-title">Start planning a trip!</span>
             <div class="nav-icon">
-                <span class="material-icons" *ngIf="userSignedIn">person</span>
-                <span class="material-icons" *ngIf="!userSignedIn" (click)="openSignUp()">login</span>
-                <span class="material-icons">directions_car</span>
-                <span class="material-icons">favorite</span>
-                <span class="material-icons">settings</span>
+                <div class="item" *ngIf="!userSignedIn" (click)="openSignUp()">
+                    <span class="material-icons">login</span>
+                </div>
+                <div class="item" *ngIf="shouldAddGuest">
+                    <span class="material-icons" (click)="addGuest()">group_add</span>
+                </div>
+                <div *ngIf="usersInTrip" class="users-preview">
+                    <app-user-preview [usersInTrip]="usersInTrip" class="users-preview-each"></app-user-preview>
+                </div>
             </div>
         </div>
         <div class="col-md-3 trip-overlay-card" *ngIf="isTripOverlayExpanded">

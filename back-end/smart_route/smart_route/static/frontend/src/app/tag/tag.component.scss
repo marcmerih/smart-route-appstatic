@@ -1,13 +1,13 @@
-.tag {
-    background-color: #1f88ff;
-    border-radius: 9px;
-    margin-left: 2px;
-    margin-right: 2px;
+@import '../../styles.scss';
 
-    p {
-        margin-left: 5px;
-        margin-right: 5px;
-        font-size: 7pt;
-        color: white;
-    }
+.container {
+    background-color: $blue;
+    border-radius: 30px;
+    font-size: 8pt;
+    color: white;
+    padding: 4px;
+    margin-right: 5px;
+    display: inline;
+    float: right;
+    width: auto;
 }

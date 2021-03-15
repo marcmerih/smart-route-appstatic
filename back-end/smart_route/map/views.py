@@ -40,13 +40,15 @@ def signIn(request, username, password):
     global user
     global trip
 
-    signedIn = user.loadUser(username, password)
+    signedIn = user.loadUser(username,password,trip)
 
     if signedIn == 0:
         # Bad, Return No Account Found Error
         print("No Account Found Error")
 
     trip.addUserToTrip(user)
+    userObject = {"username":username}
+    return JsonResponse(userObject)
 
 
 def addGuestToTrip(request, username, password):
@@ -54,59 +56,64 @@ def addGuestToTrip(request, username, password):
     global guests
 
     guestUser = User()
-    signedIn = guestUser.loadUser(username, password)
+    signedIn = guestUser.loadUser(username, password, trip)
 
     guests.append(guestUser)
 
     trip.addUserToTrip(guestUser)
 
+    userObject = {"username":username}
+    return JsonResponse(userObject)
 
+ 
 def createUser(request, username, password):
     global user
+    global trip
 
-    created = user.createUser(username, password)
-
-    if created == 0:
-        # Bad, Return Unique Account Error
-        print("Unique Account Error")
+    user.createUser(username, password,trip)
+            
+    seedPreferences = user.getSeedPreferences()
+    trip.addUserToTrip(user)
+    
+    return JsonResponse(seedPreferences)
 
 
 def getInitialTrip(request, startingLocation, endingLocation):
     global trip
     trip.startingLocation = startingLocation  # Set Starting Location
     trip.endingLocation = endingLocation  # Set Ending Location
+    trip.tripPreferences =  {'tripDuration': None, 'numStops': None, 'budget': None}
     trip.initializeDestinations()  #
     trip.planTrip()
     return trip.getTrip(request)
 
 
-def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref, keyphrases):
+def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref):
     global trip
     trip.updateTripPreferences(
-        tripDurationPref, numStopsPref, budgetPref, keyphrases)
+        tripDurationPref, numStopsPref, budgetPref)
     trip.planTrip()
     return trip.getTrip(request)
 
 
 def lockStop(request, poi_type, poi_id):
     global trip
-
     trip.lockStop(poi_type, poi_id)
+
+    return HttpResponse(1)
 
 
 def unlockStop(request, poi_type, poi_id):
     global trip
-
     trip.unlockStop(poi_type, poi_id)
 
+    return HttpResponse(1)
 
-def setRating(request, poi_type, poi_id, rating):
+
+def setRating(request, poi_type, poi_id, score):
     global user
-    if poi_type == 'R':
-        user.setRestaruantRating(poi_type, poi_id, rating)
+    user.setItemRating(poi_type, poi_id, score)
 
-    elif poi_type == 'H':
-        user.setHotelRating(poi_type, poi_id, rating)
+    return HttpResponse(1)
 
-    elif poi_type == 'T':
-        user.setTTDRating(poi_type, poi_id, rating)
+

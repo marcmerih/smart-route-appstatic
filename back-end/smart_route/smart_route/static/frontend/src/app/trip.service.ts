@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RouteModel, RouteObject } from './models';
 import { Router } from '@angular/router';
@@ -10,23 +10,40 @@ import { Router } from '@angular/router';
 export class TripService {
   tripSetupForm: FormGroup;
   intermediateLocationForm: FormGroup;
+  preferencesForm: FormGroup;
   currentRoute: RouteObject;
+  routed = false;
+  usersInTrip;
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
   public resetMarkers$: EventEmitter<string>;
+  public resetRoute$: EventEmitter<string>;
 
   constructor(private http: HttpClient, private router: Router) {
     this.nodes$ = new EventEmitter();
     this.poiMarkers$ = new EventEmitter();
     this.resetMarkers$ = new EventEmitter();
+    this.resetRoute$ = new EventEmitter();
+    this.initializeTripSetupForm();
+    this.intermediateLocationForm = new FormGroup({
+      address: new FormControl('')
+    });
+    this.initializePreferencesForm();
+  }
+
+  initializePreferencesForm() {
+    this.preferencesForm = new FormGroup({
+      maxNumberOfStops: new FormControl(3, [Validators.pattern('^[1-9]*$')]),
+      maxDuration: new FormControl(6, Validators.pattern('^[1-9]*$')),
+      budgetAmt: new FormControl('2')
+    });
+  }
+
+  initializeTripSetupForm() {
     this.tripSetupForm = new FormGroup({
       startingLocation: new FormControl(''),
       endingLocation: new FormControl('')
     });
-
-    this.intermediateLocationForm = new FormGroup({
-      address: new FormControl('')
-    })
   }
 
   setListOfNodes(nodes) {
@@ -42,52 +59,38 @@ export class TripService {
     this.resetMarkers$.emit();
   }
 
-  route(startingLocation, endingLocation, maximumDetourDuration) {
+  resetRoute() {
+    this.resetRoute$.emit();
+  }
+
+  route(startingLocation, endingLocation) {
     this.currentRoute = {
       startingLocation: startingLocation,
-      endingLocation: endingLocation,
-      maximumDetourDuration: maximumDetourDuration,
-      stops: []
+      endingLocation: endingLocation
     }
-    return this.http.get(`./dir/${startingLocation}-${endingLocation}-${maximumDetourDuration}`);
+    return this.http.get(`./init/${startingLocation}-${endingLocation}`);
   }
 
-  getIntermediate(startingLocation, endingLocation, maximumDetourDuration, stops) {
-    this.currentRoute.stops.push(stops);
-    return this.http.get<RouteModel>(`./add-stop/${startingLocation}-${endingLocation}-${maximumDetourDuration}-${stops}`);
-  }
-  
-  getRestaurants() {
-    return this.http.get(`./restaurants`);
-  }
-
-  poiLiked(poi) {
-    console.log(poi);
-  }
-
-  poiDisliked(poi) {
-    console.log(poi);
-  }
-
-  poiAdded(poi) {
-    this.updateCurrentPOIs(poi);
-    console.log(this.currentRoute.stops);
-    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${this.currentRoute.stops}`);
-  }
-
-  orderOfStopsChanged(addresses) {
-    this.currentRoute.stops = addresses;
-    console.log(this.currentRoute);
-    return this.http.get<RouteModel>(`./add-stop/${this.currentRoute.startingLocation}-${this.currentRoute.endingLocation}-${this.currentRoute.maximumDetourDuration}-${addresses}`);
-  }
-
-  updateCurrentPOIs(poi) {
-    if (poi.currentLabel === 'add') {
-      this.currentRoute.stops.push(poi.poi[1] + '-');
-    } else {
-      this.currentRoute.stops = this.currentRoute.stops.filter(x => {
-        return x[0] != poi.poi[0];
-      });
+  refreshTrip(preferencesForm: FormGroup) {
+    const obj = {
+      tripDurationPref: preferencesForm.get('maxDuration').value,
+      numStopsPref: preferencesForm.get('maxNumberOfStops').value,
+      budgetPref: preferencesForm.get('budgetAmt').value
     }
+
+    return this.http.get(`./refresh/${obj.tripDurationPref}-${obj.numStopsPref}-${obj.budgetPref}`);
   }
+
+  lockPOI(item) {
+    return this.http.get(`./lockStop/${item.type}-${item.id}`);
+  }
+
+  unlockPOI(item) {
+    return this.http.get(`./unlockStop/${item.type}-${item.id}`);
+  }
+
+  updateRating(item) {
+    return this.http.get(`./setRating/${item.type}-${item.id}-${item.currentRating}`);
+  }
+
 }
