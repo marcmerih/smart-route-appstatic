@@ -116,7 +116,8 @@
 
     .editPreferences-container {
         margin-left: 370px;
-        margin-top: -60px;
+        z-index: 12;
+        margin-top: -700px;
         height: 40px;
         width: 224px;
         display: inline-flex;
@@ -133,6 +134,7 @@
         .editPreferences {
             margin-bottom: 20px;
             height: 40px;
+            z-index: 12;
             width: 224px;
             border-radius: 50px;
             font-family: Poppins;
@@ -151,7 +153,10 @@
 
     .editPreferences-container-open {
         margin-left: 370px;
-        margin-top: 200px;
+        margin-top: -650px;
+        z-index: 12;
+        float: left;
+        display: flex;
         height: 450px;
         width: 430px;
         border-radius: 20px;
@@ -166,6 +171,7 @@
             margin-bottom: 20px;
             margin: 0 auto;
             height: 40px;
+            z-index: 12;
             width: 224px;
             border-radius: 50px;
             font-family: Poppins;
@@ -308,6 +314,21 @@
     border-radius: 50px;
     background-color: $blue;
     color: $white;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 12pt;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.letsGo::ng-deep {
+    float: left;
+    margin-top: 550px;
+    z-index: 99999;
+    margin-left: 1233px;
+    height: 90px;
+    width: 144px;
+    border-radius: 50px;
+    color: $blue;
+    background-color: $white;
     font-family: Poppins;
     font-weight: 600;
     font-size: 12pt;

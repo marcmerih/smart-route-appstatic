@@ -13,7 +13,7 @@
             </div>
         </div>
     </mat-card>
-    <div *ngFor="let item of items" class="slide">
+    <div *ngFor="let item of items; let i = index" class="slide">
         <mat-card [class]="(item.isExpanded) ? 'poi-card-expanded' : 'poi-card'">
             <div class="lock-container">
                 <span class="material-icons lock-top" (click)="lockItem(item)">{{ (item.isLocked === 1) ? 'lock' : 'lock_open'}}</span>
@@ -22,8 +22,8 @@
                 <img [src]="item.img">
             </div>
             <div class="col">
-                <div class="icon poi">
-                    <span class="material-icons">{{ (item.type === 'R') ? 'restaurant' : 'attractions' }}</span>
+                <div class="icons poi">
+                    <span [class]="getColour(i)">{{ (item.type === 'R') ? 'restaurant' : 'attractions' }}</span>
                 </div>
             </div>
             <div class="col">
@@ -31,6 +31,9 @@
                     <span class="poi-name">{{ item.name }}</span>
                     <br>
                     <span class="poi-address">{{ item.address }}</span>
+                </div>
+                <div *ngIf="numberOfUsersInTrip">
+                    <app-user-match [percentageMatch]="item.usersMatchPercentage"></app-user-match>
                 </div>
             </div>
             <br>

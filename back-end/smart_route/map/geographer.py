@@ -1,10 +1,12 @@
-from math import sin, cos, sqrt, atan2, radians, ceil
+from math import sin, cos, sqrt, atan2, radians, ceil, log
 from .graph import Graph, Node, Edge
 from geopy.geocoders import Nominatim
 import heapq as heap
 import jsonpickle
 import pandas as pd
 import copy
+import random
+
 import json
 import ast
 
@@ -39,21 +41,21 @@ class Geographer():
         location = self.geolocator.geocode(address)
         return [location.latitude, location.longitude]
 
-    def planTrip(self, destinations, tripPreferences,lockedStops):
+    def planTrip(self, destinations, tripPreferences,sessionRatings):
         # Add Destinations to Graph
         startNode_id = self.getClosestGraphNode(destinations[0])
         endNode_id = self.getClosestGraphNode(destinations[1])
 
         if tripPreferences['numStops'] == None:
-            tripPreferencesList = [4,4,4]
+            tripPreferencesList = [2,4,4]
         else:
             tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
         
         
-        costFunctionConstants = [1,1,0.2]
+        costFunctionConstants = [1,0.05,1]
         print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
-        trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants,lockedStops)
+        trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants,sessionRatings)
 
         route = trip[0]  # List of coords for the full route
 
@@ -73,7 +75,7 @@ class Geographer():
         return ids[distances.index(min(distances))]
 
 
-    def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants,lockedStops):
+    def aStar(self, startNode_id, goalNode_id,tripPreferences,cfConstants,sessionRatings):
         global restaurants_data
         global ttds_data
         startNode = self.graph.nodes[str(startNode_id)]
@@ -95,11 +97,16 @@ class Geographer():
             # heap.heapify(priorityQueue)
             node = heap.heappop(priorityQueue)
             if (node.id == goalNode.id):
+                print("Found a Route", node.history)
                 goalNode.estimatedCost = node.estimatedCost
                 goalNode.history = node.history
-                return self.getGeoList(parents, startNode, goalNode,lockedStops)
+                return self.getGeoList(parents, startNode, goalNode,sessionRatings)
 
             if (node.history[1] >= tripDurationBudget):
+                print("Issue is there")
+                continue
+
+            if (node.type in ['R','T'] and node.predicted_score <=1 and node.id != goalNode.id and node.id != startNode.id):
                 continue
 
             for edge in node.edges:
@@ -182,7 +189,7 @@ class Geographer():
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         return R * c 
 
-    def getGeoList(self, parents, startNode, goalNode,lockedStops):
+    def getGeoList(self, parents, startNode, goalNode,sessionRatings):
         global restaurants_data
         global ttds_data
         print("Route Done")
@@ -209,9 +216,9 @@ class Geographer():
                 resTARating = resRow["review_score"].item()
                 resUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
                 isLocked = 0
-                if resIndex in lockedStops:
+                if (resIndex in sessionRatings.keys()) and (sessionRatings[resIndex] == 5):
                     isLocked = 1
-                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':resIndex,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':resIndex,'lat': resLat,'lon': resLon,'name':resName,'address':resAddress,'cats':resTags,'cuisineOptions':resCuisineOptions,'reviewsURL':resTAURL,'type':'R','tripAdvisorRating':resTARating,'usersMatchPercentage':resUsersMatchPreference,'img':getStockImage('R',thisNode.id)}
                 poi_list.append(poi_dict)
             if (thisNode.type == 'T'):
                 print("FOUND A TTD",thisNode.id,thisNode.lat,thisNode.lon,thisNode.predicted_score)
@@ -227,9 +234,9 @@ class Geographer():
                 ttdTARating = ttdRow["review_score"].item()
                 ttdUsersMatchPreference = ceil((thisNode.predicted_score / 5) * 100)
                 isLocked = 0
-                if ttdIndex in lockedStops:
+                if (ttdIndex in sessionRatings.keys()) and (sessionRatings[ttdIndex] == 5):
                     isLocked = 1
-                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':ttdIndex,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+                poi_dict = {'isExpanded':0,'isLocked':isLocked,'currentRating':0,'id':ttdIndex,'lat': ttdLat,'lon': ttdLon,'name':ttdName,'address':ttdAddress,'cats':ttdTags,'reviewsURL':ttdTAURL,'type':'T','tripAdvisorRating':ttdTARating,'usersMatchPercentage':ttdUsersMatchPreference,'img':getStockImage('T',thisNode.id-4000)}
                 poi_list.append(poi_dict)
 
         # hardcoded_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id': 'R125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': ["Asian", "Buffet"],'cuisineOptions': ["Vegan"],'reviewsURL': 'https://www.google.ca','type':'R','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img' : 'https://bit.ly/3asKPeb', 'isExpanded': False, 'isLocked': False, 'currentRating': '0'}
@@ -268,3 +275,26 @@ def object_decoder(obj):
         return Edge(obj['id'], obj['destinationNodeID'], obj['sourceNodeID'], obj['length'], obj['speed'])
     
     return obj
+
+def getStockImage(type,id):
+    res_images = ["","","","","",""]
+    res_images[0] = "https://images.unsplash.com/photo-1552566626-52f8b828add9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    res_images[1] = "https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    res_images[2] = "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    res_images[3] = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80"
+    res_images[4] = "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80"
+    res_images[5] = "https://images.unsplash.com/photo-1485182708500-e8f1f318ba72?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1385&q=80"
+
+    ttd_images = ["","","","","",""]
+    ttd_images[0] = "https://images.unsplash.com/photo-1416397202228-6b2eb5b3bb26?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1347&q=80"
+    ttd_images[1] = "https://images.unsplash.com/photo-1573155993874-d5d48af862ba?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+    ttd_images[2] = "https://images.unsplash.com/photo-1588714477688-cf28a50e94f7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+    ttd_images[3] = "https://images.unsplash.com/photo-1508180588132-ec6ec3d73b3f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    ttd_images[4] = "https://images.unsplash.com/photo-1486325212027-8081e485255e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    ttd_images[5] = "https://images.unsplash.com/photo-1594182878451-6ed9c176c628?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1622&q=80"
+
+    index = int(log(id, len(res_images)))
+    if type == 'R':
+        return res_images[index]
+    if type == 'T':
+        return ttd_images[index]

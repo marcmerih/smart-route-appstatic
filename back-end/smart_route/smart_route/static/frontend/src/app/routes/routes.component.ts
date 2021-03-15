@@ -66,8 +66,6 @@ export class RoutesComponent implements AfterViewInit {
   }
 
   setStartEndMarkers(nodes) {
-    console.log(nodes);
-    console.log(typeof(nodes));
     const startingCoordinates = nodes[0];
     const endingCoordinates = nodes[nodes.length - 1];
 
@@ -130,12 +128,15 @@ export class RoutesComponent implements AfterViewInit {
 
   setPOIMarkers(coords) {
     this.resetMarkers();
+    const colours = ['rgb(231, 158, 89)', 'rgb(114, 210, 54)', 'rgb(83, 227, 238)', 'rgb(34, 122, 230)', 
+      'rgb(140, 47, 228)', 'rgb(235, 80, 191)'];
+    let colorCounter = 0;
     coords.forEach(coordinates => {
       const POIMarker = new LayerVector({
         source: new SourceVector({
           features: [
             new Feature({
-                geometry: new Point(fromLonLat(coordinates)) // this is reversed.
+                geometry: new Point(fromLonLat(coordinates))
             })
           ]
         }),
@@ -146,7 +147,7 @@ export class RoutesComponent implements AfterViewInit {
           image: new Circle({
               radius: 9,
               fill: new Fill({
-                  color: 'rgba(22,120,242,1)'
+                  color: colours[colorCounter]
               }),
               stroke: new Stroke({
                 color: 'white',
@@ -158,6 +159,7 @@ export class RoutesComponent implements AfterViewInit {
       });
       this.markers.push(POIMarker);
       this.map.addLayer(POIMarker);
+      colorCounter += 1;
     });
   }
 
@@ -183,9 +185,8 @@ export class RoutesComponent implements AfterViewInit {
     vectorLayer.getSource().addFeature(route);
     this.map.addLayer(vectorLayer);
     this.layers.push(vectorLayer);
-    
-    // this.map.getView().setCenter(transform([nodes[nodes.length / 2][0], nodes[nodes.length / 2][1]], 'EPSG:4326', 'EPSG:3857'));
-    // this.map.getView().setZoom(12);
+    this.map.getView().setCenter(transform([nodes[Math.floor(nodes.length / 2)][0], nodes[Math.floor(nodes.length / 2)][1]], 'EPSG:4326', 'EPSG:3857'));
+    this.map.getView().setZoom(14);
   }
 
   resetMarkers() {

@@ -1,0 +1,33 @@
+@import "../../styles.scss";
+
+.container {
+    border-radius: 10px;
+    width: auto;
+    height: 40px;
+    display: inline-flex;
+    background-color: $grey;
+    border-radius: 35px;
+    margin-top: 20px;
+    float: right;
+
+    .items {
+        float: left;
+        display: inline-flex;
+
+        .users-preview {
+            margin-top: 5px;
+
+            .users-preview-each {
+                float: right;
+            }
+        }
+    
+        .percent {
+            float: right;
+            margin-left: 10px;
+            margin-top: 5px;
+            color: $white;
+            font-size: 14pt;
+        }
+    }
+}

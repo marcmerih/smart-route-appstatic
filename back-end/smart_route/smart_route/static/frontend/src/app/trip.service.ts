@@ -12,6 +12,8 @@ export class TripService {
   intermediateLocationForm: FormGroup;
   preferencesForm: FormGroup;
   currentRoute: RouteObject;
+  routed = false;
+  usersInTrip;
   public nodes$: EventEmitter<string>;
   public poiMarkers$: EventEmitter<string>;
   public resetMarkers$: EventEmitter<string>;

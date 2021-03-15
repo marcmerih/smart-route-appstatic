@@ -33,6 +33,8 @@
         <app-carousel [items]="getCurrentStops" [label]="test" [startingLocation]="startingLocation" [endingLocation]="endingLocation"></app-carousel>
     </div>
     <button mat-raised-button class="col-md-12 startOver" *ngIf="currentStep === 1" (click)="startOver()">Start Over</button>
+    <button mat-raised-button class="col-md-12 letsGo" *ngIf="currentStep === 1" (click)="letsGo()">Let's Go!</button>
+
     <div [class]="editPreferencesClicked ? 'editPreferences-container-open' : 'editPreferences-container'" *ngIf="currentStep === 1">
         <div class="editPreferences">
             <div (click)="clickEditPreferences()">
@@ -118,4 +120,3 @@
         </div>
     </div>
 </div>
-

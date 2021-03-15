@@ -26,7 +26,7 @@ class Trip():
         self.stops = []
         self.route = []
 
-        self.lockedStops = []
+        self.sessionRatings = {}
 
         # Trip Preferences --Replace None with Default Settings--
         self.tripPreferences = {
@@ -44,27 +44,31 @@ class Trip():
         self.recSys.predictRestaurantRatings(self.users)
         self.recSys.predictTTDRatings(self.users)
 
+        self.recSys.predictSessionRestaurantRatings(self.sessionRatings)
+        self.recSys.predictSessionTTDRatings(self.sessionRatings)
+
         # Update Predicted_Score Column in each CSV...
         restaurants_to_truncate = []
         ttds_to_truncate = []
         if len(self.stops) > 0:
             for stop in self.stops:
-                if stop["id"] not in self.lockedStops:
+                if stop["id"] not in self.sessionRatings.keys():
+                    self.sessionRatings[stop["id"]] = 1
+                if self.sessionRatings[stop["id"]] == 1:
                     print(stop["name"])
-                    
                     if stop["type"] == 'R':
                         restaurants_to_truncate.append(stop["id"])
                     elif stop["type"] == 'T':
                         ttds_to_truncate.append(stop["id"])
                         
                 
-        self.geographer.graph.setPredictedScores(self.recSys.getRestaurantModel(),restaurants_to_truncate, self.recSys.getTTDModel(),ttds_to_truncate)
+        self.geographer.graph.setPredictedScores(self.recSys.getFinalRestaurantModel(),restaurants_to_truncate, self.recSys.getFinalTTDModel(),ttds_to_truncate)
         # self.geographer.graph.setPredictedScores('T', self.recSys.getTTDModel(),ttds_to_truncate)
 
         
 
         self.route, self.stops = self.geographer.planTrip(
-            self.destinations, self.tripPreferences,self.lockedStops)
+            self.destinations, self.tripPreferences,self.sessionRatings)
 
     def getTrip(self, request):
         to_json = {"route":self.route,"stops":self.stops}
@@ -78,30 +82,12 @@ class Trip():
     def lockStop(self, poi_type, poi_id):
         # id_ = int(poi_id[1:])
         # print(id_)
-        self.lockedStops.append(poi_id)
-        print("Locked Stops",self.lockedStops)
-        # if poi_type == 'R':
-            # Write To: restaurants_data (csv)
-            # For POI === poi_id: 1) Record predicted_score value, 2) Change predicted_score to infinity
-            # self.lockedStops[poi_id] = self.recSys.restaurant_prediction_vector[id_]
-            # self.recSys.restaurant_prediction_vector[id_] = -10000
+        self.sessionRatings[poi_id] = 5
+        print("Locked Stops",self.sessionRatings)
 
-        # elif poi_type == 'T':
-            # self.lockedStops[poi_id] = self.recSys.ttd_prediction_vector[id_]
-            # self.recSys.ttd_prediction_vector[id_] = 0
 
     def unlockStop(self, poi_type, poi_id):
         
-        self.lockedStops.remove(poi_id)
-        print("Locked Stops",self.lockedStops)
-        # id_ = int(poi_id[1:])
-        # if poi_type == 'R':
-            # Write To: restaurants_data (csv)
-            # For POI === poi_id: 1) Change predicted_score to recordedPredicatedScore, 2) Remove from lockedStops
-            # self.recSys.restaurant_prediction_vector[id_] = self.lockedStops[poi_id]
-            # del self.lockedStops[poi_id]
-            # ...
+        self.sessionRatings[poi_id] = 1
+        print("Locked Stops",self.sessionRatings)
 
-        # elif poi_type == 'T':
-            # self.recSys.ttd_prediction_vector[id_] = self.lockedStops[poi_id]
-            # del self.lockedStops[poi_id]
