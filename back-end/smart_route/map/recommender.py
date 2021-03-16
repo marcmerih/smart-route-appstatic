@@ -178,13 +178,13 @@ class RecSys():
         self.ttd_session_prediction_vector = predictionVetor
 
     def getFinalRestaurantModel(self):
-        w1 = 0.6
-        w2 = 0.4
+        w1 = 0.1
+        w2 = 0.9
         return w1 * self.restaurant_prediction_vector + w2 * self.restaurant_session_prediction_vector
 
     def getFinalTTDModel(self):
-        w1 = 0.6
-        w2 = 0.4
+        w1 = 0.1
+        w2 = 0.9
         return w1 * self.ttd_prediction_vector + w2 * self.ttd_session_prediction_vector
 
     def multiplicativeUtility(self, prediction_vectors):

@@ -25,7 +25,6 @@ user = User()
 
 guests = []
 
-number_of_refreshes = 0
 
 class DefaultRouteViewSet(viewsets.ModelViewSet):
     queryset = DefaultRoute.objects.all()
@@ -81,23 +80,19 @@ def createUser(request, username, password):
 
 def getInitialTrip(request, startingLocation, endingLocation):
     global trip
-    global number_of_refreshes
-    number_of_refreshes += 1
     trip.startingLocation = startingLocation  # Set Starting Location
     trip.endingLocation = endingLocation  # Set Ending Location
     trip.tripPreferences =  {'tripDuration': None, 'numStops': None, 'budget': None}
     trip.initializeDestinations()  #
-    trip.planTrip(number_of_refreshes)
+    trip.planTrip()
     return trip.getTrip(request)
 
 
 def refreshTrip(request, tripDurationPref, numStopsPref, budgetPref):
     global trip
-    global number_of_refreshes
-    number_of_refreshes += 1
     trip.updateTripPreferences(
         tripDurationPref, numStopsPref, budgetPref)
-    trip.planTrip(number_of_refreshes)
+    trip.planTrip()
     return trip.getTrip(request)
 
 

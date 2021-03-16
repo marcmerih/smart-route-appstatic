@@ -39,7 +39,7 @@ class Trip():
     def addUserToTrip(self, user):
         self.users.append(user)
 
-    def planTrip(self,number_of_refreshes):
+    def planTrip(self):
         # Build The Predicted Item Score Vector for each POI Type
         self.recSys.predictRestaurantRatings(self.users)
         self.recSys.predictTTDRatings(self.users)
@@ -50,8 +50,6 @@ class Trip():
         # Update Predicted_Score Column in each CSV...
         restaurants_to_truncate = []
         ttds_to_truncate = []
-        restaurants_to_ceiling = []
-        ttds_to_ceiling  = []
         if len(self.stops) > 0:
             for stop in self.stops:
                 if stop["id"] not in self.sessionRatings.keys():
@@ -62,21 +60,15 @@ class Trip():
                         restaurants_to_truncate.append(stop["id"])
                     elif stop["type"] == 'T':
                         ttds_to_truncate.append(stop["id"])
-                if self.sessionRatings[stop["id"]] == 5:
-                    print(stop["name"])
-                    if stop["type"] == 'R':
-                        restaurants_to_ceiling.append(stop["id"])
-                    elif stop["type"] == 'T':
-                        ttds_to_ceiling.append(stop["id"])
-          
+                        
                 
-        self.geographer.graph.setPredictedScores(self.recSys.getFinalRestaurantModel(),restaurants_to_truncate, restaurants_to_ceiling,self.recSys.getFinalTTDModel(),ttds_to_truncate,ttds_to_ceiling)
+        self.geographer.graph.setPredictedScores(self.recSys.getFinalRestaurantModel(),restaurants_to_truncate, self.recSys.getFinalTTDModel(),ttds_to_truncate)
         # self.geographer.graph.setPredictedScores('T', self.recSys.getTTDModel(),ttds_to_truncate)
 
         
 
         self.route, self.stops = self.geographer.planTrip(
-            self.destinations, self.tripPreferences,self.sessionRatings,number_of_refreshes)
+            self.destinations, self.tripPreferences,self.sessionRatings)
 
     def getTrip(self, request):
         to_json = {"route":self.route,"stops":self.stops}

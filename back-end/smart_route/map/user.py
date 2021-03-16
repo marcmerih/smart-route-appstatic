@@ -86,13 +86,13 @@ class User():
 
 
     def getSeedPreferences(self):
-        restaurants = self.trip.geographer.getSeedRestaurants([39,163,644,1412,1418,217])
+        restaurants = self.trip.geographer.getSeedRestaurants(5)
         # restaurants = [
         #     {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'},
         #     {'id': '122','lat': '46.648505','lon': '-81.38668700000001','name': 'Swiss Chalet','address': '123 Testing St','resTags': '["Asian", "Barbecue"]','cuisineOptions': '["Vegetarian"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.2','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'},
         #     {'id': '112','lat': '41.648505','lon': '-91.38668700000001','name': 'Subway','address': '3 Court St','resTags': '["Fast Food", "Barbecue"]','cuisineOptions': '["Gluten Free"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.0','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
         # ]
-        ttds = self.trip.geographer.getSeedTTDs([2,1180,160,462,20,470])
+        ttds = self.trip.geographer.getSeedTTDs(4)
         # ttds = [
         #     {'id': '125','lat': '43.648505','lon': '-79.38668700000001','name': 'Tim Hortons','address': '123 Test Rd','resTags': '["Asian", "Buffet"]','cuisineOptions': '["Vegan"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.6','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'},
         #     {'id': '122','lat': '46.648505','lon': '-81.38668700000001','name': 'Swiss Chalet','address': '123 Testing St','resTags': '["Asian", "Barbecue"]','cuisineOptions': '["Vegetarian"]','reviewsURL': "https://www.google.ca",'type':'res','tripAdvisorRating': '4.2','usersMatchPercentage': '5','img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'},
