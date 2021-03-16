@@ -41,18 +41,19 @@ class Geographer():
         location = self.geolocator.geocode(address)
         return [location.latitude, location.longitude]
 
-    def planTrip(self, destinations, tripPreferences,sessionRatings):
+    def planTrip(self, destinations, tripPreferences,sessionRatings,number_of_refreshes):
         # Add Destinations to Graph
         startNode_id = self.getClosestGraphNode(destinations[0])
         endNode_id = self.getClosestGraphNode(destinations[1])
 
-        if tripPreferences['numStops'] == None:
-            tripPreferencesList = [2,4,4]
+        if number_of_refreshes == 1:
+            tripPreferencesList = [4,8,4]
         else:
             tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
         
         
-        costFunctionConstants = [1,0.05,1]
+        costFunctionConstants = [1/number_of_refreshes,0.05,2]
+
         print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
         trip = self.aStar(startNode_id, endNode_id,tripPreferencesList,costFunctionConstants,sessionRatings)
@@ -102,7 +103,7 @@ class Geographer():
                 goalNode.history = node.history
                 return self.getGeoList(parents, startNode, goalNode,sessionRatings)
 
-            if (node.history[1] >= tripDurationBudget):
+            if (node.history[-1] >= tripDurationBudget):
                 print("Issue is there")
                 continue
 
@@ -132,34 +133,59 @@ class Geographer():
                 #Update nextNode history based on previous Node 
                 if node.type in ['R','T']: # If previous Node was a POI
                     nextNode.history[0].append(str(node.id)) #Add Previous Node to SelectedPOIs List
+                    if node.type == 'R':
+                        nextNode.history[1].append(str(node.id))
+                        nextNode.history[2] = 0
+                        nextNode.history[4] += (((edge.length/1000)/edge.speed)*60) 
+                    if node.type == 'T':
+                        nextNode.history[3].append(str(node.id))
+                        nextNode.history[4] = 0
+                        nextNode.history[2] += (((edge.length/1000)/edge.speed)*60) 
+                else:
+                    nextNode.history[2] += (((edge.length/1000)/edge.speed)*60) 
+                    nextNode.history[4] += (((edge.length/1000)/edge.speed)*60) 
 
                 costAtNode = costs[node] 
                 newCost = costAtNode + self.costFunction(self.graph,startNode,nextNode,edge,cfConstants) 
-                nextNode.history[1] += (((edge.length/1000)/edge.speed)*60) #Update Total Travel Time Cost
+                nextNode.history[-1] += (((edge.length/1000)/edge.speed)*60) #Update Total Travel Time Cost
+
+                if nextNode.predicted_score == 10:
+                    print(nextNode.id)
+                    newCost = 0
                 
                 # This is the cost function
-#  or (newCost < costs[nextNode])
                 if (nextNode not in parents.keys() or (newCost < costs[nextNode]) or (node.type in ['R','T'])):
                     parents[nextNode] = node
                     costs[nextNode] = newCost
-                    nextNode.estimatedCost = self.heuristic(nextNode, goalNode) + newCost
+                    nextNode.estimatedCost = 2 * sum(cfConstants) * self.heuristic(nextNode, goalNode) + newCost
+                    if nextNode.predicted_score == 10:
+                        
+                        costs[nextNode] = 0
+                        nextNode.estimatedCost = 0
                     heap.heappush(priorityQueue, nextNode)
 
     def costFunction(self,graph,startNode,nextNode,edge,const):
         cost = 0
-        distanceSinceLastPOI = 0
-        
+    #     distanceSinceLastPOI = 0
+        timeSinceLastRes = nextNode.history[2]
+        timeSinceLastTTD = nextNode.history[4]
+    
         if nextNode.type == 'road':
-
+            
             cost += const[0] * (((edge.length/1000)/edge.speed)*60)
+
+    #         if len(nextNode.history[0]) == 0:
+    #             distanceSinceLastPOI = getDistance(nextNode,startNode)
+    #         else: 
+    #             distanceSinceLastPOI = getDistance(nextNode,graph.nodes[nextNode.history[0][-1]])
+
+    #     cost += const[1] * ((distanceSinceLastPOI)/60)*60  # Penalize too long a distance between POIs -> Calculate c2 based on Trip Length
             
-            if len(nextNode.history[0]) == 0:
-                distanceSinceLastPOI = self.getDistance(nextNode,startNode)
-            else: 
-                distanceSinceLastPOI = self.getDistance(nextNode,graph.nodes[nextNode.history[0][-1]])
+            # cost *= const[1] * timeSinceLastRes
+            # cost *= const[1] * timeSinceLastTTD
+            maxTimeSince = max(timeSinceLastRes,timeSinceLastTTD)
+            cost += const[1] * maxTimeSince
             
-        cost *= const[1] * ((distanceSinceLastPOI)/60)*60  # Penalize too long a distance between POIs -> Calculate c2 based on Trip Length
-        
         if nextNode.type in ['R','T']:
             cost += const[2] * (5-nextNode.predicted_score) # Penalize derivation from perfect predicted POI score
 
@@ -246,22 +272,26 @@ class Geographer():
         return [list(reversed(geolist)), list(reversed(poi_list))]
 
 
-    def getSeedRestaurants(self,num):
+    def getSeedRestaurants(self,restaurantIDs):
         global restaurants_data
         restaurants = []
-        for i in range(num):
+        image = 0
+        for i in restaurantIDs:
             _itemRow = restaurants_data.loc[i]
-            restaurant_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'cuisineOptions':ast.literal_eval(_itemRow["diets"]),'reviewsURL':_itemRow["url"],'type':'R','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            restaurant_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'cuisineOptions':ast.literal_eval(_itemRow["diets"]),'reviewsURL':_itemRow["url"],'type':'R','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':getStockImage("seed",image)}
             restaurants.append(restaurant_dict)
+            image +=1
         return restaurants
 
-    def getSeedTTDs(self,num):
+    def getSeedTTDs(self,ttdIDs):
         global ttds_data
         ttds = []
-        for i in range(num):
+        image = 0
+        for i in ttdIDs:
             _itemRow = ttds_data.loc[i]
-            ttds_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'reviewsURL':_itemRow["url"],'type':'T','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'}
+            ttds_dict = {'isExpanded':0,'isLocked':0,'currentRating':0,'id':_itemRow["index"],'lat': _itemRow["lat"],'lon': _itemRow["lon"],'name':_itemRow["item_name"],'address':_itemRow["item_address"],'cats':ast.literal_eval(_itemRow["categories"]),'reviewsURL':_itemRow["url"],'type':'T','tripAdvisorRating':_itemRow["review_score"],'usersMatchPercentage':"N/A",'img':getStockImage("seed",image+6)}
             ttds.append(ttds_dict)
+            image +=1
         return ttds
 
     
@@ -293,8 +323,26 @@ def getStockImage(type,id):
     ttd_images[4] = "https://images.unsplash.com/photo-1486325212027-8081e485255e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     ttd_images[5] = "https://images.unsplash.com/photo-1594182878451-6ed9c176c628?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1622&q=80"
 
-    index = int(log(id, len(res_images)))
+    seed_images = ["","","","","","","","","","","",""]
+    seed_images[0] = "https://media-cdn.tripadvisor.com/media/photo-p/15/a5/33/59/home-sweet-home.jpg"
+    seed_images[1] = "http://www.shopbrockville.ca/microsite/photogallery/10218573.jpg"
+    seed_images[2] = "https://media-cdn.tripadvisor.com/media/photo-s/13/44/cc/6b/the-perfect-combo.jpg"
+    seed_images[3] = "https://10619-2.s.cdn12.com/rests/small/w312/h280/804_503070051.jpg"
+    seed_images[4] = "https://cn-geo1.uber.com/image-proc/resize/eats/format=webp/width=550/height=440/quality=70/srcb64=aHR0cHM6Ly9kMXJhbHNvZ25qbmczNy5jbG91ZGZyb250Lm5ldC80NmJmNzI1MS00MjYzLTQ1ZjQtOTljNy02YzUzMDM1MGFjYmIuanBlZw=="
+    seed_images[5] = "https://media-cdn.tripadvisor.com/media/photo-p/13/d6/48/d5/photo4jpg.jpg"
+    seed_images[6] = "https://globalnews.ca/wp-content/uploads/2020/07/eelld9bwaaqbmn3.jpg?quality=85&strip=all"
+    seed_images[7] = "https://rcmusic-kentico-cdn.s3.amazonaws.com/rcm/media/main/about%20us/learning-rcs-about-building_1.png?ext=.png"
+    seed_images[8] = "https://www.ctvnews.ca/polopoly_fs/1.3455943.1597670470!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg"
+    seed_images[9] = "https://i.cbc.ca/1.5059493.1552750376!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/stephan-moccio-and-el-sistema.jpg"
+    seed_images[10] = "https://media-cdn.tripadvisor.com/media/photo-s/0e/b4/c9/64/photo0jpg.jpg"
+    seed_images[11] = "https://ontarioconservationareas.ca/images/banner_pg_fishing.jpg"
+
+    
     if type == 'R':
+        index = int(log(id, len(res_images)))
         return res_images[index]
     if type == 'T':
+        index = int(log(id, len(res_images)))
         return ttd_images[index]
+    if type == 'seed':
+        return seed_images[id]
