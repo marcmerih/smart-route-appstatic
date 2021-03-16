@@ -13,21 +13,24 @@ class Graph(object):
 
         for node_id in list(self.nodes.keys()):
             self.nodes[node_id].estimatedCost = 0
-            self.nodes[node_id].history = [[],0] #Selected POIS, Total Travel Time  
+            self.nodes[node_id].history = [[],[],0,[],0,0] #Selected POIS, Total Travel Time  
             # if self.nodes[node_id].type == 'poi':
             #     self.nodes[node_id].predicted_score = random.uniform(1, 5)
             # else:
             #     self.nodes[node_id].predicted_score = 0
 
-    def setPredictedScores(self, restaurant_scores,restaruants_to_truncate,ttd_scores,ttds_to_truncate):
+    def setPredictedScores(self, restaurant_scores,restaruants_to_truncate,restaurants_to_ceiling,ttd_scores,ttds_to_truncate,ttds_to_ceiling):
         # for poi_id, predicted_score in enumerate(scores, start=0):
         for i in range(len(restaurant_scores)):
             _itemRow = restaurants_data.loc[i]
             index = _itemRow["index"]
             _id = index[1:]
             if index in restaruants_to_truncate:
-                print(_itemRow["item_name"])
+                print(_itemRow["item_name"],"Truncate")
                 self.nodes[_id].predicted_score = -100000000
+            elif index in restaurants_to_ceiling:
+                print(_itemRow["item_name"],"Ceiling")
+                self.nodes[_id].predicted_score = 10
             else:
                 self.nodes[_id].predicted_score = restaurant_scores[i] 
                 # self.nodes[_id].predicted_score = random.randint(0,5)
@@ -38,8 +41,11 @@ class Graph(object):
             _id = index[1:]
             _TTDID = str(int(_id)+4000)
             if index in ttds_to_truncate:
-                print(_itemRow["item_name"])
+                print(_itemRow["item_name"],"Truncate")
                 self.nodes[_TTDID].predicted_score = -100000000
+            elif index in ttds_to_ceiling:
+                print(_itemRow["item_name"],"Ceiling")
+                self.nodes[_TTDID].predicted_score = 10
             else:
                 self.nodes[_TTDID].predicted_score = ttd_scores[j] 
                 # self.nodes[_TTDID].predicted_score = random.randint(0,5)
