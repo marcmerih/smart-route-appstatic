@@ -53,7 +53,7 @@ export class CarouselComponent implements OnInit {
   }
 
   getColour(i) {
-    const colours = ['material-icons orange', 'material-icons teal', 'material-icons green', 'material-icons blue', 
+    const colours = ['material-icons orange', 'material-icons green', 'material-icons teal', 'material-icons blue', 
       'material-icons purple', 'material-icons pink'];
     return colours[i];
   }
