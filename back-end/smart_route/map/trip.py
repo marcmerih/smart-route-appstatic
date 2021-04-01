@@ -7,6 +7,7 @@ import numpy as np
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, JsonResponse
 import json
+import jsonpickle
 
 
 restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
@@ -40,7 +41,6 @@ class Trip():
 
     def planTrip(self,number_of_refreshes):
         # Build The Predicted Item Score Vector for each POI Type
-        print(number_of_refreshes)
         self.recSys.predictRestaurantRatings(self.users)
         self.recSys.predictTTDRatings(self.users)
 

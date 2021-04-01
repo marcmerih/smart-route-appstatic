@@ -2,6 +2,7 @@ from math import sin, cos, sqrt, atan2, radians, ceil, log
 from .graph import Graph, Node, Edge
 from geopy.geocoders import Nominatim
 import heapq as heap
+import jsonpickle
 import pandas as pd
 import copy
 import random
@@ -9,6 +10,7 @@ import random
 import json
 import ast
 
+import jsonpickle
 
 restaurants_data = pd.read_csv(r"data/item/resDataClean.csv")
 ttds_data = pd.read_csv(r"data/item/ttdDataClean.csv")
@@ -47,12 +49,10 @@ class Geographer():
         if number_of_refreshes == 1:
             tripPreferencesList = [4,8,4]
         else:
-            try:
-                tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
-            except: 
-                tripPreferencesList = [4,8,4]
+            tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
         
-        costFunctionConstants = [1,0.05,2]
+        
+        costFunctionConstants = [1/number_of_refreshes,0.05,2]
 
         print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
@@ -146,15 +146,12 @@ class Geographer():
                     nextNode.history[4] += (((edge.length/1000)/edge.speed)*60) 
 
                 costAtNode = costs[node] 
-                
+                newCost = costAtNode + self.costFunction(self.graph,startNode,nextNode,edge,cfConstants) 
                 nextNode.history[-1] += (((edge.length/1000)/edge.speed)*60) #Update Total Travel Time Cost
 
-                # if nextNode.predicted_score == 10:
-                #     print(nextNode.id)
-                #     newCost = 0
-                # else:
-                newCost = costAtNode + self.costFunction(self.graph,startNode,nextNode,edge,cfConstants) 
-
+                if nextNode.predicted_score == 10:
+                    print(nextNode.id)
+                    newCost = 0
                 
                 # This is the cost function
                 if (nextNode not in parents.keys() or (newCost < costs[nextNode]) or (node.type in ['R','T'])):
