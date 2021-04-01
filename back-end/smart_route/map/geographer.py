@@ -52,11 +52,7 @@ class Geographer():
             tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
         
         
-<<<<<<< Updated upstream
-        costFunctionConstants = [1/number_of_refreshes,0.05,2]
-=======
         costFunctionConstants = [0.85,0.05,2]
->>>>>>> Stashed changes
 
         print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm

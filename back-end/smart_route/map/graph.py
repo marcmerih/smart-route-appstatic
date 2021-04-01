@@ -32,7 +32,7 @@ class Graph(object):
                 print(_itemRow["item_name"],"Ceiling")
                 self.nodes[_id].predicted_score = 10
             else:
-                self.nodes[_id].predicted_score = restaurant_scores[i] 
+                self.nodes[_id].predicted_score = restaurant_scores[i] + 2.5 # For demo purposes due to the lack of POIs.  
                 # self.nodes[_id].predicted_score = random.randint(0,5)
 
         for j in range(len(ttd_scores)):
@@ -47,7 +47,7 @@ class Graph(object):
                 print(_itemRow["item_name"],"Ceiling")
                 self.nodes[_TTDID].predicted_score = 10
             else:
-                self.nodes[_TTDID].predicted_score = ttd_scores[j] 
+                self.nodes[_TTDID].predicted_score = ttd_scores[j] + 2.5 # For demo purposes due to the lack of POIs. 
                 # self.nodes[_TTDID].predicted_score = random.randint(0,5)
     
 
