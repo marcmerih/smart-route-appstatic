@@ -30,10 +30,13 @@ class Graph(object):
                 self.nodes[_id].predicted_score = -100000000
             elif index in restaurants_to_ceiling:
                 print(_itemRow["item_name"],"Ceiling")
-                self.nodes[_id].predicted_score = 10
+                self.nodes[_id].predicted_score = 5
             else:
-                self.nodes[_id].predicted_score = restaurant_scores[i] 
-                # self.nodes[_id].predicted_score = random.randint(0,5)
+                # self.nodes[_id].predicted_score = restaurant_scores[i]
+                if restaurant_scores[i] == 0:
+                    self.nodes[_id].predicted_score = 2.5
+                else:
+                    self.nodes[_id].predicted_score = restaurant_scores[i]
 
         for j in range(len(ttd_scores)):
             _itemRow = ttds_data.loc[j]
@@ -45,10 +48,13 @@ class Graph(object):
                 self.nodes[_TTDID].predicted_score = -100000000
             elif index in ttds_to_ceiling:
                 print(_itemRow["item_name"],"Ceiling")
-                self.nodes[_TTDID].predicted_score = 10
+                self.nodes[_TTDID].predicted_score = 5
             else:
-                self.nodes[_TTDID].predicted_score = ttd_scores[j] 
-                # self.nodes[_TTDID].predicted_score = random.randint(0,5)
+                # self.nodes[_TTDID].predicted_score = ttd_scores[j]
+                if ttd_scores[j] == 0:
+                    self.nodes[_TTDID].predicted_score = 2.5
+                else:
+                    self.nodes[_TTDID].predicted_score = ttd_scores[j] 
     
 
 
