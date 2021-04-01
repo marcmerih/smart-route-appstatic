@@ -49,10 +49,12 @@ class Geographer():
         if number_of_refreshes == 1:
             tripPreferencesList = [4,8,4]
         else:
-            tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
+            try:
+                tripPreferencesList = [int(tripPreferences['numStops']),int(tripPreferences['tripDuration']),int(tripPreferences['budget'])]
+            except:
+                tripPreferencesList = [4,8,4]
         
-        
-        costFunctionConstants = [1/number_of_refreshes,0.05,2]
+        costFunctionConstants = [1/number_of_refreshes,0.05,1]
 
         print("Routing")
         # Todo: Plan Trip Between Coords -> A* Trip Planning Algorithm
